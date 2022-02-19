@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React, { useRef } from 'react'
 import Webcam from 'react-webcam';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -30,38 +30,35 @@ function App() {
 
   return (
     <div className="App">
-    <header className="App-header">
-      <Container>
-      {/* <Stack gap={3} direction="vertical"> */}
-      <Col>
+      <header className="App-header">
+        <Container>
+          <Col>
 
-    <Webcam 
-        mirrored={true}
-        ref={webcamRef}
-        style = {{width: 640, height: 480, 
-          position: 'absolute',
-        }}
-        />
-        <canvas
-        ref={canvasRef}
-        style= {{width: 640, height: 480, 
-          // position: 'absolute'
-        }}
-      />
-      </Col>
-     <Button variant="primary">Primary</Button>{' '}
-    <Button variant="secondary">Secondary</Button>{' '}
-    {/* </Stack> */}
+            <Webcam
+              mirrored={true}
+              ref={webcamRef}
+              style={{
+                width: 640, height: 480,
+                position: 'absolute',
+              }}
+            />
+            <canvas
+              ref={canvasRef}
+              style={{
+                width: 640, height: 480,
+                // position: 'absolute'
+              }}
+            />
+          </Col>
+          <Button variant="primary">Primary</Button>
+          <Button variant="secondary">Secondary</Button>
 
-      </Container>
+        </Container>
 
 
+      </header>
+    </div>
 
-      
-
-    </header>
-  </div>
-  
   );
 }
 
