@@ -1,6 +1,10 @@
 import React, {useRef} from 'react'
 import Webcam from 'react-webcam';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Stack from 'react-bootstrap/Stack';
+import Col from 'react-bootstrap/Col'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -14,45 +18,47 @@ function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
+  // var context = canvasRef.getContext('2d');
+  // // Reset the current path
+  // context.beginPath(); 
+  // // Staring point (10,45)
+  //  context.moveTo(10,45);
+  // // End point (180,47)
+  // context.lineTo(180,47);
+  // // Make the line visible
+  // context.stroke();
+
   return (
     <div className="App">
     <header className="App-header">
-      <Webcam mirrored={true}
-        ref={webcamRef}
-        // style={{
-        //   position: "absolute",
-        //   marginLeft: "auto",
-        //   marginRight: "auto",
-        //   left: 0,
-        //   right: 0,
-        //   textAlign: "center",
-        //   zindex: 9,
-        //   width: 640,
-        //   height: 480,
-        // }}
-      />
+      <Container>
+      {/* <Stack gap={3} direction="vertical"> */}
+      <Col>
 
-      <canvas
+    <Webcam 
+        mirrored={true}
+        ref={webcamRef}
+        style = {{width: 640, height: 480, 
+          position: 'absolute',
+        }}
+        />
+        <canvas
         ref={canvasRef}
-        // style={{
-        //   position: "absolute",
-        //   marginLeft: "auto",
-        //   marginRight: "auto",
-        //   left: 0,
-        //   right: 0,
-        //   textAlign: "center",
-        //   zindex: 9,
-        //   width: 640,
-        //   height: 480,
-        // }}
+        style= {{width: 640, height: 480, 
+          // position: 'absolute'
+        }}
       />
-      <Button variant="primary">Primary</Button>{' '}
+      </Col>
+     <Button variant="primary">Primary</Button>{' '}
     <Button variant="secondary">Secondary</Button>{' '}
-    <Button variant="success">Success</Button>{' '}
-    <Button variant="warning">Warning</Button>{' '}
-    <Button variant="danger">Danger</Button> <Button variant="info">Info</Button>{' '}
-    <Button variant="light">Light</Button> <Button variant="dark">Dark</Button>{' '}
-    <Button variant="link">Link</Button>
+    {/* </Stack> */}
+
+      </Container>
+
+
+
+      
+
     </header>
   </div>
   
