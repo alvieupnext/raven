@@ -68,6 +68,12 @@ function completeExport(observer) {
       )
 }
 
+var exporter = vanillaExport
+
+function setExporter(newExport){
+   exporter = newExport
+}
+
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export { vanillaExport, minimalExport, totalDelayExport, historyExport, timestampExport, delayExport, completeExport }
+export { vanillaExport, minimalExport, totalDelayExport, historyExport, timestampExport, delayExport, completeExport, exporter, setExporter}

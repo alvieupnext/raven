@@ -7,23 +7,18 @@ import Row from 'react-bootstrap/Row'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {logToApp} from './Utilities';
-import {vanillaExport, completeExport} from './exports'
+import {setExporter, completeExport} from './exports'
 
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
-  var exporter = vanillaExport
-
-  exporter = completeExport
 
   return (
     <div className="App">
       <header className="App-header">
         <Container>
           <Col>
-          
-
             <Webcam
               mirrored={true}
               ref={webcamRef}
