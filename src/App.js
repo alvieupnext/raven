@@ -6,20 +6,11 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-
-
-
-
-
+import logToApp from './Utilities';
 
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
-
-  function myLog(message) {
-    document.getElementById("myLog").innerHTML = message
-  };
 
   return (
     <div className="App">
@@ -45,9 +36,9 @@ function App() {
             />
             
             </Col>
-              <p id="myLog">logable</p>
+              <p class="text-justify" id="appLog">logable</p>
           
-          <Button variant="primary" onClick={e => myLog("kaas")}>Primary</Button>
+          <Button variant="primary" onClick={e => logToApp("kaas")}>Primary</Button>
           <Button variant="secondary">Secondary</Button>
           
           
