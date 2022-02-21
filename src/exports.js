@@ -70,4 +70,4 @@ function completeExport(observer) {
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { vanillaExport, minimalExport, totalDelayExport, historyExport, timestampExport, delayExport, completeExport }
+export { vanillaExport, minimalExport, totalDelayExport, historyExport, timestampExport, delayExport, completeExport }

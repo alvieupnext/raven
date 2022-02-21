@@ -20,4 +20,4 @@ function setJSON(json, att, value){
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default {logToApp, setJSON, dereference}
+export {logToApp, setJSON, dereference}
