@@ -1,21 +1,21 @@
 import { map } from 'rxjs';
 import { setJSON, dereference } from './Utilities'
 
-function vanillaExport(observer) {
-   return observer
+function vanillaExport(observable) {
+   return observable
 }
 
-function minimalExport(observer) {
-   return observer
+function minimalExport(observable) {
+   return observable
       .pipe(map(json => { delete json.origin; return json }))
 }
 
-function timestampExport(observer) {
-   return observer
+function timestampExport(observable) {
+   return observable
       .pipe(map(json => setJSON(json, 'timestamp', Date.now())))
 }
 
-function historyExport(observer) {
+function historyExport(observable) {
    function exportFunction(json) {
       let history = json.history
       if (history === undefined) {
@@ -29,23 +29,23 @@ function historyExport(observer) {
       json['history'] = history;
       return json
    }
-   return observer
+   return observable
       .pipe(map(exportFunction))
 }
 
-function totalDelayExport(observer) {
+function totalDelayExport(observable) {
    function difference(json) {
       if (json.history === undefined) {
          return 0
       }
       else return json['timestamp'] - json['history'][0].timestamp
    }
-   return observer
+   return observable
       .pipe(map(json => setJSON(json, 'totalDelay', difference(json))))
 }
 
 
-function delayExport(observer) {
+function delayExport(observable) {
    function difference(json) {
       if (json.history === undefined) {
          return 0
@@ -55,12 +55,12 @@ function delayExport(observer) {
          return json['timestamp'] - json['history'][lastIndex].timestamp
       }
    }
-   return observer
+   return observable
       .pipe(map(json => setJSON(json, 'delay', difference(json))))
 }
 
-function completeExport(observer) {
-   return observer
+function completeExport(observable) {
+   return observable
       .pipe(timestampExport,
          delayExport,
          totalDelayExport,
