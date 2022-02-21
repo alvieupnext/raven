@@ -1,5 +1,5 @@
 import {map} from 'rxjs';
-import {setJSON, dereference} from './exports'
+import {setJSON, dereference} from './Utilities'
 
 function vanillaExport(observer){
     return observer
