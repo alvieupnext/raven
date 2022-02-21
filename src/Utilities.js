@@ -16,8 +16,10 @@ function setJSON(json, att, value){
     // return json
     return {...json}
   }
+
+const refreshRate = 60
  
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export {logToApp, setJSON, dereference}
+export {logToApp, setJSON, dereference, refreshRate}
