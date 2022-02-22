@@ -63,13 +63,13 @@ hands.setOptions({
 //Mediapipe stream to turn videofeed into landmarks
 
 function mediapipeStream(canvasRef) {
+  const net = from(hands.initialize()).pipe(tap(console.log("Mediapipe model loaded."))); //make it a observable
+  hands.onResults(onResult)
+  const result = new Subject().pipe(tap(json => { drawHand(json, canvasRef); }))//initialize a subject to push the result values
+  function onResult(results) {
+    result.next(results)
+  }
   return function (observable) {
-    const net = from(hands.initialize()).pipe(tap(console.log("Mediapipe model loaded."))); //make it a observable
-    hands.onResults(onResult)
-    const result = new Subject().pipe(tap(json => { drawHand(json, canvasRef); }))//initialize a subject to push the result values
-    function onResult(results) {
-      result.next(results)
-    }
 
     observable
       .pipe(pluck('value'), combineLatestWith(net),
