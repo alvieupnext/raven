@@ -2,7 +2,11 @@ import {interval, map, from, combineLatestWith, mergeAll, filter, zip, tap, pluc
 import { exporter } from './exports';
 import { refreshRate, setJSON, setOrigin } from './Utilities';
 
-
+//the stream that starts emitting as first, known as the prime data stream
+let primeStream = interval(refreshRate)
+   .pipe(map(number => {return {value: number}}))
+   .pipe(map(json => setOrigin(json, 'prime')))
+   .pipe(exporter)
 
 //get videoFeed from webcam
 function videoFeed (webcamRef, canvasRef) {
@@ -41,4 +45,4 @@ function videoFeed (webcamRef, canvasRef) {
       }
   }
 
-  export {videoFeed, createWebcamStream}
+  export {videoFeed, createWebcamStream, primeStream}
