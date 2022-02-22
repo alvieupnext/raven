@@ -62,7 +62,7 @@ hands.setOptions({
 
 //Mediapipe stream to turn videofeed into landmarks
 
-function mediapipe(canvasRef) {
+function mediapipeStream(canvasRef) {
   return function (observable) {
     const net = from(hands.initialize()).pipe(tap(console.log("Mediapipe model loaded."))); //make it a observable
     hands.onResults(onResult)
@@ -87,4 +87,4 @@ function mediapipe(canvasRef) {
 
 
 
-export { webcamStream, primeStream }
+export { webcamStream, primeStream, mediapipeStream }
