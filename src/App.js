@@ -8,7 +8,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {logToApp} from './Utilities';
 import {setExporter, completeExport} from './exports'
-import { createWebcamStream, primeStream} from './streams';
+import { webcamStream, primeStream} from './streams';
 import { consoleSubscriber } from './subscribers';
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
   const canvasRef = useRef(null);
 
   let streams = [
-    primeStream.pipe(createWebcamStream(webcamRef, canvasRef))
+    primeStream.pipe(webcamStream(webcamRef, canvasRef))
   ]
 
   let on = false;

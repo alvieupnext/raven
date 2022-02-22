@@ -34,7 +34,7 @@ function videoFeed(webcamRef, canvasRef) {
   }
 };
 
-function createWebcamStream(webcamRef, canvasRef) {
+function webcamStream(webcamRef, canvasRef) {
   return function (observable) {
     const hand = interval(refreshRate).pipe(map(value => videoFeed(webcamRef, canvasRef)), filter(value => value !== undefined))
 
@@ -87,4 +87,4 @@ function mediapipe(canvasRef) {
 
 
 
-export { createWebcamStream, primeStream }
+export { webcamStream, primeStream }
