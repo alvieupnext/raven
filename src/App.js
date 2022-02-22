@@ -59,7 +59,7 @@ function App() {
               <p class="text-justify" id="appLog">logable</p>
           
           <Button variant="primary" onClick={e => logToApp("kaas")}>kaasprinter</Button>
-          <Button variant="secondary"onClick={e => toggleSub()}>Start</Button>
+          <Button variant="success" id="toggle" onClick={e => toggleSub()}>Start</Button>
           
           
         </Container>
