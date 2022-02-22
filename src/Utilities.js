@@ -6,6 +6,14 @@ function logToApp(message) {
     console.log(message)
 };
 
+//combines one or multiple commands into one single string
+function commandLog(values){
+    let result = ""
+    for (let value in values){
+        result = result + value + " "
+    }
+}
+
 
 //sets an attribute to a new value and returns the json
 function setJSON(json, att, value) {
@@ -31,4 +39,4 @@ function transformValue(json, transform) {
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue }
+export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue, commandLog }
