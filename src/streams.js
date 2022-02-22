@@ -1,6 +1,6 @@
 import { interval, map, from, combineLatestWith, mergeAll, filter, zip, tap, pluck, observable, Subject } from 'rxjs';
 import { exporter } from './exports';
-import { refreshRate, setJSON, setOrigin } from './Utilities';
+import { drawHand, refreshRate, setJSON, setOrigin } from './Utilities';
 import * as mp from '@mediapipe/hands';
 
 //the stream that starts emitting as first, known as the prime data stream
@@ -66,7 +66,7 @@ function mediapipe(canvasRef) {
   return function (observable) {
     const net = from(hands.initialize()).pipe(tap(console.log("Mediapipe model loaded."))); //make it a observable
     hands.onResults(onResult)
-    const result = new Subject().pipe(tap(json => { drawMPHand(json, canvasRef); }))//initialize a subject to push the result values
+    const result = new Subject().pipe(tap(json => { drawHand(json, canvasRef); }))//initialize a subject to push the result values
     function onResult(results) {
       result.next(results)
     }

@@ -1,4 +1,23 @@
+import * as mp from '@mediapipe/hands'
+import * as du from '@mediapipe/drawing_utils'
+
 const refreshRate = 60
+
+function drawHand (results, canvasElement) {
+    const canvasCtx = canvasElement.current.getContext("2d")
+    canvasCtx.save();
+    canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+    canvasCtx.drawImage(
+        results.image, 0, 0, canvasElement.width, canvasElement.height);
+    if (results.multiHandLandmarks) {
+      for (const landmarks of results.multiHandLandmarks) {
+        du.drawConnectors(canvasCtx, landmarks, mp.HAND_CONNECTIONS,
+                       {color: '#00FF00', lineWidth: 5});
+        du.drawLandmarks(canvasCtx, landmarks, {color: '#FF0000', lineWidth: 2});
+      }
+    }
+    canvasCtx.restore();
+  }
 
 // logs a message to the application and also logs it to the console
 function logToApp(message) {
@@ -39,4 +58,4 @@ function transformValue(json, transform) {
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue, commandLog }
+export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue, commandLog, drawHand}
