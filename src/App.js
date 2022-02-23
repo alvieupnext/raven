@@ -8,8 +8,8 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {logToApp} from './Utilities';
 import {setExporter, completeExport} from './exports'
-import { webcamStream, primeStream, mediapipeStream, sendTest, fingerposeStream} from './streams.js';
-import { consoleSubscriber } from './subscribers';
+import { webcamStream, primeStream, mediapipeStream, sendTest, fingerposeStream, gesturer} from './streams.js';
+import { consoleSubscriber, logSubscriber } from './subscribers';
 import { EmptyHandFilter } from './filters';
 
 function App() {
@@ -24,6 +24,7 @@ function App() {
     mediapipeStream(canvasRef),
     EmptyHandFilter,
     fingerposeStream,
+    gesturer,
     )
   ]
 
@@ -33,7 +34,7 @@ function App() {
   function toggleSub(){
     if (!on) {
       for (let source of streams){
-        let disposeable = source.subscribe(consoleSubscriber) 
+        let disposeable = source.subscribe(logSubscriber) 
         subscriptions.push(disposeable)
       }
     }

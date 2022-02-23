@@ -170,4 +170,4 @@ function gesturer(observable){
 
 
 
-export { webcamStream, primeStream, mediapipeStream, sendTest, fingerposeStream}
+export { webcamStream, primeStream, mediapipeStream, sendTest, fingerposeStream, gesturer}
