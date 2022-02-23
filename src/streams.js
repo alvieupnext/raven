@@ -1,4 +1,4 @@
-import { interval, map, from, combineLatestWith, mergeAll, filter, zip, tap, pluck, observable, Subject } from 'rxjs';
+import { interval, map, from, combineLatestWith, mergeAll, filter, zip, tap, pluck, take, observable, Subject, asyncScheduler } from 'rxjs';
 import { exporter } from './exports';
 import { drawHand, refreshRate, setJSON, setOrigin } from './Utilities';
 import * as mp from '@mediapipe/hands';
@@ -46,39 +46,62 @@ function webcamStream(webcamRef, canvasRef) {
   }
 }
 
+let handModel;
+
+async function getHands() {
+  let hands = await new mp.Hands({
+    locateFile: (file) => {
+      return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+    }
+  });
+  hands.setOptions({
+    maxNumHands: 2,
+    modelComplexity: 1,
+    minDetectionConfidence: 0.5,
+    minTrackingConfidence: 0.5
+  });
+  console.log("Mediapipe Model Loaded")
+  return hands
+}
+
+
+
+
+console.log(handModel)
+
 //create a new instance of the ML model for detecting hands
-const hands = new mp.Hands({
-  locateFile: (file) => {
-    console.log(file)
-    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
-  }
-});
-hands.setOptions({
-  maxNumHands: 2,
-  modelComplexity: 1,
-  minDetectionConfidence: 0.5,
-  minTrackingConfidence: 0.5
-});
+// const hands = new mp.Hands({
+//   locateFile: (file) => {
+//     console.log(file)
+//     return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+//   }
+// });
+// hands.setOptions({
+//   maxNumHands: 2,
+//   modelComplexity: 1,
+//   minDetectionConfidence: 0.5,
+//   minTrackingConfidence: 0.5
+// });
 
 //Mediapipe stream to turn videofeed into landmarks
+    console.log(getHands().then(data=> { handModel = data; handModel.onResults(onResult); handModel.initialize();console.log(handModel)}))
 
+const result = new Subject().pipe(tap(data => console.log(data)))
+
+function onResult(results) {
+  result.next(results)
+}
+
+function sendTest(video){
+  handModel.initialize()
+}
 function mediapipeStream(canvasRef) {
-  const net = from(hands.initialize()).pipe(tap(console.log("Mediapipe model loaded."))); //make it a observable
-  hands.onResults(onResult)
-  const result = new Subject().pipe(tap(json => { drawHand(json, canvasRef); }))//initialize a subject to push the result values
-  function onResult(results) {
-    result.next(results)
-  }
+
   return function (observable) {
+      const net = observable.pipe(pluck('value'), tap(value => {handModel.send({image: value})}), tap(value => console.log(value)))
 
-    observable
-      .pipe(pluck('value'), combineLatestWith(net),
-    ) //only start predicting when the model gets loaded
-      .pipe(tap(([video, empty]) => hands.send({ image: video }))) //returns a stream full of Observables
-      .subscribe()
-
-    return zip(observable, result)
-      .pipe(map(([json, landmark]) => setJSON(json, 'value', landmark)))
+    return zip(observable, result, net)
+      .pipe(map(([json, landmark, net]) => setJSON(json, 'value', landmark)))
       .pipe(map(json => setOrigin(json, 'mediapipe')))
 
       .pipe(exporter)
@@ -87,4 +110,4 @@ function mediapipeStream(canvasRef) {
 
 
 
-export { webcamStream, primeStream, mediapipeStream }
+export { webcamStream, primeStream, mediapipeStream, sendTest }

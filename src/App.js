@@ -8,15 +8,18 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {logToApp} from './Utilities';
 import {setExporter, completeExport} from './exports'
-import { webcamStream, primeStream} from './streams';
+import { webcamStream, primeStream, mediapipeStream, sendTest} from './streams.js';
 import { consoleSubscriber } from './subscribers';
 
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  
 
   let streams = [
-    primeStream.pipe(webcamStream(webcamRef, canvasRef))
+    primeStream.pipe(webcamStream(webcamRef, canvasRef), 
+    mediapipeStream(canvasRef)
+    )
   ]
 
   let on = false;
@@ -32,6 +35,8 @@ function App() {
     else subscriptions.forEach((sub) => sub.unsubscribe());
     on = !on
   }
+
+  
 
 
   return (
@@ -56,9 +61,9 @@ function App() {
             />
             
             </Col>
-              <p class="text-justify" id="appLog">logable</p>
+              <p className="text-justify" id="appLog">logable</p>
           
-          <Button variant="primary" onClick={e => logToApp("kaas")}>kaasprinter</Button>
+          <Button variant="primary" onClick={e => sendTest()}>SendTest</Button>
           <Button variant="success" id="toggle" onClick={e => toggleSub()}>Start</Button>
           
           
