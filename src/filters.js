@@ -51,9 +51,11 @@ function sortGestures(values){
     }
     return false
   }
+
+  const SortByBestGesture = createSort(sortGestures)
   
 
 
 const EmptyHandFilter = createFilterer(removeEmptyHand)
 
-export {EmptyHandFilter}
+export {EmptyHandFilter, SortByBestGesture}
