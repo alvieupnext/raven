@@ -25,6 +25,11 @@ function logToApp(message) {
     console.log(message)
 };
 
+// mirrors direction
+function mirrorDirection(dir){
+    return (dir === 'Right' ? 'Left' : "Right")
+   }
+
 //combines one or multiple commands into one single string
 function commandLog(values){
     let result = ""
@@ -58,4 +63,4 @@ function transformValue(json, transform) {
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue, commandLog, drawHand}
+export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue, commandLog, drawHand, mirrorDirection}
