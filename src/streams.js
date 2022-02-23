@@ -1,7 +1,9 @@
-import { interval, map, from, combineLatestWith, mergeAll, filter, zip, tap, pluck, take, observable, Subject, asyncScheduler } from 'rxjs';
+import { interval, map, from, combineLatestWith, mergeAll, filter, zip, tap, pluck, take, observable, Subject} from 'rxjs';
 import { exporter } from './exports';
-import { drawHand, refreshRate, setJSON, setOrigin } from './Utilities';
+import { dereference, drawHand, mirrorDirection, refreshRate, setJSON, setOrigin, transformValue } from './Utilities';
 import * as mp from '@mediapipe/hands';
+import * as fp from 'fingerpose'
+import { four, highFive, okaySign, phone, pointUp, stopSign, three, thumbsDown, thumbsLeft, thumbsRight, thumbsUp, victory, yeah } from './gestures';
 
 //the stream that starts emitting as first, known as the prime data stream
 let primeStream = interval(refreshRate)
@@ -46,23 +48,6 @@ function webcamStream(webcamRef, canvasRef) {
   }
 }
 
-//create a new instance of the ML model for detecting hands
-// const hands = new mp.Hands({
-//   locateFile: (file) => {
-//     console.log(file)
-//     return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
-//   }
-// });
-// hands.setOptions({
-//   maxNumHands: 2,
-//   modelComplexity: 1,
-//   minDetectionConfidence: 0.5,
-//   minTrackingConfidence: 0.5
-// });
-
-//Mediapipe stream to turn videofeed into landmarks
-// console.log(getHands().then(data=> { handModel = data; handModel.onResults(onResult); handModel.initialize();console.log(handModel)}))
-
 function sendTest(video) {
   handModel.send(video)
 }
@@ -81,10 +66,6 @@ handModel.setOptions({
 
 
 handModel.initialize();
-
-
-
-console.log("Mediapipe Model Loaded")
 
 function mediapipeStream(canvasRef) {
 
@@ -107,6 +88,66 @@ function mediapipeStream(canvasRef) {
   }
 }
 
+function fingerposeStream(observable){
+  const GE = new fp.GestureEstimator([
+    victory, 
+    okaySign,
+    thumbsDown,
+    highFive,
+    stopSign,
+    thumbsRight,
+    thumbsUp,
+    thumbsLeft,
+    pointUp,
+    three,
+    four,
+    yeah,
+    phone,
+    ])
+
+  function fromTensorFlow(hand){
+    return [{gesture: GE.estimate(hand[0].landmarks, 8), hand: 'one'}]
+  }
+
+  //remember we have to mirror the hands to keep consistent with the whole program
+  function fromMediaPipe(hands){
+    let result = []
+    let length = hands.multiHandWorldLandmarks.length
+    for (let place of hands.multiHandedness){
+      let index = place.index
+      result.push({gesture: GE.estimate(convertLandmarks(hands.multiHandWorldLandmarks[index % length]), 8), hand: mirrorDirection(place.label)})
+    }
+    return result
+  }
+
+  function convertLandmarks(landmark){
+    let index = 0;
+    let clone = dereference(landmark)
+    for (let point of landmark){
+      delete point.visibility
+      let array = Object.values(point)
+      clone[index] = array
+      index++
+    }
+    return clone
+  }
+
+  function predict(json){
+    if (json.origin === 'tensorflow'){
+      transformValue(json, (hand => fromTensorFlow(hand)))
+      
+    }
+    else {
+      transformValue(json, (hands => fromMediaPipe(hands)))
+    }
+    return setOrigin(json, 'fingerpose')
+  }
+
+  return observable
+  .pipe(map(predict))
+  .pipe(exporter)
+}
 
 
-export { webcamStream, primeStream, mediapipeStream, sendTest }
+
+export { webcamStream, primeStream, mediapipeStream, sendTest, fingerposeStream}
