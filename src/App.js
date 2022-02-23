@@ -10,6 +10,7 @@ import {logToApp} from './Utilities';
 import {setExporter, completeExport} from './exports'
 import { webcamStream, primeStream, mediapipeStream, sendTest} from './streams.js';
 import { consoleSubscriber } from './subscribers';
+import { EmptyHandFilter } from './filters';
 
 function App() {
   const webcamRef = useRef(null);
@@ -20,7 +21,8 @@ function App() {
 
   let streams = [
     primeStream.pipe(webcamStream(webcamRef, canvasRef), 
-    mediapipeStream(canvasRef)
+    mediapipeStream(canvasRef),
+    EmptyHandFilter
     )
   ]
 
