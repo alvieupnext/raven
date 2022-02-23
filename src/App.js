@@ -14,6 +14,8 @@ import { consoleSubscriber } from './subscribers';
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+
+  setExporter(completeExport)
   
 
   let streams = [
@@ -44,26 +46,35 @@ function App() {
       <header className="App-header">
         <Container>
           <Col>
+          
             <Webcam
               mirrored={true}
               ref={webcamRef}
               style={{
                 width: 640, height: 480,
+                // zindex: -1,
                 position: 'absolute',
+                // position: 'relative',
               }}
+            
+            
             />
+
             <canvas
               ref={canvasRef}
               style={{
-                width: 640, height: 480,
-                // position: 'absolute'
+                width: 640, height: 480, 
+                transform: 'scaleX(-1)',
+                // position: 'absolute',
+                
               }}
-            />
+              />
             
             </Col>
               <p className="text-justify" id="appLog">logable</p>
           
           <Button variant="primary" onClick={e => sendTest(webcamRef.current.video)}>Load Mediapipe Model</Button>
+          <Button variant="secondary" onClick={e => setExporter(completeExport)}>Change To Complete</Button>
           <Button variant="success" id="toggle" onClick={e => toggleSub()}>Start</Button>
           
           

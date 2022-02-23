@@ -88,7 +88,7 @@ console.log("Mediapipe Model Loaded")
 
 function mediapipeStream(canvasRef) {
 
-  const result = new Subject().pipe(tap(data => console.log(data)))
+  const result = new Subject().pipe(tap(data => drawHand(data, canvasRef)))
 
   function onResult(results) {
     result.next(results)
@@ -97,7 +97,7 @@ function mediapipeStream(canvasRef) {
   handModel.onResults(onResult)
 
   return function (observable) {
-    const net = observable.pipe(pluck('value'), tap(value => { handModel.send({ image: value }) }), tap(value => console.log(value)))
+    const net = observable.pipe(pluck('value'), tap(value => { handModel.send({ image: value }) }))
 
     return zip(observable, result, net)
       .pipe(map(([json, landmark, net]) => setJSON(json, 'value', landmark)))
