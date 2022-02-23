@@ -36,6 +36,8 @@ function commandLog(values){
     for (let value in values){
         result = result + value + " "
     }
+    return result
+    
 }
 
 
