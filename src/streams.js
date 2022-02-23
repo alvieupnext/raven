@@ -4,6 +4,7 @@ import { dereference, drawHand, mirrorDirection, refreshRate, setJSON, setOrigin
 import * as mp from '@mediapipe/hands';
 import * as fp from 'fingerpose'
 import { four, highFive, okaySign, phone, pointUp, stopSign, three, thumbsDown, thumbsLeft, thumbsRight, thumbsUp, victory, yeah } from './gestures';
+import { SortByBestGesture } from './filters';
 
 //the stream that starts emitting as first, known as the prime data stream
 let primeStream = interval(refreshRate)
@@ -145,6 +146,25 @@ function fingerposeStream(observable){
 
   return observable
   .pipe(map(predict))
+  .pipe(exporter)
+}
+
+//gesture array needs to be sorted before using this procedure
+function extractBestGesture(hands){
+  let result = []
+  for (let hand of hands){
+    let clone = dereference(hand)
+    let name = (hand.gesture.gestures.length !== 0 ?  hand.gesture.gestures[0].name : "no_gesture")
+    result.push(setJSON(clone, 'gesture', name))
+  }
+  return result
+}
+
+function gesturer(observable){
+  return observable
+  .pipe(SortByBestGesture)
+  .pipe(map(json => transformValue(json, extractBestGesture)))
+  .pipe(map(json => setOrigin(json,'gesture')))
   .pipe(exporter)
 }
 
