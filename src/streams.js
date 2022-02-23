@@ -46,29 +46,6 @@ function webcamStream(webcamRef, canvasRef) {
   }
 }
 
-let handModel;
-
-async function getHands() {
-  let hands = await new mp.Hands({
-    locateFile: (file) => {
-      return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
-    }
-  });
-  hands.setOptions({
-    maxNumHands: 2,
-    modelComplexity: 1,
-    minDetectionConfidence: 0.5,
-    minTrackingConfidence: 0.5
-  });
-  console.log("Mediapipe Model Loaded")
-  return hands
-}
-
-
-
-
-console.log(handModel)
-
 //create a new instance of the ML model for detecting hands
 // const hands = new mp.Hands({
 //   locateFile: (file) => {
@@ -84,21 +61,43 @@ console.log(handModel)
 // });
 
 //Mediapipe stream to turn videofeed into landmarks
-    console.log(getHands().then(data=> { handModel = data; handModel.onResults(onResult); handModel.initialize();console.log(handModel)}))
+// console.log(getHands().then(data=> { handModel = data; handModel.onResults(onResult); handModel.initialize();console.log(handModel)}))
 
-const result = new Subject().pipe(tap(data => console.log(data)))
-
-function onResult(results) {
-  result.next(results)
+function sendTest(video) {
+  handModel.send(video)
 }
 
-function sendTest(video){
-  handModel.initialize()
-}
+let handModel = new mp.Hands({
+  locateFile: (file) => {
+    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+  }
+});
+handModel.setOptions({
+  maxNumHands: 2,
+  modelComplexity: 1,
+  minDetectionConfidence: 0.5,
+  minTrackingConfidence: 0.5
+});
+
+
+handModel.initialize();
+
+
+
+console.log("Mediapipe Model Loaded")
+
 function mediapipeStream(canvasRef) {
 
+  const result = new Subject().pipe(tap(data => console.log(data)))
+
+  function onResult(results) {
+    result.next(results)
+  }
+
+  handModel.onResults(onResult)
+
   return function (observable) {
-      const net = observable.pipe(pluck('value'), tap(value => {handModel.send({image: value})}), tap(value => console.log(value)))
+    const net = observable.pipe(pluck('value'), tap(value => { handModel.send({ image: value }) }), tap(value => console.log(value)))
 
     return zip(observable, result, net)
       .pipe(map(([json, landmark, net]) => setJSON(json, 'value', landmark)))

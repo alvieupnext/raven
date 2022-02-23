@@ -63,7 +63,7 @@ function App() {
             </Col>
               <p className="text-justify" id="appLog">logable</p>
           
-          <Button variant="primary" onClick={e => sendTest()}>SendTest</Button>
+          <Button variant="primary" onClick={e => sendTest(webcamRef.current.video)}>Load Mediapipe Model</Button>
           <Button variant="success" id="toggle" onClick={e => toggleSub()}>Start</Button>
           
           
