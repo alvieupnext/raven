@@ -11,7 +11,7 @@ let consoleSubscriber = {
 
 
 let logSubscriber = {
-    next: (data) => { logToApp(commandLog(data.value))},
+    next: (data) => { console.log(data); logToApp(commandLog(data.value))},
     error: (error) => { console.log(error) },
     complete: () => { console.log('Completed') }
 }
