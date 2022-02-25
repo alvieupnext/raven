@@ -91,7 +91,6 @@ function App() {
 
           </Col>
           <p className="text-justify" id="appLog">Welcome To Raven!</p>
-          <Container>
             <LoadMediaPipeButton></LoadMediaPipeButton>
           <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
           <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
@@ -104,8 +103,6 @@ function App() {
               <Dropdown.Item eventKey={2}>Minimal</Dropdown.Item>
             </Dropdown.Menu>
             </Dropdown>
-            
-          </Container>
 
             {/* <Button variant="secondary" onClick={e => setExporter(completeExport)}>Change Export Settings</Button> */}
             
