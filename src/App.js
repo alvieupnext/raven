@@ -84,7 +84,7 @@ function App() {
           
           <Button variant="primary" onClick={e => loadModel()}>Load Mediapipe Model</Button>
           <Button variant="secondary" onClick={e => console.log(canvasRef)}>Ref?</Button>
-          <Button variant="success" id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
+          <Button variant={(running.current ? "danger" : "success" )} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
           
           
         </Container>
