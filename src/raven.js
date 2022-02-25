@@ -1,4 +1,4 @@
-import { webcamStream, primeStream, mediapipeStream, loadModel, fingerposeStream, gesturer} from './streams.js';
+import { webcamStream, primeStream, mediapipeStream, loadModel, fingerposeStream, gesturer, commandStream} from './streams.js';
 import {setExporter, completeExport} from './exports'
 import { consoleSubscriber, logSubscriber } from './subscribers';
 import { EmptyHandFilter } from './filters';
@@ -12,6 +12,7 @@ function createRaven(webcamRef, canvasRef){
     EmptyHandFilter,
     fingerposeStream,
     gesturer,
+    commandStream,
     )
 }
 
