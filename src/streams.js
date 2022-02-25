@@ -50,9 +50,9 @@ function webcamStream(webcamRef, canvasRef) {
 }
 
 
-
-function loadModel(video) {
-  handModel.send(video)
+//send a dummy value to the model in order to force the hand model to load
+function loadModel() {
+  handModel.send(5)
 }
 
 let handModel = new mp.Hands({
