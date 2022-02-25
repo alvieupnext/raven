@@ -17,6 +17,7 @@ function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const [buttonText, setButtonText] = useState("Start")
+  const [loaded, setLoaded] = useState(false)
   const raven = useRef(null)
 
 
@@ -45,6 +46,15 @@ function App() {
     setExporter(exporters[eventKey])
     //confirm to the user and if the stream is running, remind them to resubscribe to the stream
     logToApp(`Changed output to ${names[eventKey]}. ` + (running.current ? "Please stop and resume the stream" : ""))
+  }
+
+  function LoadMediaPipeButton(props) {
+    if (!loaded){
+      return (
+        <Button variant="primary" onClick={e => {loadModel(); setLoaded(true)}}>Load Mediapipe Model</Button>
+      );
+    }
+    else return(<div></div>)
   }
 
 
@@ -82,7 +92,7 @@ function App() {
           </Col>
           <p className="text-justify" id="appLog">Welcome To Raven!</p>
           <Container>
-          <Button variant="primary" onClick={e => loadModel()}>Load Mediapipe Model</Button>
+            <LoadMediaPipeButton></LoadMediaPipeButton>
           <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
           <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
             <Dropdown.Toggle variant="light" id="dropdown-button-drop-right">
