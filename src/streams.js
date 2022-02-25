@@ -1,5 +1,5 @@
-import { interval, map, from, combineLatestWith, mergeAll, filter, zip, tap, pluck, take, observable, Subject, buffer} from 'rxjs';
-import {  getExporter } from './exports';
+import { interval, map, from, combineLatestWith, mergeAll, filter, zip, tap, pluck, take, observable, Subject, buffer } from 'rxjs';
+import { getExporter } from './exports';
 import { dereference, drawHand, logToApp, mirrorDirection, refreshRate, setJSON, setOrigin, transformValue } from './Utilities';
 import * as mp from '@mediapipe/hands';
 import * as fp from 'fingerpose'
@@ -93,9 +93,9 @@ function mediapipeStream(canvasRef) {
   }
 }
 
-function fingerposeStream(observable){
+function fingerposeStream(observable) {
   const GE = new fp.GestureEstimator([
-    victory, 
+    victory,
     okaySign,
     thumbsDown,
     highFive,
@@ -108,27 +108,27 @@ function fingerposeStream(observable){
     four,
     yeah,
     phone,
-    ])
+  ])
 
-  function fromTensorFlow(hand){
-    return [{gesture: GE.estimate(hand[0].landmarks, 8), hand: 'one'}]
+  function fromTensorFlow(hand) {
+    return [{ gesture: GE.estimate(hand[0].landmarks, 8), hand: 'one' }]
   }
 
   //remember we have to mirror the hands to keep consistent with the whole program
-  function fromMediaPipe(hands){
+  function fromMediaPipe(hands) {
     let result = []
     let length = hands.multiHandWorldLandmarks.length
-    for (let place of hands.multiHandedness){
+    for (let place of hands.multiHandedness) {
       let index = place.index
-      result.push({gesture: GE.estimate(convertLandmarks(hands.multiHandWorldLandmarks[index % length]), 8), hand: mirrorDirection(place.label)})
+      result.push({ gesture: GE.estimate(convertLandmarks(hands.multiHandWorldLandmarks[index % length]), 8), hand: mirrorDirection(place.label) })
     }
     return result
   }
 
-  function convertLandmarks(landmark){
+  function convertLandmarks(landmark) {
     let index = 0;
     let clone = dereference(landmark)
-    for (let point of landmark){
+    for (let point of landmark) {
       delete point.visibility
       let array = Object.values(point)
       clone[index] = array
@@ -137,10 +137,10 @@ function fingerposeStream(observable){
     return clone
   }
 
-  function predict(json){
-    if (json.origin === 'tensorflow'){
+  function predict(json) {
+    if (json.origin === 'tensorflow') {
       transformValue(json, (hand => fromTensorFlow(hand)))
-      
+
     }
     else {
       transformValue(json, (hands => fromMediaPipe(hands)))
@@ -149,27 +149,27 @@ function fingerposeStream(observable){
   }
 
   return observable
-  .pipe(map(predict))
-  .pipe(getExporter())
+    .pipe(map(predict))
+    .pipe(getExporter())
 }
 
 //gesture array needs to be sorted before using this procedure
-function extractBestGesture(hands){
+function extractBestGesture(hands) {
   let result = []
-  for (let hand of hands){
+  for (let hand of hands) {
     let clone = dereference(hand)
-    let name = (hand.gesture.gestures.length !== 0 ?  hand.gesture.gestures[0].name : "no_gesture")
+    let name = (hand.gesture.gestures.length !== 0 ? hand.gesture.gestures[0].name : "no_gesture")
     result.push(setJSON(clone, 'gesture', name))
   }
   return result
 }
 
-function gesturer(observable){
+function gesturer(observable) {
   return observable
-  .pipe(SortByBestGesture)
-  .pipe(map(json => transformValue(json, extractBestGesture)))
-  .pipe(map(json => setOrigin(json,'gesture')))
-  .pipe(getExporter())
+    .pipe(SortByBestGesture)
+    .pipe(map(json => transformValue(json, extractBestGesture)))
+    .pipe(map(json => setOrigin(json, 'gesture')))
+    .pipe(getExporter())
 }
 
 const one_dict = {
@@ -192,31 +192,55 @@ const dict = {
   Right: one_dict
 }
 
-function translateGesture(value){
+function translateGesture(value) {
   let result = []
-  for (let gest of value){
-    result.push({command: dict[gest.hand][gest.gesture], hand: gest.hand})
+  for (let gest of value) {
+    result.push({ command: dict[gest.hand][gest.gesture], hand: gest.hand })
   }
   return result
 }
 
-function commandStream(observable){
+function commandStream(observable) {
   return observable
-  .pipe(map(json => transformValue(json, translateGesture)))
-  .pipe(map(json => setOrigin(json,'command')))
-  .pipe(getExporter())
+    .pipe(map(json => transformValue(json, translateGesture)))
+    .pipe(map(json => setOrigin(json, 'command')))
+    .pipe(getExporter())
 }
 
-function bufferStream(ms){
-  return function(observable){
+function bufferStream(ms) {
+  return function (observable) {
     const intervalEvents = interval(ms)
     return observable
-    .pipe(buffer(intervalEvents))
+      .pipe(buffer(intervalEvents))
   }
 }
 
+function frequencyStream(observable) {
+  function frequency(array) {
+    let occurences = {}
+    let count = array.length
+    if (count !==0) {
+      for (let element of array) {
+        console.log(element)
+        for (let command of element.value){
+          let key = command.command + "_" + command.hand
+          occurences[key] = (occurences[key] === undefined ? 1 : occurences[key] + 1)
+        }
+      }
+      for (let key of Object.keys(occurences)){
+        occurences[key] /= count
+      }
+      return occurences
+    }
+  }
+  return observable
+    .pipe(map(frequency))
+}
 
 
 
 
-export { webcamStream, primeStream, mediapipeStream, loadModel, fingerposeStream, gesturer, commandStream, bufferStream}
+
+
+
+export { webcamStream, primeStream, mediapipeStream, loadModel, fingerposeStream, gesturer, commandStream, bufferStream, frequencyStream }
