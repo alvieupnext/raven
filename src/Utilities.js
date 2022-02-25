@@ -33,11 +33,12 @@ function mirrorDirection(dir){
 //combines one or multiple commands into one single string
 function commandLog(values){
     let result = ""
-    for (let value in values){
-        result = result + value + " "
+    for (let value of values){
+
+        result = result + JSON.stringify(value) + " "
     }
     return result
-    
+
 }
 
 
