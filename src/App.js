@@ -15,6 +15,7 @@ import { EmptyHandFilter } from './filters';
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  const [buttonText, setButtonText] = useState("Start")
 
   setExporter(completeExport)
   
@@ -28,18 +29,22 @@ function App() {
     )
   ]
 
-  var running = false;
+  var running = useRef(false);
   let subscriptions = []
 
   function toggleSub(){
-    if (!running) {
+    if (!running.current) {
       for (let source of streams){
         let disposeable = source.subscribe(logSubscriber) 
         subscriptions.push(disposeable)
+        setButtonText("Stop")
       }
     }
-    else subscriptions.forEach((sub) => sub.unsubscribe());
-    running = !running
+    else {
+      subscriptions.forEach((sub) => sub.unsubscribe());
+      setButtonText("Resume")
+    }
+    running.current = !running.current
   }
 
   
@@ -78,8 +83,8 @@ function App() {
               <p className="text-justify" id="appLog">Welcome To Raven!</p>
           
           <Button variant="primary" onClick={e => loadModel()}>Load Mediapipe Model</Button>
-          {/* <Button variant="secondary" onClick={e => setExporter(completeExport)}>Change To Complete</Button> */}
-          <Button variant="success" id="toggle" onClick={e => toggleSub()}>Start</Button>
+          <Button variant="secondary" onClick={e => console.log(canvasRef)}>Ref?</Button>
+          <Button variant="success" id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
           
           
         </Container>
