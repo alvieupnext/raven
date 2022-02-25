@@ -8,7 +8,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {logToApp} from './Utilities';
 import {setExporter, completeExport} from './exports'
-import { webcamStream, primeStream, mediapipeStream, sendTest, fingerposeStream, gesturer} from './streams.js';
+import { webcamStream, primeStream, mediapipeStream, loadModel, fingerposeStream, gesturer} from './streams.js';
 import { consoleSubscriber, logSubscriber } from './subscribers';
 import { EmptyHandFilter } from './filters';
 
@@ -77,7 +77,7 @@ function App() {
             </Col>
               <p className="text-justify" id="appLog">Welcome To Raven!</p>
           
-          <Button variant="primary" onClick={e => sendTest(webcamRef.current.video)}>Load Mediapipe Model</Button>
+          <Button variant="primary" onClick={e => loadModel(webcamRef.current.video)}>Load Mediapipe Model</Button>
           <Button variant="secondary" onClick={e => setExporter(completeExport)}>Change To Complete</Button>
           <Button variant="success" id="toggle" onClick={e => toggleSub()}>Start</Button>
           

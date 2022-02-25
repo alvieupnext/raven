@@ -49,7 +49,9 @@ function webcamStream(webcamRef, canvasRef) {
   }
 }
 
-function sendTest(video) {
+
+
+function loadModel(video) {
   handModel.send(video)
 }
 
@@ -170,4 +172,4 @@ function gesturer(observable){
 
 
 
-export { webcamStream, primeStream, mediapipeStream, sendTest, fingerposeStream, gesturer}
+export { webcamStream, primeStream, mediapipeStream, loadModel, fingerposeStream, gesturer}
