@@ -34,10 +34,10 @@ function mirrorDirection(dir){
 function commandLog(values){
     let result = ""
     for (let value of values){
-
-        result = result + JSON.stringify(value) + " "
+        result = result + `Gesture ${value.gesture} from ${value.hand} hand || `
     }
-    return result
+    //remove the last vertical lines from end result
+    return result.substring(0, result.length - 3)
 
 }
 
