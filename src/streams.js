@@ -1,5 +1,5 @@
 import { interval, map, from, combineLatestWith, mergeAll, filter, zip, tap, pluck, take, observable, Subject} from 'rxjs';
-import { exporter } from './exports';
+import {  getExporter } from './exports';
 import { dereference, drawHand, logToApp, mirrorDirection, refreshRate, setJSON, setOrigin, transformValue } from './Utilities';
 import * as mp from '@mediapipe/hands';
 import * as fp from 'fingerpose'
@@ -10,7 +10,7 @@ import { SortByBestGesture } from './filters';
 let primeStream = interval(refreshRate)
   .pipe(map(number => { return { value: number } }))
   .pipe(map(json => setOrigin(json, 'prime')))
-  .pipe(exporter)
+  .pipe(getExporter())
 
 //get videoFeed from webcam
 function videoFeed(webcamRef, canvasRef) {
@@ -44,7 +44,7 @@ function webcamStream(webcamRef, canvasRef) {
     return zip(observable, hand)
       .pipe(map(([json, video]) => setJSON(json, 'value', video)))
       .pipe(map(json => setOrigin(json, 'webcam')))
-      .pipe(exporter)
+      .pipe(getExporter())
 
   }
 }
@@ -89,7 +89,7 @@ function mediapipeStream(canvasRef) {
       .pipe(map(([json, landmark, net]) => setJSON(json, 'value', landmark)))
       .pipe(map(json => setOrigin(json, 'mediapipe')))
 
-      .pipe(exporter)
+      .pipe(getExporter())
   }
 }
 
@@ -150,7 +150,7 @@ function fingerposeStream(observable){
 
   return observable
   .pipe(map(predict))
-  .pipe(exporter)
+  .pipe(getExporter())
 }
 
 //gesture array needs to be sorted before using this procedure
@@ -169,7 +169,7 @@ function gesturer(observable){
   .pipe(SortByBestGesture)
   .pipe(map(json => transformValue(json, extractBestGesture)))
   .pipe(map(json => setOrigin(json,'gesture')))
-  .pipe(exporter)
+  .pipe(getExporter())
 }
 
 

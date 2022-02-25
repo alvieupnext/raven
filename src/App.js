@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row'
+import {setExporter, completeExport} from './exports'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { logToApp } from './Utilities';
@@ -71,7 +72,7 @@ function App() {
           <p className="text-justify" id="appLog">Welcome To Raven!</p>
 
           <Button variant="primary" onClick={e => loadModel()}>Load Mediapipe Model</Button>
-          <Button variant="secondary" onClick={e => console.log(canvasRef)}>Ref?</Button>
+          <Button variant="secondary" onClick={e => setExporter(completeExport)}>Change To Complete</Button>
           <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
 
 

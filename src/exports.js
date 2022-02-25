@@ -1,6 +1,16 @@
 import { map } from 'rxjs';
 import { setJSON, dereference } from './Utilities'
 
+var exporter = vanillaExport
+
+function setExporter(newExport){
+   exporter = newExport
+}
+
+function getExporter(){
+   return exporter
+}
+
 function vanillaExport(observable) {
    return observable
 }
@@ -68,12 +78,5 @@ function completeExport(observable) {
       )
 }
 
-var exporter = vanillaExport
-
-function setExporter(newExport){
-   exporter = newExport
-}
-
-
 // eslint-disable-next-line import/no-anonymous-default-export
-export { vanillaExport, minimalExport, totalDelayExport, historyExport, timestampExport, delayExport, completeExport, exporter, setExporter}
+export { vanillaExport, minimalExport, totalDelayExport, historyExport, timestampExport, delayExport, completeExport, getExporter, setExporter}

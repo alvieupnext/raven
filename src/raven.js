@@ -3,7 +3,7 @@ import {setExporter, completeExport} from './exports'
 import { consoleSubscriber, logSubscriber } from './subscribers';
 import { EmptyHandFilter } from './filters';
 
-setExporter(completeExport)
+// setExporter(completeExport)
 
 //Raven, the example of controlling a drone
 function createRaven(webcamRef, canvasRef){
