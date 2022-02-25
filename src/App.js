@@ -30,6 +30,9 @@ function App() {
       raven.current = createRaven(webcamRef, canvasRef)
       raven.current = startRaven(raven.current)
       setButtonText("Stop")
+      if(!loaded){
+        setLoaded(true)
+      }
     }
     else {
       stopRaven(raven.current)
