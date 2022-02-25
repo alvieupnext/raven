@@ -31,11 +31,23 @@ function mirrorDirection(dir){
    }
 
 //combines one or multiple commands into one single string
-function commandLog(values){
+function commandLog(data){
     let result = ""
-    for (let value of values){
-        result = result + `Gesture ${value.gesture} from ${value.hand} hand || `
+    switch (data.origin){
+        case "gesture": for (let value of data.value){
+            result = result + `Gesture ${value.gesture} from ${value.hand} hand || `
+        }
+        break;
+        case "command": for (let value of data.value){
+            result = result + `Command ${value.command} from ${value.hand} hand || `
+        } 
+        ;break
+        //for minimal export and unimplemented origins
+        default: for (let value of data.value){
+            result = result + JSON.stringify(value) + ' || '
+        }
     }
+    
     //remove the last vertical lines from end result
     return result.substring(0, result.length - 3)
 
