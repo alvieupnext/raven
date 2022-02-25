@@ -41,6 +41,10 @@ video {
   z-index: 0;
 }
 
+p {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 container {
   position: relative
 }
