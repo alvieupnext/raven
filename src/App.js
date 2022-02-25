@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import Webcam from 'react-webcam';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -28,18 +28,18 @@ function App() {
     )
   ]
 
-  let on = false;
+  var running = false;
   let subscriptions = []
 
   function toggleSub(){
-    if (!on) {
+    if (!running) {
       for (let source of streams){
         let disposeable = source.subscribe(logSubscriber) 
         subscriptions.push(disposeable)
       }
     }
     else subscriptions.forEach((sub) => sub.unsubscribe());
-    on = !on
+    running = !running
   }
 
   
@@ -78,7 +78,7 @@ function App() {
               <p className="text-justify" id="appLog">Welcome To Raven!</p>
           
           <Button variant="primary" onClick={e => loadModel()}>Load Mediapipe Model</Button>
-          <Button variant="secondary" onClick={e => setExporter(completeExport)}>Change To Complete</Button>
+          {/* <Button variant="secondary" onClick={e => setExporter(completeExport)}>Change To Complete</Button> */}
           <Button variant="success" id="toggle" onClick={e => toggleSub()}>Start</Button>
           
           
