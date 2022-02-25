@@ -1,4 +1,4 @@
-import { interval, map, from, combineLatestWith, mergeAll, filter, zip, tap, pluck, take, observable, Subject} from 'rxjs';
+import { interval, map, from, combineLatestWith, mergeAll, filter, zip, tap, pluck, take, observable, Subject, buffer} from 'rxjs';
 import {  getExporter } from './exports';
 import { dereference, drawHand, logToApp, mirrorDirection, refreshRate, setJSON, setOrigin, transformValue } from './Utilities';
 import * as mp from '@mediapipe/hands';
@@ -207,8 +207,16 @@ function commandStream(observable){
   .pipe(getExporter())
 }
 
+function bufferStream(ms){
+  return function(observable){
+    const intervalEvents = interval(ms)
+    return observable
+    .pipe(buffer(intervalEvents))
+  }
+}
 
 
 
 
-export { webcamStream, primeStream, mediapipeStream, loadModel, fingerposeStream, gesturer, commandStream}
+
+export { webcamStream, primeStream, mediapipeStream, loadModel, fingerposeStream, gesturer, commandStream, bufferStream}
