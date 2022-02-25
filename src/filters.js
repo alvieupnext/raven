@@ -37,10 +37,7 @@ function sortGestures(values){
   }
   
   function removeEmptyHand(json){
-    if (json.origin === "mediapipe"){
-      return json.value.multiHandWorldLandmarks.length !== 0
-    }
-    return json.value.length !== 0
+    return json.value.multiHandWorldLandmarks.length !== 0
   }
   
   function removeNoGestures(json){
