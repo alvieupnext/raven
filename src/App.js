@@ -3,8 +3,9 @@ import Webcam from 'react-webcam';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row'
-import {setExporter, completeExport} from './exports'
+import Row from 'react-bootstrap/Row';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { setExporter, completeExport, vanillaExport, minimalExport } from './exports'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { logToApp } from './Utilities';
@@ -34,6 +35,16 @@ function App() {
       setButtonText("Resume")
     }
     running.current = !running.current
+  }
+
+  const exporters = [completeExport, vanillaExport, minimalExport]
+  const names = ["Complete", "Vanilla", "Minimal"]
+
+  function updateExporter(eventKey){
+    //access the right export function and set it as exporter
+    setExporter(exporters[eventKey])
+    //confirm to the user and if the stream is running, remind them to resubscribe to the stream
+    logToApp(`Changed output to ${names[eventKey]}. ` + (running.current ? "Please stop and resume the stream" : ""))
   }
 
 
@@ -70,10 +81,24 @@ function App() {
 
           </Col>
           <p className="text-justify" id="appLog">Welcome To Raven!</p>
-
+          <Container>
           <Button variant="primary" onClick={e => loadModel()}>Load Mediapipe Model</Button>
-          <Button variant="secondary" onClick={e => setExporter(completeExport)}>Change To Complete</Button>
           <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
+          <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
+            <Dropdown.Toggle variant="light" id="dropdown-button-drop-right">
+              Change Output Settings
+            </Dropdown.Toggle>
+            <Dropdown.Menu variant="dark">
+              <Dropdown.Item eventKey={0}>Complete</Dropdown.Item>
+              <Dropdown.Item eventKey={1}>Vanilla</Dropdown.Item>
+              <Dropdown.Item eventKey={2}>Minimal</Dropdown.Item>
+            </Dropdown.Menu>
+            </Dropdown>
+            
+          </Container>
+
+            {/* <Button variant="secondary" onClick={e => setExporter(completeExport)}>Change Export Settings</Button> */}
+            
 
 
         </Container>
