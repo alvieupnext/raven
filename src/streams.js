@@ -172,6 +172,43 @@ function gesturer(observable){
   .pipe(getExporter())
 }
 
+const one_dict = {
+  thumbs_up: 'UP',
+  thumbs_right: 'RIGHT',
+  thumbs_left: 'LEFT',
+  thumbs_down: 'LAND',
+  yeah: 'FORWARD',
+  phone: 'BACK',
+  okay: 'DOWN',
+  one: '1',
+  victory: '2',
+  three: '3',
+  four: '4',
+  high_five: '5'
+}
+
+const dict = {
+  Left: one_dict,
+  Right: one_dict
+}
+
+function translateGesture(value){
+  let result = []
+  for (let gest of value){
+    result.push({command: dict[gest.hand][gest.gesture], hand: gest.hand})
+  }
+  return result
+}
+
+function commandStream(observable){
+  return observable
+  .pipe(map(json => transformValue(json, translateGesture)))
+  .pipe(map(json => setOrigin(json,'command')))
+  .pipe(getExporter())
+}
 
 
-export { webcamStream, primeStream, mediapipeStream, loadModel, fingerposeStream, gesturer}
+
+
+
+export { webcamStream, primeStream, mediapipeStream, loadModel, fingerposeStream, gesturer, commandStream}
