@@ -75,7 +75,7 @@ function App() {
               />
             
             </Col>
-              <p className="text-justify" id="appLog">logable</p>
+              <p className="text-justify" id="appLog">Welcome To Raven!</p>
           
           <Button variant="primary" onClick={e => sendTest(webcamRef.current.video)}>Load Mediapipe Model</Button>
           <Button variant="secondary" onClick={e => setExporter(completeExport)}>Change To Complete</Button>
