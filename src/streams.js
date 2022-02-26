@@ -1,6 +1,6 @@
 import { interval, map, from, combineLatestWith, mergeAll, filter, zip, tap, pluck, take, observable, Subject, buffer } from 'rxjs';
 import { getExporter } from './exports';
-import { dereference, drawHand, logToApp, mirrorDirection, refreshRate, setJSON, setOrigin, setValue, transformValue } from './Utilities';
+import { dereference, drawHand, mirrorDirection, refreshRate, setJSON, setOrigin, setValue, transformValue } from './Utilities';
 import * as mp from '@mediapipe/hands';
 import * as fp from 'fingerpose'
 import { four, highFive, okaySign, phone, pointUp, stopSign, three, thumbsDown, thumbsLeft, thumbsRight, thumbsUp, victory, yeah } from './gestures';
@@ -52,9 +52,7 @@ function webcamStream(webcamRef, canvasRef) {
 
 //send a dummy value to the model in order to force the hand model to load
 function loadModel() {
-  logToApp("Loading Hand Detection Model")
   handModel.send(5)
-  logToApp("Loaded Hand Detection Model")
 }
 
 let handModel = new mp.Hands({

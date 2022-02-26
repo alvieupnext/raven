@@ -48,13 +48,13 @@ function App() {
     //access the right export function and set it as exporter
     setExporter(exporters[eventKey])
     //confirm to the user and if the stream is running, remind them to resubscribe to the stream
-    logToApp(`Changed output to ${names[eventKey]}. ` + (running.current ? "Please stop and resume the stream" : ""))
+    logToApp(`Changed output to ${names[eventKey]}. ` + (running.current ? "Please stop and resume the stream" : "", "appLog"))
   }
 
   function LoadMediaPipeButton(props) {
     if (!loaded){
       return (
-        <Button variant="primary" onClick={e => {loadModel(); setLoaded(true)}}>Load Mediapipe Model</Button>
+        <Button variant="primary" onClick={e => {logToApp("Loading Hand Detection Model", "appLog"); loadModel(); setLoaded(true); logToApp("Loaded Hand Detection Model", "appLog")}}>Load Mediapipe Model</Button>
       );
     }
     else return(<div></div>)
