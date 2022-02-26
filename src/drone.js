@@ -1,5 +1,12 @@
-import { TelloDrone } from "yatsw";
+// import { TelloDrone } from "yatsw";
 
-const Tello = new TelloDrone()
+// const Tello = new TelloDrone()
+// Tello.start()
 
-Tello.start()
+function sendToTello(commands){
+
+}
+
+
+
+export {sendToTello}
