@@ -18,6 +18,9 @@ function sortGestures(values) {
   return values
 }
 
+function sortFrequency(values){
+  return values.sort(compareFPGestures)
+}
 
 
 function createSort(sortf) { //requires data to be an array
@@ -55,8 +58,10 @@ function removeNoGestures(json) {
 
 const SortByBestGesture = createSort(sortGestures)
 
+const SortByHighestFrequency = createSort(sortFrequency)
+
 const EmptyArrayFilter = createFilterer(removeEmptyValue)
 
 const EmptyHandFilter = createFilterer(removeEmptyHand)
 
-export { EmptyHandFilter, SortByBestGesture, EmptyArrayFilter }
+export { EmptyHandFilter, SortByBestGesture, EmptyArrayFilter, SortByHighestFrequency }
