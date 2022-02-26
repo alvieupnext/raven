@@ -247,6 +247,7 @@ function frequencyStream(observable) {
     .pipe(map(frequency))
     .pipe(SortByHighestFrequency)
     .pipe(FrequencyThreshold(0.5))
+    .pipe(EmptyArrayFilter)
     .pipe(map(json => setOrigin(json, 'frequency')))
     .pipe(getExporter())
 }
