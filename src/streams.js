@@ -4,7 +4,7 @@ import { dereference, drawHand, logToApp, mirrorDirection, refreshRate, setJSON,
 import * as mp from '@mediapipe/hands';
 import * as fp from 'fingerpose'
 import { four, highFive, okaySign, phone, pointUp, stopSign, three, thumbsDown, thumbsLeft, thumbsRight, thumbsUp, victory, yeah } from './gestures';
-import { SortByBestGesture } from './filters';
+import { EmptyArrayFilter, SortByBestGesture } from './filters';
 
 //the stream that starts emitting as first, known as the prime data stream
 let primeStream = interval(refreshRate)
@@ -224,7 +224,6 @@ function frequencyStream(observable) {
     let occurences = {}
     let array = json.value
     let count = array.length
-    if (count !==0) {
       for (let element of array) {
         console.log(element)
         for (let command of element.value){
@@ -237,8 +236,8 @@ function frequencyStream(observable) {
       }
       return setValue(json, occurences)
     }
-  }
   return observable
+    .pipe(EmptyArrayFilter)
     .pipe(map(frequency))
     .pipe(map(json => setOrigin(json, 'frequency')))
     .pipe(getExporter())
