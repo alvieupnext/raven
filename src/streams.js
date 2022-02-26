@@ -210,8 +210,12 @@ function commandStream(observable) {
 function bufferStream(ms) {
   return function (observable) {
     const intervalEvents = interval(ms)
+    // const bufferedStream = observable.pipe(buffer(intervalEvents))
     return observable
       .pipe(buffer(intervalEvents))
+      .pipe(map(arr => {return {value: arr}}))
+      .pipe(map(json => setOrigin(json, 'buffer')))
+      .pipe(getExporter())
   }
 }
 
