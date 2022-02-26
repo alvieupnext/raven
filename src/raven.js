@@ -13,7 +13,7 @@ function createRaven(webcamRef, canvasRef){
     fingerposeStream,
     gesturer,
     commandStream,
-    bufferStream(1000),
+    bufferStream(1500),
     frequencyStream,
     )
 }
