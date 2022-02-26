@@ -12,6 +12,7 @@
     "bootstrap": "^5.1.3",
     "concurrently": "^7.0.0",
     "cross-env": "^7.0.3",
+    "dgram": "^1.0.1",
     "fingerpose": "^0.1.0",
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.2",
