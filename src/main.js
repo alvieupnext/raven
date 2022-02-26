@@ -2,6 +2,8 @@ const { app, BrowserWindow } = require('electron')
 
 const path = require('path');
 const url = require('url');
+const dgram = require('dgram')
+const { TelloDrone } = require('yatsw')
 
 function createWindow () {
   // Create the browser window.
@@ -14,15 +16,15 @@ function createWindow () {
   })
 
   // //load the index.html from a url
-  // win.loadURL('http://localhost:3000');
+  win.loadURL('http://localhost:3000');
 
   // console.log(__dirname+'/public/')
 
-  win.loadURL(url.format({
-    pathname: path.join(__dirname+'/src/', 'index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
+  // win.loadURL(url.format({
+  //   pathname: path.join(__dirname+'/public/', 'index.html'),
+  //   protocol: 'file:',
+  //   slashes: true
+  // }))
 
   // Open the DevTools.
   win.webContents.openDevTools()

@@ -2,7 +2,7 @@
   "name": "raven",
   "version": "0.1.0",
   "private": true,
-  "main": "public/main.js",
+  "main": "src/main.js",
   "dependencies": {
     "@mediapipe/drawing_utils": "^0.3.1620248257",
     "@mediapipe/hands": "^0.4.1635986972",

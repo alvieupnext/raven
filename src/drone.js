@@ -1,4 +1,4 @@
-// import { TelloDrone } from "yatsw";
+// const { TelloDrone } = require('yatsw')
 
 // const Tello = new TelloDrone()
 // Tello.start()
