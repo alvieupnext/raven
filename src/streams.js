@@ -42,7 +42,7 @@ function webcamStream(webcamRef, canvasRef) {
     const hand = interval(refreshRate).pipe(map(value => videoFeed(webcamRef, canvasRef)), filter(value => value !== undefined))
 
     return zip(observable, hand)
-      .pipe(map(([json, video]) => setJSON(json, 'value', video)))
+      .pipe(map(([json, video]) => setValue(json, video)))
       .pipe(map(json => setOrigin(json, 'webcam')))
       .pipe(getExporter())
 
@@ -86,7 +86,7 @@ function mediapipeStream(canvasRef) {
     const net = observable.pipe(pluck('value'), tap(value => { handModel.send({ image: value }) }))
 
     return zip(observable, result, net)
-      .pipe(map(([json, landmark, net]) => setJSON(json, 'value', landmark)))
+      .pipe(map(([json, landmark, net]) => setValue(json, landmark)))
       .pipe(map(json => setOrigin(json, 'mediapipe')))
 
       .pipe(getExporter())
