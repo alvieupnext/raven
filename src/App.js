@@ -48,7 +48,7 @@ function App() {
     //access the right export function and set it as exporter
     setExporter(exporters[eventKey])
     //confirm to the user and if the stream is running, remind them to resubscribe to the stream
-    logToApp(`Changed output to ${names[eventKey]}. ` + (running.current ? "Please stop and resume the stream" : "", "appLog"))
+    logToApp(`Changed output to ${names[eventKey]}. ` + (running.current ? "Please stop and resume the stream" : ""), "appLog")
   }
 
   function LoadMediaPipeButton(props) {
