@@ -226,10 +226,10 @@ function frequencyStream(observable) {
     let count = array.length
       for (let element of array) {
         for (let command of element.value){
-          let key = command.command + "_" + command.hand
-          let found = occurences.find(json => json.name === key)
+          let key = command.command
+          let found = occurences.find(json => json.name === key && json.hand === command.hand)
           if (found === undefined){ //not found (does not yet exist)
-            occurences.push({name: key, score: 1})
+            occurences.push({name: key, hand: command.hand, score: 1})
           }
           else { //element found
             found.score += 1
