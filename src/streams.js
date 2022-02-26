@@ -225,7 +225,6 @@ function frequencyStream(observable) {
     let array = json.value
     let count = array.length
       for (let element of array) {
-        console.log(element)
         for (let command of element.value){
           let key = command.command + "_" + command.hand
           occurences[key] = (occurences[key] === undefined ? 1 : occurences[key] + 1)
