@@ -19,7 +19,7 @@ function createWindow () {
   // console.log(__dirname+'/public/')
 
   win.loadURL(url.format({
-    pathname: path.join(__dirname+'/src/', 'main.html'),
+    pathname: path.join(__dirname+'/src/', 'index.html'),
     protocol: 'file:',
     slashes: true
   }))
