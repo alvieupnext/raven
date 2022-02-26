@@ -40,6 +40,10 @@ function removeEmptyHand(json) {
   return json.value.multiHandWorldLandmarks.length !== 0
 }
 
+function removeEmptyValue(json){
+  return json.value.length !== 0
+}
+
 function removeNoGestures(json) {
   for (let gest of json.value) {
     if (gest.gesture !== "no_gesture") {
@@ -51,8 +55,8 @@ function removeNoGestures(json) {
 
 const SortByBestGesture = createSort(sortGestures)
 
-
+const EmptyArrayFilter = createFilterer(removeEmptyValue)
 
 const EmptyHandFilter = createFilterer(removeEmptyHand)
 
-export { EmptyHandFilter, SortByBestGesture }
+export { EmptyHandFilter, SortByBestGesture, EmptyArrayFilter }
