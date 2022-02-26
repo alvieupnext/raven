@@ -22,7 +22,13 @@ function sortFrequency(values){
   return values.sort(compareFPGestures)
 }
 
+function threshold(thres){
+  return function (values){
+    return values.filter(json => json.score > 0.5)
+  }
+}
 
+//TODO rename this function
 function createSort(sortf) { //requires data to be an array
   return (observable) => {
     return observable
@@ -60,8 +66,12 @@ const SortByBestGesture = createSort(sortGestures)
 
 const SortByHighestFrequency = createSort(sortFrequency)
 
+function FrequencyThreshold(thres){
+  return createSort(threshold(thres))
+} 
+
 const EmptyArrayFilter = createFilterer(removeEmptyValue)
 
 const EmptyHandFilter = createFilterer(removeEmptyHand)
 
-export { EmptyHandFilter, SortByBestGesture, EmptyArrayFilter, SortByHighestFrequency }
+export { EmptyHandFilter, SortByBestGesture, EmptyArrayFilter, SortByHighestFrequency, FrequencyThreshold }
