@@ -19,7 +19,7 @@ function createRaven(webcamRef, canvasRef){
 }
 
 function startRaven(raven){
-    return raven.subscribe(consoleSubscriber)
+    return raven.subscribe(logSubscriber)
 }
 
 function stopRaven(raven){
