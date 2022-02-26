@@ -94,6 +94,8 @@ function App() {
 
           </Col>
           <p className="text-justify" id="appLog">Welcome To Raven!</p>
+          <p className="text-justify" >Tello Command History:</p>
+          <p className="text-justify" id="telloLog">[]</p>
             <LoadMediaPipeButton></LoadMediaPipeButton>
           <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
           <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
