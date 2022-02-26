@@ -67,8 +67,11 @@ function dereference(json) {
 }
 
 function setOrigin(json, origin) {
-    json['origin'] = origin
-    return json
+    return setJSON(json, 'origin', origin)
+}
+
+function setValue(json, value){
+    return setJSON(json, 'value', value)
 }
 
 function transformValue(json, transform) {
@@ -78,4 +81,4 @@ function transformValue(json, transform) {
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue, commandLog, drawHand, mirrorDirection}
+export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue, commandLog, drawHand, mirrorDirection, setValue}
