@@ -11,13 +11,13 @@ let consoleSubscriber = {
 
 
 let logSubscriber = {
-    next: (data) => { console.log(data); logToApp(commandLog(data))},
+    next: (data) => { console.log(data); logToApp(commandLog(data), "appLog")},
     error: (error) => { console.log(error) },
     complete: () => { console.log('Completed') }
 }
 
 let telloSubscriber = {
-    next: (data) => { console.log(data); logToApp(commandLog(data))},
+    next: (data) => { console.log(data); logToApp(commandLog(data), "telloLog")},
     error: (error) => { console.log(error) },
     //TODO tello stop
     complete: () => { console.log('Completed') }

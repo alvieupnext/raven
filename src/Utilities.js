@@ -20,8 +20,8 @@ function drawHand (results, canvasElement) {
   }
 
 // logs a message to the application and also logs it to the console
-function logToApp(message) {
-    document.getElementById("appLog").innerHTML = message
+function logToApp(message, id) {
+    document.getElementById(id).innerHTML = message
     console.log(message)
 };
 
