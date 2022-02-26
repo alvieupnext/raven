@@ -1,6 +1,6 @@
 import { interval, map, from, combineLatestWith, mergeAll, filter, zip, tap, pluck, take, observable, Subject, buffer } from 'rxjs';
 import { getExporter } from './exports';
-import { dereference, drawHand, logToApp, mirrorDirection, refreshRate, setJSON, setOrigin, transformValue } from './Utilities';
+import { dereference, drawHand, logToApp, mirrorDirection, refreshRate, setJSON, setOrigin, setValue, transformValue } from './Utilities';
 import * as mp from '@mediapipe/hands';
 import * as fp from 'fingerpose'
 import { four, highFive, okaySign, phone, pointUp, stopSign, three, thumbsDown, thumbsLeft, thumbsRight, thumbsUp, victory, yeah } from './gestures';
@@ -220,8 +220,9 @@ function bufferStream(ms) {
 }
 
 function frequencyStream(observable) {
-  function frequency(array) {
+  function frequency(json) {
     let occurences = {}
+    let array = json.value
     let count = array.length
     if (count !==0) {
       for (let element of array) {
@@ -234,11 +235,13 @@ function frequencyStream(observable) {
       for (let key of Object.keys(occurences)){
         occurences[key] /= count
       }
-      return occurences
+      return setValue(json, occurences)
     }
   }
   return observable
     .pipe(map(frequency))
+    .pipe(map(json => setOrigin(json, 'frequency')))
+    .pipe(getExporter())
 }
 
 
