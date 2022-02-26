@@ -1,5 +1,8 @@
 const { app, BrowserWindow } = require('electron')
 
+const path = require('path');
+const url = require('url');
+
 function createWindow () {
   // Create the browser window.
   const win = new BrowserWindow({
@@ -10,8 +13,16 @@ function createWindow () {
     }
   })
 
-  //load the index.html from a url
-  win.loadURL('http://localhost:3000');
+  // //load the index.html from a url
+  // win.loadURL('http://localhost:3000');
+
+  // console.log(__dirname+'/public/')
+
+  win.loadURL(url.format({
+    pathname: path.join(__dirname+'/src/', 'main.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
 
   // Open the DevTools.
   win.webContents.openDevTools()
