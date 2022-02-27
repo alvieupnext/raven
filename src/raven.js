@@ -1,6 +1,6 @@
 import { webcamStream, primeStream, mediapipeStream, loadModel, fingerposeStream, gesturer, commandStream, bufferStream, frequencyStream} from './streams.js';
 import {setExporter, completeExport} from './exports'
-import { consoleSubscriber, logSubscriber } from './subscribers';
+import { consoleSubscriber, logSubscriber, telloSubscriber } from './subscribers';
 import { EmptyHandFilter } from './filters';
 
 // setExporter(completeExport)
@@ -19,7 +19,7 @@ function createRaven(webcamRef, canvasRef){
 }
 
 function startRaven(raven){
-    return raven.subscribe(logSubscriber)
+    return raven.subscribe(telloSubscriber)
 }
 
 function stopRaven(raven){
