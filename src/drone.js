@@ -5,6 +5,8 @@ const { logDroneHistory } = require("./Utilities");
 
 let history = []
 
+let takeoff = false
+
 let ws = new WebSocket('ws://localhost:4000/ws')
 ws.onopen = function() {
                 
@@ -22,12 +24,15 @@ ws.onclose = function() {
 console.log("Connection is closed..."); 
 };
 
+function processCommand(command){
+    history.push(command)
+}
+
 
 
 function sendToDrone(commands){
     if (commands.length === 1){ //just send the command to the drone
-        // ws.send(commands[0])
-        history.push(commands[0])
+        processCommand(commands[0])
         logDroneHistory(history)
     }
 
