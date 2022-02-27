@@ -28,26 +28,30 @@ ws.onclose = function () {
 let counter = 3;
 
 function processCommand(command) {
-    history.push(command)
-    if (!takeoff) {
-        if (typeof command.name === 'number' && counter === command.name) { //takeoff sequence?
+    if (!takeoff) { //drone on the ground
+        if (typeof command === 'number' && counter === command) { //takeoff sequence?
             logToApp(counter, "appLog")
             counter -= 1
             if (counter === 0) {
-                history.push({ name: 'takeoff' })
+                history.push('takeoff')
                 takeoff = true
                 counter = 3
             }
         }
         else { counter = 3 }
     }
+    else {
+        if (command === "LAND"){
+            takeoff = false
+        }
+        history.push(command)
+    }
 }
-
 
 
 function sendToDrone(commands) {
     if (commands.length === 1) { //just send the command to the drone
-        processCommand(commands[0])
+        processCommand(commands[0].name)
         logDroneHistory(history)
     }
 

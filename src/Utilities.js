@@ -63,7 +63,7 @@ function droneLog(history, amount){
     let result = ""
     for (let i = lowerEnd; i < upperEnd; i++){
         let element = history[i]
-        result = result + `${element.name} | `
+        result = result + `${element} | `
     }
     return result.substring(0, result.length - 3)
 }
