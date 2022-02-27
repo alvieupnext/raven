@@ -57,6 +57,21 @@ function commandLog(data){
 
 }
 
+function droneLog(history, amount){
+    let upperEnd = history.length
+    let lowerEnd = (upperEnd > amount ? upperEnd - amount : 0)
+    let result = ""
+    for (let i = lowerEnd; i < upperEnd; i++){
+        let element = history[i]
+        result = result + `${element.name} || `
+    }
+    return result.substring(0, result.length - 3)
+}
+
+function logDroneHistory(history){
+    logToApp(droneLog(history, 5), "telloLog")
+}
+
 
 //sets an attribute to a new value and returns the json
 function setJSON(json, att, value) {
@@ -85,4 +100,4 @@ function transformValue(json, transform) {
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue, commandLog, drawHand, mirrorDirection, setValue}
+export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue, commandLog, drawHand, mirrorDirection, setValue, logDroneHistory}
