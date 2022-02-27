@@ -1,6 +1,6 @@
 // subscribers can be used to get information from the pipeline
 
-import { sendToTello } from "./drone";
+import {sendToDrone} from './drone'
 import { commandLog, logToApp } from "./Utilities";
 
 
@@ -18,7 +18,9 @@ let logSubscriber = {
 }
 
 let telloSubscriber = {
-    next: (data) => { console.log(data); logToApp(commandLog(data), "appLog"); logToApp(sendToTello(data.value), "telloLog")},
+    next: (data) => { console.log(data); logToApp(commandLog(data), "appLog"); 
+    sendToDrone(data.value)
+},
     error: (error) => { console.log(error) },
     //TODO tello stop
     complete: () => { console.log('Completed') }
