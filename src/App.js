@@ -98,6 +98,7 @@ function App() {
           <p className="text-justify" id="telloLog">[]</p>
             <LoadMediaPipeButton></LoadMediaPipeButton>
           <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
+          {/*TODO takeoff and land glitch with pressing buttons */}
           <Button variant= "success" onClick={e => sendToDrone([{name: 'takeOff'}])}>TakeOff</Button>
           <Button variant= "danger" onClick={e => sendToDrone([{name: 'land'}])}>Land</Button>
           <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
