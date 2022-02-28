@@ -176,7 +176,7 @@ const one_dict = {
   thumbs_right: 'RIGHT',
   thumbs_left: 'LEFT',
   thumbs_down: 'DOWN',
-  stop: 'LAND',
+  stop: 'land',
   yeah: 'FORWARD',
   phone: 'BACK',
   okay: 'DOWN',
