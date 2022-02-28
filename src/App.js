@@ -1,9 +1,8 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState} from 'react'
 import Webcam from 'react-webcam';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { setExporter, completeExport, vanillaExport, minimalExport } from './exports'
 import './App.css';
@@ -11,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { logToApp } from './Utilities';
 import { createRaven, startRaven, stopRaven } from './raven';
 import { loadModel } from './streams';
+import { sendToDrone } from './drone';
 
 
 function App() {
@@ -98,6 +98,8 @@ function App() {
           <p className="text-justify" id="telloLog">[]</p>
             <LoadMediaPipeButton></LoadMediaPipeButton>
           <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
+          <Button variant= "success" onClick={e => sendToDrone([{name: 'takeOff'}])}>TakeOff</Button>
+          <Button variant= "danger" onClick={e => sendToDrone([{name: 'land'}])}>Land</Button>
           <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
             <Dropdown.Toggle variant="light" id="dropdown-button-drop-right">
               Change Output Settings
