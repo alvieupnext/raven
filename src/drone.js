@@ -47,7 +47,7 @@ function processCommand(command) {
         else { counter = 3 }
     }
     else {
-        if (command === "land"){
+        if (command === "land" || command === 'emergencyLand'){
             takeoff = false
             ws.send(command)
         }

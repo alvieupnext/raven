@@ -100,7 +100,7 @@ function App() {
           <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
           {/*TODO takeoff and land glitch with pressing buttons */}
           <Button variant= "success" onClick={e => sendToDrone([{name: 'takeOff'}])}>TakeOff</Button>
-          <Button variant= "danger" onClick={e => sendToDrone([{name: 'land'}])}>Land</Button>
+          <Button variant= "danger" onClick={e => sendToDrone([{name: 'emergencyLand'}])}>Land</Button>
           <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
             <Dropdown.Toggle variant="light" id="dropdown-button-drop-right">
               Change Output Settings
