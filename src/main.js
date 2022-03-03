@@ -1,6 +1,6 @@
 const { app, BrowserWindow } = require('electron')
 
-const { TelloDrone } = require('yatsw')
+require("./telloserver")
 
 // const http = require('http');
 // const WebSocket = require('ws');
@@ -15,8 +15,9 @@ const { TelloDrone } = require('yatsw')
 //     right: [1],
 // }
 
+// const Tello = new TelloDrone()
+
 // wss.on('connection', (ws) => {
-//   const Tello = new TelloDrone()
 //   Tello.start()
 
 //     //connection is up, let's add a simple simple event
@@ -38,6 +39,11 @@ const { TelloDrone } = require('yatsw')
 
 //     //send immediatly a feedback to the incoming connection    
 //     ws.send('Hi there, I am a WebSocket server');
+
+//     ws.on('close', (message) => {
+//       console.log("Closed Websocket")
+//       Tello.destroy()
+//     })
 // });
 
 // //start our server
@@ -69,15 +75,6 @@ function createWindow () {
   // Open the DevTools.
   win.webContents.openDevTools()
 }
-
-const tello = new TelloDrone()
-
-tello.start()
-
-function sendToTello(commands){
-  return "hi"
-}
-
 
 
 // This method will be called when Electron has finished
