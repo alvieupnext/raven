@@ -172,7 +172,7 @@ function gesturer(observable) {
 }
 
 const one_dict = {
-  thumbs_up: 'UP',
+  thumbs_up: 'up',
   thumbs_right: 'RIGHT',
   thumbs_left: 'LEFT',
   thumbs_down: 'DOWN',
