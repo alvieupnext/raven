@@ -7,39 +7,36 @@ import { sendToServer } from './server';
 import Slider from '@mui/material/Slider';
 import { Subscription } from './raven';
 import { loadModel } from './streams';
-const {logToApp, marks } = require("./Utilities");
+const {logToApp, marks, logDroneHistory, droneLog } = require("./Utilities");
 
 function Drone(props) {
-    const [takeoff, setTakeoff] = useState(false)
+    const takeoff = useRef(false)
     const [strength, setStrength] = useState(20)
-    const [history, setHistory] = useState([])
+    const [trick, reTrick] = useState(false)
+    const history = useRef([])
     const [loaded, setLoaded] = useState(false)
     //could also be changed to 5
     const counter = useRef(3)
     const webcamRef = props.webcam
     const canvasRef = props.canvas
 
-    function addToHistory(command){
-        setHistory(history.concat(command))
+    function setTakeoff(bool){
+        takeoff.current = bool
+        //needed to force a re-render while maintaing this state
+        reTrick(!trick)
     }
 
-    function droneLog(history, amount) {
-        let upperEnd = history.length
-        let lowerEnd = (upperEnd > amount ? upperEnd - amount : 0)
-        let result = ""
-        for (let i = lowerEnd; i < upperEnd; i++) {
-            let element = history[i]
-            let name = element.name
-            let strength = (element.strength !== undefined ? "_" + element.strength : "")
-            result = result + name + strength + " | "
-        }
-        return result.substring(0, result.length - 3)
+
+    function addToHistory(command){
+        console.log(history)
+        history.current.push(command)
     }
 
 
 
     function processCommand(command) {
-        if (!takeoff) { //drone on the ground
+        console.log(takeoff)
+        if (!takeoff.current) { //drone on the ground
             console.log(counter)
             if (command.name === "takeOff") {
                 sendToServer(command)
@@ -60,8 +57,8 @@ function Drone(props) {
         }
         else {
             if (command.name === "land" || command.name === 'emergencyLand') {
-                setTakeoff(false)
                 sendToServer(command)
+                setTakeoff(false)  
             }
 
             addToHistory(command)
@@ -69,28 +66,31 @@ function Drone(props) {
     }
     function sendToDrone(commands) {
         if (commands.length === 1) { //just send the command to the drone
+            delete commands[0].score
+            delete commands[0].hand
             processCommand(commands[0])
+            logDroneHistory(history.current)
         }
-
     }
 
     const history_text = <div>
         <p className="fs-3" >Tello Command History:</p>
-        <p className="fs-4" id="telloLog">{droneLog(history, 5)}</p>
+        <p className="fs-4" id="telloLog"></p>
         </div>
     
-    const sub = <Subscription webcam={webcamRef} canvas={canvasRef} send={sendToDrone}/>
+    const [sub, setSub] = useState(<Subscription webcam={webcamRef} canvas={canvasRef} send={sendToDrone} />)
 
 
     return (
-        (takeoff ?
+        (takeoff.current ?
             <Container>
                 {sub}
                 <Button variant="danger" onClick={e => sendToDrone([{ name: 'emergencyLand' }])}>Land</Button>
                 <Button variant="light" onClick={e => sendToDrone([{ name: 'forward' , strength: strength}])}>Send Drone Forward</Button>
                 {history_text}
-                <p className="fs-5" >Distance performed by direction:</p>
                 <Slider defaultValue={20} step={5} min={20} max={500} onChangeCommitted={(event, value) => setStrength(value)} marks={marks} id="Strength" valueLabelDisplay="auto" color="secondary" />
+                <p className="fs-5" >Distance performed by direction:</p>
+                
             </Container>
             :
             <Container>

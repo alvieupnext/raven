@@ -13,6 +13,7 @@ function Subscription(props) {
     const webcamRef = props.webcam
     const canvasRef = props.canvas
     const send = props.send
+    const takeoff = props.takeoff
     const [buttonText, setButtonText] = useState("Start")
     const [loaded, setLoaded] = useState(false)
     const [sub, setSub] = useState(false)
@@ -20,13 +21,23 @@ function Subscription(props) {
 
     const raven = useRef(createRaven(webcamRef, canvasRef))
     function startRaven() {
-        setSub(raven.current.subscribe(consoleSubscriber))
+        console.log("subscribed")
+        setSub(raven.current.subscribe(telloSubscriber(send, takeoff)))
     }
 
     function stopRaven() {
         sub.unsubscribe()
         setSub(false)
     }
+
+    // useEffect(()=> {
+    //     if (sub){
+    //         console.log("subscribed")
+    //         const subscription = raven.current.subscribe(telloSubscriber(send));
+    //         return () => subscription.unsubscribe();
+    //     }
+    //     else {console.log("Not Subscribed")}
+    // })
 
     function toggleSub() {
         if (!running.current) {
@@ -58,7 +69,6 @@ function Subscription(props) {
         <Container>
             <LoadMediaPipeButton></LoadMediaPipeButton>
             <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
-            <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => console.log(sub)}>Kenny</Button>
             {/* <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
                 <Dropdown.Toggle variant="light" id="dropdown-button-drop-right">
                     Change Output Settings
