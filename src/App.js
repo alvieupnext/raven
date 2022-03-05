@@ -19,6 +19,7 @@ function App() {
   const canvasRef = useRef(null);
   const [buttonText, setButtonText] = useState("Start")
   const [loaded, setLoaded] = useState(false)
+  const [strength, setStrength] = useState(20)
   const raven = useRef(null)
 
 
@@ -50,10 +51,6 @@ function App() {
     setExporter(exporters[eventKey])
     //confirm to the user and if the stream is running, remind them to resubscribe to the stream
     logToApp(`Changed output to ${names[eventKey]}. ` + (running.current ? "Please stop and resume the stream" : ""), "appLog")
-  }
-
-  function getStrength(){
-    return document.getElementById("Strength").value
   }
 
   function LoadMediaPipeButton(props) {
@@ -106,7 +103,7 @@ function App() {
           {/*TODO takeoff and land glitch with pressing buttons */}
           <Button variant="primary" onClick={e => sendToDrone([{ name: 'takeOff' }])}>TakeOff</Button>
           <Button variant="danger" onClick={e => sendToDrone([{ name: 'emergencyLand' }])}>Land</Button>
-          <Button variant="light" onClick={e => sendToDrone([{ name: 'forward' , strength: getStrength()}])}>Send Drone Forward</Button>
+          <Button variant="light" onClick={e => sendToDrone([{ name: 'forward' , strength: strength}])}>Send Drone Forward</Button>
           <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
             <Dropdown.Toggle variant="light" id="dropdown-button-drop-right">
               Change Output Settings
@@ -122,7 +119,7 @@ function App() {
             <input id="multi" class="multi-range" type="range" />
           </form> */}
           <p className="fs-5" >Distance performed by direction:</p>
-          <Slider defaultValue={20} step={5} min={20} max={500} marks={marks} id="Strength" valueLabelDisplay="auto" color="secondary"/>
+          <Slider defaultValue={20} step={5} min={20} max={500} onChangeCommitted={(event, value) => setStrength(value)}marks={marks} id="Strength" valueLabelDisplay="auto" color="secondary"/>
           {/* <input type="range" class="form-range" id="customRange1"></input> */}
           {/* <Button variant="secondary" onClick={e => setExporter(completeExport)}>Change Export Settings</Button> */}
 
