@@ -10,7 +10,7 @@ const {logToApp, marks, logDroneHistory, droneLog } = require("./Utilities");
 
 function Drone(props) {
     const takeoff = useRef(false)
-    const [strength, setStrength] = useState(20)
+    const strength = useRef(20)
     const [trick, reTrick] = useState(false)
     const history = useRef([])
     const [loaded, setLoaded] = useState(false)
@@ -25,11 +25,17 @@ function Drone(props) {
         reTrick(!trick)
     }
 
+    function setStrength(number){
+        strength.current = number
+    }
+
 
     function addToHistory(command){
         console.log(history)
         history.current.push(command)
     }
+
+    const directions = ["up", "left", "right", "down", "forward", "back"]
 
 
 
@@ -59,6 +65,13 @@ function Drone(props) {
                 sendToServer(command)
                 setTakeoff(false)  
             }
+            else {
+                if (directions.includes(command.name)){ //check if direction
+                    command.strength = strength.current
+                    sendToServer(command)
+                }
+
+            }
 
             addToHistory(command)
         }
@@ -85,10 +98,11 @@ function Drone(props) {
             <Container>
                 {sub}
                 <Button variant="danger" onClick={e => sendToDrone([{ name: 'emergencyLand' }])}>Land</Button>
-                <Button variant="light" onClick={e => sendToDrone([{ name: 'forward' , strength: strength}])}>Send Drone Forward</Button>
+                <Button variant="light" onClick={e => sendToDrone([{ name: 'forward'}])}>Send Drone Forward</Button>
                 {history_text}
-                <Slider defaultValue={20} step={5} min={20} max={500} onChangeCommitted={(event, value) => setStrength(value)} marks={marks} id="Strength" valueLabelDisplay="auto" color="secondary" />
                 <p className="fs-5" >Distance performed by direction:</p>
+                <Slider defaultValue={20} step={5} min={20} max={500} onChangeCommitted={(event, value) => setStrength(value)} marks={marks} id="Strength" valueLabelDisplay="auto" color="secondary" />
+                
                 
             </Container>
             :
