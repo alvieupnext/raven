@@ -7,11 +7,10 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { setExporter, completeExport, vanillaExport, minimalExport } from './exports'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { logToApp, marks } from './Utilities';
+import { logToApp } from './Utilities';
 import { createRaven, startRaven, stopRaven } from './raven';
 import { loadModel } from './streams';
-import { sendToDrone } from './drone';
-import Slider from'@mui/material/Slider';
+import { Drone } from './drone';
 
 
 function App() {
@@ -19,7 +18,6 @@ function App() {
   const canvasRef = useRef(null);
   const [buttonText, setButtonText] = useState("Start")
   const [loaded, setLoaded] = useState(false)
-  const [strength, setStrength] = useState(20)
   const raven = useRef(null)
 
 
@@ -101,9 +99,7 @@ function App() {
           <LoadMediaPipeButton></LoadMediaPipeButton>
           <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
           {/*TODO takeoff and land glitch with pressing buttons */}
-          <Button variant="primary" onClick={e => sendToDrone([{ name: 'takeOff' }])}>TakeOff</Button>
-          <Button variant="danger" onClick={e => sendToDrone([{ name: 'emergencyLand' }])}>Land</Button>
-          <Button variant="light" onClick={e => sendToDrone([{ name: 'forward' , strength: strength}])}>Send Drone Forward</Button>
+          <Drone></Drone>
           <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
             <Dropdown.Toggle variant="light" id="dropdown-button-drop-right">
               Change Output Settings
@@ -118,8 +114,6 @@ function App() {
           {/* <form class="multi-range-field my-5 pb-5">
             <input id="multi" class="multi-range" type="range" />
           </form> */}
-          <p className="fs-5" >Distance performed by direction:</p>
-          <Slider defaultValue={20} step={5} min={20} max={500} onChangeCommitted={(event, value) => setStrength(value)}marks={marks} id="Strength" valueLabelDisplay="auto" color="secondary"/>
           {/* <input type="range" class="form-range" id="customRange1"></input> */}
           {/* <Button variant="secondary" onClick={e => setExporter(completeExport)}>Change Export Settings</Button> */}
 
