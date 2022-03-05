@@ -7,7 +7,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { setExporter, completeExport, vanillaExport, minimalExport } from './exports'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { logToApp } from './Utilities';
+import { logToApp, marks } from './Utilities';
 import { createRaven, startRaven, stopRaven } from './raven';
 import { loadModel } from './streams';
 import { sendToDrone } from './drone';
@@ -55,7 +55,7 @@ function App() {
   function LoadMediaPipeButton(props) {
     if (!loaded) {
       return (
-        <Button variant="primary" onClick={e => { logToApp("Loading Hand Detection Model", "appLog"); loadModel(); setLoaded(true); logToApp("Loaded Hand Detection Model", "appLog") }}>Load Mediapipe Model</Button>
+        <Button variant="info" onClick={e => { logToApp("Loading Hand Detection Model", "appLog"); loadModel(); setLoaded(true); logToApp("Loaded Hand Detection Model", "appLog") }}>Load Mediapipe Model</Button>
       );
     }
     else return (<div></div>)
@@ -100,7 +100,7 @@ function App() {
           <LoadMediaPipeButton></LoadMediaPipeButton>
           <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
           {/*TODO takeoff and land glitch with pressing buttons */}
-          <Button variant="success" onClick={e => sendToDrone([{ name: 'takeOff' }])}>TakeOff</Button>
+          <Button variant="primary" onClick={e => sendToDrone([{ name: 'takeOff' }])}>TakeOff</Button>
           <Button variant="danger" onClick={e => sendToDrone([{ name: 'emergencyLand' }])}>Land</Button>
           <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
             <Dropdown.Toggle variant="light" id="dropdown-button-drop-right">
@@ -116,7 +116,7 @@ function App() {
           {/* <form class="multi-range-field my-5 pb-5">
             <input id="multi" class="multi-range" type="range" />
           </form> */}
-          <Slider defaultValue={20} aria-label="Default" valueLabelDisplay="auto" color="secondary"/>
+          <Slider defaultValue={20} step={5} min={20} max={500} marks={marks} aria-label="Default" valueLabelDisplay="auto" color="secondary"/>
           {/* <input type="range" class="form-range" id="customRange1"></input> */}
           {/* <Button variant="secondary" onClick={e => setExporter(completeExport)}>Change Export Settings</Button> */}
 
