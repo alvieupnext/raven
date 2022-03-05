@@ -6,7 +6,6 @@ import Container from 'react-bootstrap/Container';
 import { sendToServer } from './server';
 import Slider from '@mui/material/Slider';
 import { Subscription } from './raven';
-import { loadModel } from './streams';
 const {logToApp, marks, logDroneHistory, droneLog } = require("./Utilities");
 
 function Drone(props) {
