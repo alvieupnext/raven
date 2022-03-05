@@ -29,17 +29,17 @@ let counter = 3;
 
 function processCommand(command) {
     if (!takeoff) { //drone on the ground
-        if (command ==="takeOff"){
-            ws.send('takeOff')
-            history.push('takeOff')
+        if (command.name ==="takeOff"){
+            ws.send(command)
+            history.push(command)
             takeoff = true
         }
-        if (typeof command === 'number' && counter === command) { //takeoff sequence?
+        if (typeof command.name === 'number' && counter === command.name) { //takeoff sequence?
             logToApp(counter, "appLog")
             counter -= 1
             if (counter === 0) {
-                ws.send('takeOff')
-                history.push('takeOff')
+                ws.send({name: 'takeOff'})
+                history.push({name: 'takeOff'})
                 takeoff = true
                 counter = 3
             }
@@ -47,7 +47,7 @@ function processCommand(command) {
         else { counter = 3 }
     }
     else {
-        if (command === "land" || command === 'emergencyLand'){
+        if (command.name === "land" || command.name === 'emergencyLand'){
             takeoff = false
             ws.send(command)
         }
@@ -59,7 +59,7 @@ function processCommand(command) {
 
 function sendToDrone(commands) {
     if (commands.length === 1) { //just send the command to the drone
-        processCommand(commands[0].name)
+        processCommand(commands[0])
         logDroneHistory(history)
     }
 
