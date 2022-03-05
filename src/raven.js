@@ -1,6 +1,5 @@
 import { webcamStream, primeStream, mediapipeStream, loadModel, fingerposeStream, gesturer, commandStream, bufferStream, frequencyStream} from './streams.js';
-import {setExporter, completeExport} from './exports'
-import { consoleSubscriber, logSubscriber, telloSubscriber } from './subscribers';
+import {telloSubscriber } from './subscribers';
 import { EmptyHandFilter } from './filters';
 
 // setExporter(completeExport)
