@@ -75,7 +75,7 @@ function Drone(props) {
 
     const history_text = <div>
         <p className="fs-3" >Tello Command History:</p>
-        <p className="fs-4" id="telloLog"></p>
+        <p className="fs-4" id="telloLog">{droneLog(history.current, 5)}</p>
         </div>
     
     const [sub, setSub] = useState(<Subscription webcam={webcamRef} canvas={canvasRef} send={sendToDrone} />)
