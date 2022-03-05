@@ -15,12 +15,14 @@ let logSubscriber = {
     complete: () => { console.log('Completed') }
 }
 
-let telloSubscriber = {
-    next: (data) => { console.log(data); logToApp(commandLog(data), "appLog"); 
-},
-    error: (error) => { console.log(error) },
-    //TODO tello stop
-    complete: () => { console.log('Completed') }
+function telloSubscriber(send){
+    return {
+        next: (data) => { console.log(data); logToApp(commandLog(data), "appLog");  send(data.value)},
+        error: (error) => { console.log(error) },
+        //TODO tello stop
+        complete: () => { console.log('Completed') }
+
+    }
 }
 
 export {consoleSubscriber, logSubscriber, telloSubscriber}
