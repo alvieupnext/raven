@@ -2,6 +2,7 @@
 //drone module which takes care of communications with drone
 import React, { useRef, useState } from 'react'
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 import { sendToServer } from './server';
 import Slider from '@mui/material/Slider';
 const { logDroneHistory, logToApp, marks } = require("./Utilities");
@@ -54,17 +55,18 @@ function Drone(props) {
 
     return (
         (takeoff ?
-            <div>
+            <Container>
                 <p className="fs-3" >Tello Command History:</p>
                 <p className="fs-4" id="telloLog"></p>
                 <Button variant="danger" onClick={e => sendToDrone([{ name: 'emergencyLand' }])}>Land</Button>
+                <Button variant="light" onClick={e => sendToDrone([{ name: 'forward' , strength: strength}])}>Send Drone Forward</Button>
                 <p className="fs-5" >Distance performed by direction:</p>
                 <Slider defaultValue={20} step={5} min={20} max={500} onChangeCommitted={(event, value) => setStrength(value)} marks={marks} id="Strength" valueLabelDisplay="auto" color="secondary" />
-            </div>
+            </Container>
             :
-            <div>
+            <Container>
                 <Button variant="primary" onClick={e => sendToDrone([{ name: 'takeOff' }])}>TakeOff</Button>
-            </div>
+            </Container>
         )
     )
 }
