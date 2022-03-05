@@ -68,13 +68,12 @@ handModel.setOptions({
   minTrackingConfidence: 0.5
 });
 
+const result = new Subject()
+
 
 handModel.initialize();
 
 function mediapipeStream(canvasRef) {
-  console.log("I have bveen summoned")
-
-  const result = new Subject().pipe(tap(data => drawHand(data, canvasRef)))
 
   function onResult(results) {
     result.next(results)
@@ -85,7 +84,9 @@ function mediapipeStream(canvasRef) {
   return function (observable) {
     const net = observable.pipe(pluck('value'), tap(value => { handModel.send({ image: value }) }))
 
-    return zip(observable, result, net)
+    const res = result.pipe(tap(data => drawHand(data, canvasRef)))
+
+    return zip(observable, res, net)
       .pipe(map(([json, landmark, net]) => setValue(json, landmark)))
       .pipe(map(json => setOrigin(json, 'mediapipe')))
 
