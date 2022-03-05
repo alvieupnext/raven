@@ -16,49 +16,27 @@ import { Drone } from './drone';
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
-  const [buttonText, setButtonText] = useState("Start")
-  const [loaded, setLoaded] = useState(false)
   const raven = useRef(null)
 
-
-
-  var running = useRef(false);
-
-
-  function toggleSub() {
-    if (!running.current) {
-      raven.current = createRaven(webcamRef, canvasRef)
-      raven.current = startRaven(raven.current)
-      setButtonText("Stop")
-      if (!loaded) {
-        setLoaded(true)
-      }
-    }
-    else {
-      stopRaven(raven.current)
-      setButtonText("Resume")
-    }
-    running.current = !running.current
-  }
 
   const exporters = [completeExport, vanillaExport, minimalExport]
   const names = ["Complete", "Vanilla", "Minimal"]
 
-  function updateExporter(eventKey) {
-    //access the right export function and set it as exporter
-    setExporter(exporters[eventKey])
-    //confirm to the user and if the stream is running, remind them to resubscribe to the stream
-    logToApp(`Changed output to ${names[eventKey]}. ` + (running.current ? "Please stop and resume the stream" : ""), "appLog")
-  }
+  // function updateExporter(eventKey) {
+  //   //access the right export function and set it as exporter
+  //   setExporter(exporters[eventKey])
+  //   //confirm to the user and if the stream is running, remind them to resubscribe to the stream
+  //   logToApp(`Changed output to ${names[eventKey]}. ` + (running.current ? "Please stop and resume the stream" : ""), "appLog")
+  // }
 
-  function LoadMediaPipeButton(props) {
-    if (!loaded) {
-      return (
-        <Button variant="info" onClick={e => { logToApp("Loading Hand Detection Model", "appLog"); loadModel(); setLoaded(true); logToApp("Loaded Hand Detection Model", "appLog") }}>Load Mediapipe Model</Button>
-      );
-    }
-    else return (<div></div>)
-  }
+  // function LoadMediaPipeButton(props) {
+  //   if (!loaded) {
+  //     return (
+  //       <Button variant="info" onClick={e => { logToApp("Loading Hand Detection Model", "appLog"); loadModel(); setLoaded(true); logToApp("Loaded Hand Detection Model", "appLog") }}>Load Mediapipe Model</Button>
+  //     );
+  //   }
+  //   else return (<div></div>)
+  // }
 
 
 
@@ -94,18 +72,7 @@ function App() {
 
           </Col>
           <p className="text-justify" id="appLog">Welcome To Raven!</p>
-          <LoadMediaPipeButton></LoadMediaPipeButton>
-          <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
-          <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
-            <Dropdown.Toggle variant="light" id="dropdown-button-drop-right">
-              Change Output Settings
-            </Dropdown.Toggle>
-            <Dropdown.Menu variant="dark">
-              <Dropdown.Item eventKey={0}>Complete</Dropdown.Item>
-              <Dropdown.Item eventKey={1}>Vanilla</Dropdown.Item>
-              <Dropdown.Item eventKey={2}>Minimal</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          {/* <LoadMediaPipeButton></LoadMediaPipeButton> */}
           <Drone canvas={canvasRef} webcam={webcamRef} ></Drone>
           {/* <label for="customRange1" class="form-label">Example range</label> */}
           {/* <form class="multi-range-field my-5 pb-5">

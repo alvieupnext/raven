@@ -98,6 +98,7 @@ function droneLog(history, amount) {
     return result.substring(0, result.length - 3)
 }
 
+
 function logDroneHistory(history) {
     logToApp(droneLog(history, 5), "telloLog")
 }

@@ -5,14 +5,19 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { sendToServer } from './server';
 import Slider from '@mui/material/Slider';
+import { Subscription } from './raven';
+import { loadModel } from './streams';
 const {logToApp, marks } = require("./Utilities");
 
 function Drone(props) {
     const [takeoff, setTakeoff] = useState(false)
     const [strength, setStrength] = useState(20)
     const [history, setHistory] = useState([])
+    const [loaded, setLoaded] = useState(false)
     //could also be changed to 5
     const counter = useRef(3)
+    const webcamRef = props.webcam
+    const canvasRef = props.canvas
 
     function addToHistory(command){
         setHistory(history.concat(command))
@@ -73,12 +78,14 @@ function Drone(props) {
         <p className="fs-3" >Tello Command History:</p>
         <p className="fs-4" id="telloLog">{droneLog(history, 5)}</p>
         </div>
+    
+    const sub = <Subscription webcam={webcamRef} canvas={canvasRef} send={sendToDrone}/>
 
 
     return (
         (takeoff ?
             <Container>
-                
+                {sub}
                 <Button variant="danger" onClick={e => sendToDrone([{ name: 'emergencyLand' }])}>Land</Button>
                 <Button variant="light" onClick={e => sendToDrone([{ name: 'forward' , strength: strength}])}>Send Drone Forward</Button>
                 {history_text}
@@ -87,6 +94,7 @@ function Drone(props) {
             </Container>
             :
             <Container>
+                {sub}
                 <Button variant="primary" onClick={e => sendToDrone([{ name: 'takeOff' }])}>TakeOff</Button>
                 {history_text}
             </Container>

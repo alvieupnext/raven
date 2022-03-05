@@ -72,6 +72,7 @@ handModel.setOptions({
 handModel.initialize();
 
 function mediapipeStream(canvasRef) {
+  console.log("I have bveen summoned")
 
   const result = new Subject().pipe(tap(data => drawHand(data, canvasRef)))
 
