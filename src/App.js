@@ -38,6 +38,8 @@ function App() {
     }
     else {
       stopRaven(raven.current)
+      let ctx = canvasRef.current.getContext("2d")
+      ctx.clearRect(0, 0, 640, 480)
       setButtonText("Resume")
     }
     running.current = !running.current
