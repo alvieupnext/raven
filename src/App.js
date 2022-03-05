@@ -96,8 +96,6 @@ function App() {
           <p className="text-justify" id="appLog">Welcome To Raven!</p>
           <LoadMediaPipeButton></LoadMediaPipeButton>
           <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
-          {/*TODO takeoff and land glitch with pressing buttons */}
-          <Drone></Drone>
           <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
             <Dropdown.Toggle variant="light" id="dropdown-button-drop-right">
               Change Output Settings
@@ -108,6 +106,7 @@ function App() {
               <Dropdown.Item eventKey={2}>Minimal</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
+          <Drone canvas={canvasRef} webcam={webcamRef} ></Drone>
           {/* <label for="customRange1" class="form-label">Example range</label> */}
           {/* <form class="multi-range-field my-5 pb-5">
             <input id="multi" class="multi-range" type="range" />
