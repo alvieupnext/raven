@@ -94,8 +94,6 @@ function App() {
 
           </Col>
           <p className="text-justify" id="appLog">Welcome To Raven!</p>
-          <p className="fs-3" >Tello Command History:</p>
-          <p className="fs-4" id="telloLog"></p>
           <LoadMediaPipeButton></LoadMediaPipeButton>
           <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
           {/*TODO takeoff and land glitch with pressing buttons */}
