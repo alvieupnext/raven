@@ -95,8 +95,8 @@ function App() {
 
           </Col>
           <p className="text-justify" id="appLog">Welcome To Raven!</p>
-          <p className="text-justify" >Tello Command History:</p>
-          <p className="text-justify" id="telloLog">[]</p>
+          <p className="fs-3" >Tello Command History:</p>
+          <p className="fs-4" id="telloLog"></p>
           <LoadMediaPipeButton></LoadMediaPipeButton>
           <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
           {/*TODO takeoff and land glitch with pressing buttons */}
@@ -116,11 +116,10 @@ function App() {
           {/* <form class="multi-range-field my-5 pb-5">
             <input id="multi" class="multi-range" type="range" />
           </form> */}
+          <p className="fs-5" >Distance performed by direction:</p>
           <Slider defaultValue={20} step={5} min={20} max={500} marks={marks} aria-label="Default" valueLabelDisplay="auto" color="secondary"/>
           {/* <input type="range" class="form-range" id="customRange1"></input> */}
           {/* <Button variant="secondary" onClick={e => setExporter(completeExport)}>Change Export Settings</Button> */}
-
-
 
         </Container>
 
