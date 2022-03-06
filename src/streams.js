@@ -175,7 +175,7 @@ function gesturer(observable) {
 }
 
 //one-handed commands
-const one_dict = {
+const one_hand = {
   thumbs_up: 'up',
   thumbs_right: 'right',
   thumbs_left: 'left',
@@ -191,7 +191,8 @@ const one_dict = {
   high_five: 5,
 }
 
-const two_dict = {
+//commands for two hands
+const two_hand = {
   thumbs_up: 'up',
   thumbs_right: 'right',
   thumbs_left: 'left',
@@ -199,12 +200,27 @@ const two_dict = {
   stop: 'land',
   yeah: 'forward',
   phone: 'back',
+  okay: 'stop',
+  secondary: 'secondary',
+  one: 1,
+  victory: 2,
+  three: 3,
+  four: 4,
+  high_five: 5,
+}
 
+const two_hand_alt = {
+  thumbs_up: 'ccw',
+  thumbs_down: 'cw',
+  thumbs_left: 'flip_left',
+  thumbs_right: 'flip_right',
+  yeah: 'flip_forward',
+  phone: 'flip_back',
 }
 
 const dict = {
-  Left: one_dict,
-  Right: one_dict
+  Left: one_hand,
+  Right: one_hand
 }
 
 function translateGesture(value) {
