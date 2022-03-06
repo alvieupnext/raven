@@ -69,9 +69,8 @@ function commandLog(data) {
         case "command": 
             return `Command ${data.value.command} from ${data.value.hand} hand`
         case "frequency": for (let freq of data.value) {
-            result = result + `Command ${freq.name} from ${freq.hand} with score ${freq.score} || `
+            return `Command ${freq.value.name} from ${freq.value.hand} hand with score ${freq.value.score}`
         }
-            ; break
         //for minimal export and unimplemented origins
         default: for (let value of data.value) {
             result = result + JSON.stringify(value) + ' || '
