@@ -97,7 +97,7 @@ function mediapipeStream(canvasRef) {
 function fingerposeStream(observable) {
   const GE = new fp.GestureEstimator([
     victory,
-    secondary,
+    // secondary,
     okaySign,
     thumbsDown,
     highFive,
