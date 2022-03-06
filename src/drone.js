@@ -60,7 +60,7 @@ function Drone(props) {
             }
             else { counter.current = 3 }
         }
-        else {
+        else { //airborne
             if (command.name === "land" || command.name === 'emergencyLand') {
                 sendToServer(command)
                 setTakeoff(false)  
@@ -70,7 +70,11 @@ function Drone(props) {
                     command.strength = strength.current
                     sendToServer(command)
                 }
-
+                else if (typeof command.name === 'number'){ //number
+                    command.strength = command.name * 10
+                    command.name = 'speed'
+                    sendToServer(command)
+                }
             }
 
             addToHistory(command)
