@@ -21,7 +21,7 @@ function Drone(props) {
     function setTakeoff(bool){
         takeoff.current = bool
         //needed to force a re-render while maintaing this state
-        reTrick(!trick)
+        reTrick(bool)
     }
 
     function setStrength(number){
