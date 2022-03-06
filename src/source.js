@@ -2,7 +2,6 @@ import { webcamStream, primeStream, mediapipeStream,  fingerposeStream, gesturer
 import { EmptyHandFilter } from './filters';
 
 function createRaven(webcamRef, canvasRef){
-    console.log("help")
     return primeStream
     .pipe(webcamStream(webcamRef, canvasRef),
     mediapipeStream(canvasRef),
@@ -10,8 +9,8 @@ function createRaven(webcamRef, canvasRef){
     fingerposeStream,
     gesturer,
     commandStream,
-    // bufferStream(1500),
-    // frequencyStream,
+    bufferStream(1500),
+    frequencyStream,
 )
 }
 
