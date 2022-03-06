@@ -224,11 +224,12 @@ const dict = {
 }
 
 function translateGesture(value) {
-  let result = []
-  for (let gest of value) {
-    result.push({ command: dict[gest.hand][gest.gesture], hand: gest.hand })
+  if (value.length === 1){ //single
+    return {command: one_hand[value[0].gesture], hand: value[0].hand}
   }
-  return result
+  else {//compound
+    return {command: one_hand[value[0].gesture], hand: value[0].hand}
+  }
 }
 
 function commandStream(observable) {
