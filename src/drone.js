@@ -13,7 +13,6 @@ function Drone(props) {
     const strength = useRef(20)
     const [trick, reTrick] = useState(false)
     const history = useRef([])
-    const [loaded, setLoaded] = useState(false)
     //could also be changed to 5
     const counter = useRef(3)
     const webcamRef = props.webcam
@@ -94,7 +93,7 @@ function Drone(props) {
         <p className="fs-4" id="telloLog">{droneLog(history.current, 5)}</p>
         </div>
     
-    const [sub, setSub] = useState(<Subscription webcam={webcamRef} canvas={canvasRef} send={sendToDrone} />)
+    const sub = <Subscription webcam={webcamRef} canvas={canvasRef} send={sendToDrone} />
 
 
     return (
