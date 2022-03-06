@@ -222,12 +222,27 @@ const dict = {
   Right: one_hand
 }
 
+function toCommand(command, hand){
+  return {command: command, hand: hand}
+}
+
 function translateGesture(value) {
   if (value.length === 1){ //single
-    return {command: one_hand[value[0].gesture], hand: value[0].hand}
+    return toCommand(one_hand[value[0].gesture], value[0].hand)
   }
   else {//compound
-    return {command: one_hand[value[0].gesture], hand: value[0].hand}
+    let command1 = two_hand[value[0].gesture]
+    let command2 = two_hand[value[1].gesture]
+    if (command1 === 'secondary'){ //using secondary menu
+      return toCommand(two_hand_alt[value[1].gesture], value[1].hand)
+    }
+    if (command2 === 'secondary'){
+      return toCommand(two_hand_alt[value[0].gesture], value[0].hand)
+    }
+    if (typeof command1 === 'number' && typeof command2 === 'number'){ //numbers from both hands
+      return toCommand(command1 + command2, "both")
+    }
+    else return toCommand(one_hand[value[0].gesture], value[0].hand) //give priority to the first one
   }
 }
 
