@@ -66,10 +66,8 @@ function commandLog(data) {
             result = result + `Gesture ${value.gesture} from ${value.hand} hand || `
         }
             break;
-        case "command": for (let value of data.value) {
-            result = result + `Command ${value.command} from ${value.hand} hand || `
-        }
-            break;
+        case "command": 
+            return `Command ${data.value.command} from ${data.value.hand} hand`
         case "frequency": for (let freq of data.value) {
             result = result + `Command ${freq.name} from ${freq.hand} with score ${freq.score} || `
         }
