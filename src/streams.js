@@ -215,6 +215,13 @@ const two_hand_alt = {
   thumbs_right: 'flip_right',
   yeah: 'flip_forward',
   phone: 'flip_back',
+  stop: 'emergencyLand',
+  okay: 'stop',
+  one: 1,
+  victory: 2,
+  three: 3,
+  four: 4,
+  high_five: 5,
 }
 
 const dict = {
