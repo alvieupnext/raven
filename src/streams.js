@@ -3,7 +3,7 @@ import { getExporter } from './exports';
 import { dereference, drawHand, mirrorDirection, refreshRate, setJSON, setOrigin, setValue, transformValue } from './Utilities';
 import * as mp from '@mediapipe/hands';
 import * as fp from 'fingerpose'
-import { four, highFive, okaySign, phone, pointUp, stopSign, three, thumbsDown, thumbsLeft, thumbsRight, thumbsUp, victory, yeah } from './gestures';
+import { four, highFive, hold, okaySign, phone, pointUp, stopSign, three, thumbsDown, thumbsLeft, thumbsRight, thumbsUp, victory, yeah } from './gestures';
 import { EmptyArrayFilter, FrequencyThreshold, SortByBestGesture, SortByHighestFrequency } from './filters';
 
 //the stream that starts emitting as first, known as the prime data stream
@@ -97,6 +97,7 @@ function mediapipeStream(canvasRef) {
 function fingerposeStream(observable) {
   const GE = new fp.GestureEstimator([
     victory,
+    hold,
     okaySign,
     thumbsDown,
     highFive,
