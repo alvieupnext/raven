@@ -193,14 +193,14 @@ const one_hand = {
 
 //commands for two hands
 const two_hand = {
-  thumbs_up: 'up',
+  thumbs_up: 'secondary',
   thumbs_right: 'right',
   thumbs_left: 'left',
   thumbs_down: 'down',
   stop: 'land',
   yeah: 'forward',
   phone: 'back',
-  okay: 'secondary',
+  okay: 'stop',
   one: 1,
   victory: 2,
   three: 3,
@@ -231,6 +231,7 @@ function translateGesture(value) {
     return toCommand(one_hand[value[0].gesture], value[0].hand)
   }
   else {//compound
+    //TODO emergency land with two hands
     let command1 = two_hand[value[0].gesture]
     let command2 = two_hand[value[1].gesture]
     if (command1 === 'secondary'){ //using secondary menu
