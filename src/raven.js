@@ -13,7 +13,6 @@ function Subscription(props) {
     const webcamRef = props.webcam
     const canvasRef = props.canvas
     const send = props.send
-    const takeoff = props.takeoff
     const [buttonText, setButtonText] = useState("Start")
     const [loaded, setLoaded] = useState(false)
     const [sub, setSub] = useState(false)
@@ -22,7 +21,7 @@ function Subscription(props) {
     const raven = useRef(createRaven(webcamRef, canvasRef))
     function startRaven() {
         console.log("subscribed")
-        setSub(raven.current.subscribe(telloSubscriber(send, takeoff)))
+        setSub(raven.current.subscribe(telloSubscriber(send)))
     }
 
     function stopRaven() {
