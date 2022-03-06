@@ -243,35 +243,35 @@ victory.addCurl(Finger.Ring, FingerCurl.HalfCurl, 0.9);
 victory.addCurl(Finger.Pinky, FingerCurl.FullCurl, 1.0);
 victory.addCurl(Finger.Pinky, FingerCurl.HalfCurl, 0.9);
 
-const hold = new GestureDescription('hold');
+const secondary = new GestureDescription('secondary');
 
-hold.addDirection(Finger.Thumb, FingerDirection.VerticalUp, 1.0);
-hold.addDirection(Finger.Thumb, FingerDirection.DiagonalUpLeft, 1.0);
-hold.addDirection(Finger.Thumb, FingerDirection.DiagonalUpRight, 1.0);
+secondary.addDirection(Finger.Thumb, FingerDirection.VerticalUp, 1.0);
+secondary.addDirection(Finger.Thumb, FingerDirection.DiagonalUpLeft, 1.0);
+secondary.addDirection(Finger.Thumb, FingerDirection.DiagonalUpRight, 1.0);
 
 // index:
-hold.addCurl(Finger.Index, FingerCurl.NoCurl, 1.0);
-hold.addDirection(Finger.Index, FingerDirection.VerticalUp, 1.0);
-hold.addDirection(Finger.Index, FingerDirection.DiagonalUpLeft, 0.5);
-hold.addDirection(Finger.Index, FingerDirection.DiagonalUpRight, 0.5);
-hold.addDirection(Finger.Index, FingerDirection.HorizontalLeft, 0.9);
-hold.addDirection(Finger.Index, FingerDirection.HorizontalRight, 0.9);
+secondary.addCurl(Finger.Index, FingerCurl.NoCurl, 1.0);
+secondary.addDirection(Finger.Index, FingerDirection.VerticalUp, 1.0);
+secondary.addDirection(Finger.Index, FingerDirection.DiagonalUpLeft, 0.5);
+secondary.addDirection(Finger.Index, FingerDirection.DiagonalUpRight, 0.5);
+secondary.addDirection(Finger.Index, FingerDirection.HorizontalLeft, 0.9);
+secondary.addDirection(Finger.Index, FingerDirection.HorizontalRight, 0.9);
 
 // middle:
-hold.addCurl(Finger.Middle, FingerCurl.NoCurl, 1.0);
-hold.addDirection(Finger.Middle, FingerDirection.VerticalUp, 1.0);
-hold.addDirection(Finger.Middle, FingerDirection.DiagonalUpLeft, 0.3);
-hold.addDirection(Finger.Middle, FingerDirection.DiagonalUpRight, 0.3);
-hold.addDirection(Finger.Middle, FingerDirection.HorizontalLeft, 0.9);
-hold.addDirection(Finger.Middle, FingerDirection.HorizontalRight, 0.9);
+secondary.addCurl(Finger.Middle, FingerCurl.NoCurl, 1.0);
+secondary.addDirection(Finger.Middle, FingerDirection.VerticalUp, 1.0);
+secondary.addDirection(Finger.Middle, FingerDirection.DiagonalUpLeft, 0.3);
+secondary.addDirection(Finger.Middle, FingerDirection.DiagonalUpRight, 0.3);
+secondary.addDirection(Finger.Middle, FingerDirection.HorizontalLeft, 0.9);
+secondary.addDirection(Finger.Middle, FingerDirection.HorizontalRight, 0.9);
 
 // ring:
-hold.addCurl(Finger.Ring, FingerCurl.FullCurl, 1.0);
-hold.addCurl(Finger.Ring, FingerCurl.HalfCurl, 0.9);
+secondary.addCurl(Finger.Ring, FingerCurl.FullCurl, 1.0);
+secondary.addCurl(Finger.Ring, FingerCurl.HalfCurl, 0.9);
 
 // pinky:
-hold.addCurl(Finger.Pinky, FingerCurl.FullCurl, 1.0);
-hold.addCurl(Finger.Pinky, FingerCurl.HalfCurl, 0.9);
+secondary.addCurl(Finger.Pinky, FingerCurl.FullCurl, 1.0);
+secondary.addCurl(Finger.Pinky, FingerCurl.HalfCurl, 0.9);
 
 const pointUp = new GestureDescription("one")
 
@@ -379,4 +379,4 @@ phone.addDirection(Finger.Thumb, FingerDirection.DiagonalUpRight, 0.9)
 
 
 
-export {okaySign, thumbsDown, highFive, stopSign, thumbsRight, thumbsUp, thumbsLeft, victory, hold, pointUp, three, four, yeah, phone}
+export {okaySign, thumbsDown, highFive, stopSign, thumbsRight, thumbsUp, thumbsLeft, victory, secondary, pointUp, three, four, yeah, phone}

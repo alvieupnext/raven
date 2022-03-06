@@ -3,7 +3,7 @@ import { getExporter } from './exports';
 import { dereference, drawHand, mirrorDirection, refreshRate, setJSON, setOrigin, setValue, transformValue } from './Utilities';
 import * as mp from '@mediapipe/hands';
 import * as fp from 'fingerpose'
-import { four, highFive, hold, okaySign, phone, pointUp, stopSign, three, thumbsDown, thumbsLeft, thumbsRight, thumbsUp, victory, yeah } from './gestures';
+import { four, highFive, secondary, okaySign, phone, pointUp, stopSign, three, thumbsDown, thumbsLeft, thumbsRight, thumbsUp, victory, yeah } from './gestures';
 import { EmptyArrayFilter, FrequencyThreshold, SortByBestGesture, SortByHighestFrequency } from './filters';
 
 //the stream that starts emitting as first, known as the prime data stream
@@ -97,7 +97,7 @@ function mediapipeStream(canvasRef) {
 function fingerposeStream(observable) {
   const GE = new fp.GestureEstimator([
     victory,
-    hold,
+    secondary,
     okaySign,
     thumbsDown,
     highFive,
@@ -174,6 +174,7 @@ function gesturer(observable) {
     .pipe(getExporter())
 }
 
+//one-handed commands
 const one_dict = {
   thumbs_up: 'up',
   thumbs_right: 'right',
@@ -187,7 +188,18 @@ const one_dict = {
   victory: 2,
   three: 3,
   four: 4,
-  high_five: 5
+  high_five: 5,
+}
+
+const two_dict = {
+  thumbs_up: 'up',
+  thumbs_right: 'right',
+  thumbs_left: 'left',
+  thumbs_down: 'down',
+  stop: 'land',
+  yeah: 'forward',
+  phone: 'back',
+
 }
 
 const dict = {
