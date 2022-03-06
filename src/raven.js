@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { setExporter, completeExport } from './exports'
+import { setExporter, completeExport, vanillaExport, minimalExport } from './exports'
 import { loadModel } from './streams';
 import { consoleSubscriber, logSubscriber, telloSubscriber } from './subscribers';
 import Button from 'react-bootstrap/Button';
@@ -28,6 +28,16 @@ function Subscription(props) {
         sub.unsubscribe()
         setSub(false)
     }
+
+    const exporters = [completeExport, vanillaExport, minimalExport]
+    const names = ["Complete", "Vanilla", "Minimal"]
+
+      function updateExporter(eventKey) {
+    //access the right export function and set it as exporter
+    setExporter(exporters[eventKey])
+    //confirm to the user and if the stream is running, remind them to resubscribe to the stream
+    logToApp(`Changed output to ${names[eventKey]}. ` + (running.current ? "Please stop and resume the stream" : ""), "appLog")
+  }
 
     // useEffect(()=> {
     //     if (sub){
@@ -68,7 +78,7 @@ function Subscription(props) {
         <Container>
             <LoadMediaPipeButton></LoadMediaPipeButton>
             <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
-            {/* <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
+            <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
                 <Dropdown.Toggle variant="light" id="dropdown-button-drop-right">
                     Change Output Settings
                 </Dropdown.Toggle>
@@ -77,7 +87,7 @@ function Subscription(props) {
                     <Dropdown.Item eventKey={1}>Vanilla</Dropdown.Item>
                     <Dropdown.Item eventKey={2}>Minimal</Dropdown.Item>
                 </Dropdown.Menu>
-            </Dropdown> */}
+            </Dropdown>
         </Container>
     )
 }

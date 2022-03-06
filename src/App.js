@@ -19,8 +19,7 @@ function App() {
   const raven = useRef(null)
 
 
-  const exporters = [completeExport, vanillaExport, minimalExport]
-  const names = ["Complete", "Vanilla", "Minimal"]
+
 
   // function updateExporter(eventKey) {
   //   //access the right export function and set it as exporter
