@@ -20,6 +20,7 @@ function Subscription(props) {
 
     const raven = useRef(createRaven(webcamRef, canvasRef))
     function startRaven() {
+        raven.current = createRaven(webcamRef, canvasRef)
         console.log("subscribed")
         setSub(raven.current.subscribe(logSubscriber))
     }
