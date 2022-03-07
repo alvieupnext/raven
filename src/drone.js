@@ -71,7 +71,7 @@ function Drone(props) {
                 }
                 else if (typeof command.name === 'number') { //number
                     command.arg = command.name * 10
-                    command.name = 'speed'
+                    command.name = 'setSpeed'
                     sendToServer(command)
                 }
             }
@@ -97,7 +97,8 @@ function Drone(props) {
             <Container>
                 {sub}
                 <Button variant="danger" onClick={e => sendToDrone({ name: 'emergencyLand' })}>Land</Button>
-                <Button variant="light" onClick={e => sendToDrone({ name: 'forward' })}>Send Drone Forward</Button>
+                <Button variant="light" onClick={e => sendToDrone({ name: 'yawCW_360' })}>Drone Circle</Button>
+                <Button variant="light" onClick={e => sendToDrone({ name: 'forward' })}>Drone Forward</Button>
                 {history_text}
                 <p className="fs-5" >Distance performed by direction:</p>
                 <Slider defaultValue={20} step={5} min={20} max={500} onChangeCommitted={(event, value) => setStrength(value)} marks={marks} id="Strength" valueLabelDisplay="auto" color="secondary" />

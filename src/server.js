@@ -16,7 +16,10 @@ ws.onclose = function () {
 };
 
 function sendToServer(command){
-    ws.send(command)
+    if (command.arg === undefined){
+        ws.send(command.name)
+    }
+    else ws.send(`${command.name}_${command.arg}`)
 }
 
 export {sendToServer}
