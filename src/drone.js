@@ -96,8 +96,8 @@ function Drone(props) {
         (takeoff.current ?
             <Container>
                 {sub}
-                <Button variant="danger" onClick={e => sendToDrone([{ name: 'emergencyLand' }])}>Land</Button>
-                <Button variant="light" onClick={e => sendToDrone([{ name: 'forward' }])}>Send Drone Forward</Button>
+                <Button variant="danger" onClick={e => sendToDrone({ name: 'emergencyLand' })}>Land</Button>
+                <Button variant="light" onClick={e => sendToDrone({ name: 'forward' })}>Send Drone Forward</Button>
                 {history_text}
                 <p className="fs-5" >Distance performed by direction:</p>
                 <Slider defaultValue={20} step={5} min={20} max={500} onChangeCommitted={(event, value) => setStrength(value)} marks={marks} id="Strength" valueLabelDisplay="auto" color="secondary" />
@@ -107,7 +107,7 @@ function Drone(props) {
             :
             <Container>
                 {sub}
-                <Button variant="primary" onClick={e => sendToDrone([{ name: 'takeOff' }])}>TakeOff</Button>
+                <Button variant="primary" onClick={e => sendToDrone({ name: 'takeOff' })}>TakeOff</Button>
                 {history_text}
             </Container>
         )
