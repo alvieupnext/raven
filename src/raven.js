@@ -22,7 +22,7 @@ function Subscription(props) {
     function startRaven() {
         raven.current = createRaven(webcamRef, canvasRef)
         console.log("subscribed")
-        setSub(raven.current.subscribe(logSubscriber))
+        setSub(raven.current.subscribe(telloSubscriber(send)))
     }
 
     function stopRaven() {
