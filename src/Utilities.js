@@ -88,8 +88,8 @@ function droneLog(history, amount) {
     for (let i = lowerEnd; i < upperEnd; i++) {
         let element = history[i]
         let name = element.name
-        let strength = (element.strength !== undefined ? "_" + element.strength : "")
-        result = result + name + strength + " | "
+        let arg = (element.arg !== undefined ? "_" + element.arg : "")
+        result = result + name + arg + " | "
     }
     return result.substring(0, result.length - 3)
 }
