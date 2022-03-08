@@ -61,21 +61,19 @@ function Drone(props) {
         }
         else { //airborne
             if (command.name === "land" || command.name === 'emergencyLand') {
-                sendToServer(command)
                 setTakeoff(false)
             }
             else {
                 if (directions.includes(command.name)) { //check if direction
                     command.arg = strength.current
-                    sendToServer(command)
+                    
                 }
                 else if (typeof command.name === 'number') { //number
                     command.arg = command.name * 10
                     command.name = 'setSpeed'
-                    sendToServer(command)
                 }
             }
-
+            sendToServer(command)
             addToHistory(command)
         }
     }
