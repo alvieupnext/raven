@@ -207,8 +207,8 @@ const two_hand = {
 }
 
 const two_hand_alt = {
-  thumbs_up: 'ccw',
-  thumbs_down: 'cw',
+  thumbs_up: 'yawCCW',
+  thumbs_down: 'yawCW',
   thumbs_left: 'flip_l',
   thumbs_right: 'flip_r',
   yeah: 'flip_f',
