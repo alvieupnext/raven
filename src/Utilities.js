@@ -30,6 +30,29 @@ function mirrorDirection(dir) {
     return (dir === 'Right' ? 'Left' : "Right")
 }
 
+const degreeMarks = [
+    {
+        value: 0,
+        label: "0°"
+    },
+    {
+        value: 90,
+        label: "90°"
+    },
+    {
+        value: 180,
+        label: "180°"
+    },
+    {
+        value: 270,
+        label: "270°"
+    },
+    {
+        value: 360,
+        label: "360°"
+    }
+]
+
 const marks = [
     {
         value: 20,
@@ -127,4 +150,4 @@ function transformValue(json, transform) {
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue, commandLog, drawHand, mirrorDirection, setValue, logDroneHistory, marks, droneLog}
+export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue, commandLog, drawHand, mirrorDirection, setValue, logDroneHistory, marks, droneLog, degreeMarks}
