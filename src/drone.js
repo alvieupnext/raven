@@ -100,7 +100,7 @@ function Drone(props) {
             <Container>
                 {sub}
                 <Button variant="danger" onClick={e => sendToDrone({ name: 'emergencyLand' })}>Land</Button>
-                <Button variant="light" onClick={e => sendToDrone({ name: 'yawCW_360' })}>Drone Circle</Button>
+                <Button variant="light" onClick={e => sendToDrone({ name: 'yawCW' })}>Drone Circle</Button>
                 <Button variant="light" onClick={e => sendToDrone({ name: 'forward' })}>Drone Forward</Button>
                 {history_text}
                 <p className="fs-5" >Distance performed by direction:</p>
