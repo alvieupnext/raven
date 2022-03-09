@@ -11,6 +11,7 @@ const { logToApp, marks, logDroneHistory, droneLog } = require("./Utilities");
 function Drone(props) {
     const takeoff = useRef(false)
     const strength = useRef(20)
+    const degree = useRef(0)
     const [trick, reTrick] = useState(false)
     const history = useRef([])
     //could also be changed to 5
@@ -26,6 +27,10 @@ function Drone(props) {
 
     function setStrength(number) {
         strength.current = number
+    }
+
+    function setDegree(number){
+        degree.current = number
     }
 
 
@@ -100,6 +105,7 @@ function Drone(props) {
                 {history_text}
                 <p className="fs-5" >Distance performed by direction:</p>
                 <Slider defaultValue={20} step={5} min={20} max={500} onChangeCommitted={(event, value) => setStrength(value)} marks={marks} id="Strength" valueLabelDisplay="auto" color="secondary" />
+                <Slider defaultValue={0} step={1} min={0} max={360} onChangeCommitted={(event, value) => setDegree(value)} marks={marks} id="Strength" valueLabelDisplay="auto" color="secondary" />
 
 
             </Container>
