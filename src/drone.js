@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 import { sendToServer } from './server';
 import Slider from '@mui/material/Slider';
 import { Subscription } from './raven';
-const { logToApp, logDroneHistory, droneLog, distanceMarks } = require("./Utilities");
+const { logToApp, logDroneHistory, droneLog, distanceMarks, degreeMarks } = require("./Utilities");
 
 function Drone(props) {
     const takeoff = useRef(false)
@@ -105,7 +105,7 @@ function Drone(props) {
                 {history_text}
                 <p className="fs-5" >Distance performed by direction:</p>
                 <Slider defaultValue={20} step={5} min={20} max={500} onChangeCommitted={(event, value) => setStrength(value)} marks={distanceMarks} id="Strength" valueLabelDisplay="auto" color="secondary" />
-                <Slider defaultValue={0} step={1} min={0} max={360} onChangeCommitted={(event, value) => setDegree(value)} marks={distanceMarks} id="Strength" valueLabelDisplay="auto" color="secondary" />
+                <Slider defaultValue={0} step={1} min={0} max={360} onChangeCommitted={(event, value) => setDegree(value)} marks={degreeMarks} id="Strength" valueLabelDisplay="auto" color="secondary" />
 
 
             </Container>
