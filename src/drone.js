@@ -11,7 +11,7 @@ const { logToApp, logDroneHistory, droneLog, distanceMarks, degreeMarks } = requ
 function Drone(props) {
     const takeoff = useRef(false)
     const strength = useRef(20)
-    const degree = useRef(0)
+    const degree = useRef(90)
     const [trick, reTrick] = useState(false)
     const history = useRef([])
     //could also be changed to 5
