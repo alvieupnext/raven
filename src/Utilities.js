@@ -53,7 +53,7 @@ const degreeMarks = [
     }
 ]
 
-const marks = [
+const distanceMarks = [
     {
         value: 20,
         label: 'Min = 20cm',
@@ -150,4 +150,4 @@ function transformValue(json, transform) {
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue, commandLog, drawHand, mirrorDirection, setValue, logDroneHistory, marks, droneLog, degreeMarks}
+export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue, commandLog, drawHand, mirrorDirection, setValue, logDroneHistory, distanceMarks, droneLog, degreeMarks}
