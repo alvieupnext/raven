@@ -4,7 +4,7 @@ import { dereference, drawHand, mirrorDirection, refreshRate, setJSON, setOrigin
 import * as mp from '@mediapipe/hands';
 import * as fp from 'fingerpose'
 import { four, highFive, secondary, okaySign, phone, pointUp, stopSign, three, thumbsDown, thumbsLeft, thumbsRight, thumbsUp, victory, yeah } from './gestures';
-import { EmptyArrayFilter, FrequencyThreshold, SortByBestGesture, SortByHighestFrequency } from './filters';
+import { EmptyArrayFilter, FrequencyThreshold, NoGestureFilter, SortByBestGesture, SortByHighestFrequency } from './filters';
 
 //the stream that starts emitting as first, known as the prime data stream
 let primeStream = interval(refreshRate)
@@ -253,6 +253,7 @@ function translateGesture(value) {
 
 function commandStream(observable) {
   return observable
+    .pipe(NoGestureFilter)
     .pipe(map(json => transformValue(json, translateGesture)))
     .pipe(map(json => setOrigin(json, 'command')))
     .pipe(getExporter())

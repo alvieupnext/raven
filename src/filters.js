@@ -66,6 +66,8 @@ const SortByBestGesture = createSort(sortGestures)
 
 const SortByHighestFrequency = createSort(sortFrequency)
 
+const NoGestureFilter = createFilterer(removeNoGestures)
+
 function FrequencyThreshold(thres){
   return createSort(threshold(thres))
 } 
@@ -74,4 +76,4 @@ const EmptyArrayFilter = createFilterer(removeEmptyValue)
 
 const EmptyHandFilter = createFilterer(removeEmptyHand)
 
-export { EmptyHandFilter, SortByBestGesture, EmptyArrayFilter, SortByHighestFrequency, FrequencyThreshold }
+export { EmptyHandFilter, SortByBestGesture, EmptyArrayFilter, SortByHighestFrequency, FrequencyThreshold, NoGestureFilter }
