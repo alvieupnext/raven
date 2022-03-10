@@ -17,20 +17,32 @@ const argdict = {
     right: [1],
 }
 
+//store battery in this variable
+let battery = 0;
+
 wss.on('connection', (ws) => {
 
     const Tello = new TelloDrone()
 
     Tello.start()
 
-    //events
-    Tello.on(Tello.events.MESSAGE, data => {
-        console.log(data)
-    })
+    Tello.streamOn()
+
+    // //events
+    // Tello.on(Tello.events.VIDEO, data => {
+    //     console.log(data)
+    // })
+
 
     //telemetry
     Tello.on(Tello.events.STATE, data => {
-        console.log(JSON.parse(data))
+        let parsed = JSON.parse(data)
+        // console.log(parsed)
+        if (battery !== parsed.bat){ //update battery variable and send new battery value to server
+            ws.send(parsed.bat)
+            battery = parsed.bat
+        }
+        
     })
 
     //connection is up, let's add a simple simple event
