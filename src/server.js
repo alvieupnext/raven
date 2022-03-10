@@ -9,6 +9,10 @@ ws.onmessage = function (evt) {
     console.log("Message is received..." + received_msg);
 };
 
+function setOnMessage(func){
+    ws.onmessage(func)
+}
+
 ws.onclose = function () {
 
     // websocket is closed.
@@ -22,4 +26,4 @@ function sendToServer(command){
     else ws.send(`${command.name}_${command.arg}`)
 }
 
-export {sendToServer}
+export {sendToServer, setOnMessage}
