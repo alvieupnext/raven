@@ -3,7 +3,7 @@
 import React, { useRef, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { getBattery, sendToServer, setOnMessage } from './server';
+import { getBattery, sendToServer} from './server';
 import Slider from '@mui/material/Slider';
 import { Subscription } from './raven';
 import { BatteryIndicator } from 'battery-indicator-element';
@@ -20,6 +20,7 @@ function Drone(props) {
     const counter = useRef(3)
     const webcamRef = props.webcam
     const canvasRef = props.canvas
+    
 
     function setTakeoff(bool) {
         takeoff.current = bool
@@ -34,6 +35,8 @@ function Drone(props) {
     function setDegree(number){
         degree.current = number
     }
+
+    setInterval(() => {setBattery(getBattery())}, 10000)
 
     function addToHistory(command) {
         console.log(history)
@@ -104,7 +107,7 @@ function Drone(props) {
         (takeoff.current ?
             <Container>
                 {sub}
-                <p className="fs-3" >Battery: {getBattery()}</p>
+                <p className="fs-3" >Battery: {battery}</p>
                 <Button variant="danger" onClick={e => sendToDrone({ name: 'emergencyLand' })}>Land</Button>
                 <Button variant="light" onClick={e => sendToDrone({ name: 'yawCW' })}>Drone Circle</Button>
                 <Button variant="light" onClick={e => sendToDrone({ name: 'forward' })}>Drone Forward</Button>
@@ -118,6 +121,7 @@ function Drone(props) {
             :
             <Container>
                 {sub}
+                <p className="fs-3" >Battery: {battery}</p>
                 <Button variant="primary" onClick={e => sendToDrone({ name: 'takeOff' })}>TakeOff</Button>
                 {history_text}
             </Container>
