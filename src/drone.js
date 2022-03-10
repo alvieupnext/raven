@@ -3,15 +3,17 @@
 import React, { useRef, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { sendToServer } from './server';
+import { getBattery, sendToServer, setOnMessage } from './server';
 import Slider from '@mui/material/Slider';
 import { Subscription } from './raven';
+import { BatteryIndicator } from 'battery-indicator-element';
 const { logToApp, logDroneHistory, droneLog, distanceMarks, degreeMarks } = require("./Utilities");
 
 function Drone(props) {
     const takeoff = useRef(false)
     const strength = useRef(20)
     const degree = useRef(90)
+    const [battery, setBattery] = useState("0")
     const [trick, reTrick] = useState(false)
     const history = useRef([])
     //could also be changed to 5
@@ -32,7 +34,6 @@ function Drone(props) {
     function setDegree(number){
         degree.current = number
     }
-
 
     function addToHistory(command) {
         console.log(history)
@@ -103,6 +104,7 @@ function Drone(props) {
         (takeoff.current ?
             <Container>
                 {sub}
+                <p className="fs-3" >Battery: {getBattery()}</p>
                 <Button variant="danger" onClick={e => sendToDrone({ name: 'emergencyLand' })}>Land</Button>
                 <Button variant="light" onClick={e => sendToDrone({ name: 'yawCW' })}>Drone Circle</Button>
                 <Button variant="light" onClick={e => sendToDrone({ name: 'forward' })}>Drone Forward</Button>
@@ -127,4 +129,4 @@ function Drone(props) {
 
 
 
-export { Drone }
+export { Drone}
