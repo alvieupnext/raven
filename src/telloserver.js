@@ -76,11 +76,7 @@ wss.on('connection', (ws) => {
         //     func.apply(null, arg)
         // }
         // else {func()}
-        ws.send(`Hello, you sent -> ${message}`);
     });
-
-    //send immediatly a feedback to the incoming connection    
-    ws.send('Hi there, I am a WebSocket server');
 });
 
 //start our server
