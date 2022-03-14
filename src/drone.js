@@ -109,8 +109,8 @@ function Drone(props) {
                 {sub}
                 <p className="fs-3" >Battery: {battery}</p>
                 <Button variant="danger" onClick={e => sendToDrone({ name: 'emergencyLand' })}>Land</Button>
-                <Button variant="light" onClick={e => sendToDrone({ name: 'yawCW' })}>Drone Circle</Button>
-                <Button variant="light" onClick={e => sendToDrone({ name: 'forward' })}>Drone Forward</Button>
+                <Button variant="light" onClick={e => sendToDrone({ name: 'yawCW' })}>Rotate</Button>
+                <Button variant="light" onClick={e => sendToDrone({ name: 'forward' })}>Go Forward</Button>
                 {history_text}
                 <p className="fs-5" >Distance performed by direction:</p>
                 <Slider defaultValue={20} step={5} min={20} max={500} onChangeCommitted={(event, value) => setStrength(value)} marks={distanceMarks} id="Strength" valueLabelDisplay="auto" color="secondary" />
