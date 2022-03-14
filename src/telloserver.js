@@ -53,8 +53,15 @@ wss.on('connection', (ws) => {
         // console.log(message.toString())
         const index = message.indexOf('_')
         if (index === -1){ //no parameter
+            if (message === "stop"){
+                //empty the command
+                Tello.commands = []
+                Tello._send("stop")
+            }
+            else {
             let func = Tello[message]
             func()
+            }
         }
         else {
             let name = message.substring(0, index)

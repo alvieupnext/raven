@@ -110,6 +110,7 @@ function Drone(props) {
                 <p className="fs-3" >Battery: {battery}</p>
                 <Button variant="danger" onClick={e => sendToDrone({ name: 'emergencyLand' })}>Land</Button>
                 <Button variant="light" onClick={e => sendToDrone({ name: 'yawCW' })}>Rotate</Button>
+                <Button variant="danger" onClick={e => sendToDrone({ name: 'stop' })}>Stop</Button>
                 <Button variant="light" onClick={e => sendToDrone({ name: 'forward' })}>Go Forward</Button>
                 {history_text}
                 <p className="fs-5" >Distance performed by direction:</p>
