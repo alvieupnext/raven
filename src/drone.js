@@ -6,7 +6,6 @@ import Container from 'react-bootstrap/Container';
 import { getBattery, sendToServer} from './server';
 import Slider from '@mui/material/Slider';
 import { Subscription } from './raven';
-import { BatteryIndicator } from 'battery-indicator-element';
 const { logToApp, logDroneHistory, droneLog, distanceMarks, degreeMarks } = require("./Utilities");
 
 function Drone(props) {
