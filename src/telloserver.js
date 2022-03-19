@@ -4,6 +4,9 @@ const WebSocket = require('ws');
 
 const app = express();
 
+//prepare to serve static files for the mediapipe model
+app.use(express.static(__dirname + '/mediapipe'))
+
 //initialize a simple http server
 const server = http.createServer(app);
 
