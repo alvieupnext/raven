@@ -55,10 +55,13 @@ function loadModel() {
   handModel.send(5)
 }
 
-//do not disable cache
+
 let handModel = new mp.Hands({
   locateFile: (file) => {
-    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+    //use this link for overall use (do not disable cache)
+    // return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+    //use this link for offline loading (requires server)
+    return `http://localhost:4000/hands/${file}`
   }
 });
 handModel.setOptions({
