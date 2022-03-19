@@ -48,7 +48,6 @@ function Drone(props) {
 
 
     function processCommand(command) {
-        console.log(takeoff)
         if (!takeoff.current) { //drone on the ground
             console.log(counter)
             if (command.name === "takeOff") {
