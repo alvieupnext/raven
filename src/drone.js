@@ -3,10 +3,10 @@
 import React, { useRef, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { batteryStream, sendToServer} from './server';
+import { batteryStream, sendToServer } from './server';
 import Slider from '@mui/material/Slider';
 import { Subscription } from './raven';
-const { logToApp, logDroneHistory, droneLog, distanceMarks, degreeMarks } = require("./Utilities");
+const { logToApp, logDroneHistory, droneLog, distanceMarks, degreeMarks, commandLog } = require("./Utilities");
 
 function Drone(props) {
     const takeoff = useRef(false)
@@ -19,7 +19,7 @@ function Drone(props) {
     const counter = useRef(3)
     const webcamRef = props.webcam
     const canvasRef = props.canvas
-    
+
 
     function setTakeoff(bool) {
         takeoff.current = bool
@@ -31,7 +31,7 @@ function Drone(props) {
         strength.current = number
     }
 
-    function setDegree(number){
+    function setDegree(number) {
         degree.current = number
     }
 
@@ -45,8 +45,16 @@ function Drone(props) {
     const rotations = ['yawCW', 'yawCCW']
 
     let batterySubscriber = {
-        next: (data) => { setBattery(data);},
+        next: (data) => { setBattery(data); },
         error: (error) => { console.log(error) },
+        complete: () => { console.log('Completed') }
+    }
+
+
+    let telloSubscriber = {
+        next: (data) => { console.log(data); console.log("kaas"); logToApp(commandLog(data), "appLog"); sendToDrone(data.value) },
+        error: (error) => { console.log(error) },
+        //TODO tello stop
         complete: () => { console.log('Completed') }
     }
 
@@ -80,9 +88,9 @@ function Drone(props) {
             else {
                 if (directions.includes(command.name)) { //check if direction
                     command.arg = strength.current
-                    
+
                 }
-                else if (rotations.includes(command.name)){
+                else if (rotations.includes(command.name)) {
                     command.arg = degree.current
                 }
                 else if (typeof command.name === 'number') { //number
@@ -104,7 +112,7 @@ function Drone(props) {
         <p className="fs-4" id="telloLog">{droneLog(history.current, 5)}</p>
     </div>
 
-    const sub = <Subscription webcam={webcamRef} canvas={canvasRef} send={sendToDrone} />
+    const sub = <Subscription webcam={webcamRef} canvas={canvasRef} sub={telloSubscriber} />
 
 
     return (
@@ -138,4 +146,4 @@ function Drone(props) {
 
 
 
-export { Drone}
+export { Drone }

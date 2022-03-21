@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { setExporter, completeExport, vanillaExport, minimalExport } from './exports'
 import { loadModel } from './streams';
-import { consoleSubscriber, logSubscriber, telloSubscriber } from './subscribers';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -12,7 +11,7 @@ import { createRaven } from './source';
 function Subscription(props) {
     const webcamRef = props.webcam
     const canvasRef = props.canvas
-    const send = props.send
+    const subscription = props.sub
     const [buttonText, setButtonText] = useState("Start")
     const [loaded, setLoaded] = useState(false)
     const [sub, setSub] = useState(false)
@@ -22,7 +21,7 @@ function Subscription(props) {
     function startRaven() {
         raven.current = createRaven(webcamRef, canvasRef)
         console.log("subscribed")
-        setSub(raven.current.subscribe(telloSubscriber(send)))
+        setSub(raven.current.subscribe(subscription))
     }
 
     function stopRaven() {
