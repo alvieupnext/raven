@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState } from 'react'
 import { setExporter, completeExport, vanillaExport, minimalExport } from './exports'
 import { loadModel } from './streams';
 import Button from 'react-bootstrap/Button';
@@ -6,11 +6,13 @@ import Container from 'react-bootstrap/Container';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { logToApp } from './Utilities.js';
 import { createRaven } from './source';
+import Col from 'react-bootstrap/Col';
+import Webcam from 'react-webcam'
 
 // setExporter(completeExport)
 function Subscription(props) {
-    const webcamRef = props.webcam
-    const canvasRef = props.canvas
+    const webcamRef = useRef(null)
+    const canvasRef = useRef(null)
     const subscription = props.sub
     const [buttonText, setButtonText] = useState("Start")
     const [loaded, setLoaded] = useState(false)
@@ -76,6 +78,29 @@ function Subscription(props) {
 
     return (
         <Container>
+            <Col>
+            <Webcam
+              mirrored={true}
+              ref={webcamRef}
+              style={{
+                width: 640, height: 480,
+                position: 'absolute',
+                // position: 'relative',
+              }}
+
+
+            />
+
+            <canvas
+              ref={canvasRef}
+              style={{
+                width: 640, height: 480,
+                transform: 'scaleX(-1)',
+                // position: 'absolute',
+
+              }}
+            />
+            </Col>
             <LoadMediaPipeButton></LoadMediaPipeButton>
             <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
             <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>

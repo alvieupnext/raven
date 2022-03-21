@@ -112,7 +112,7 @@ function Drone(props) {
         <p className="fs-4" id="telloLog">{droneLog(history.current, 5)}</p>
     </div>
 
-    const sub = <Subscription webcam={webcamRef} canvas={canvasRef} sub={telloSubscriber} />
+    const sub = <Subscription sub={telloSubscriber} />
 
 
     return (
