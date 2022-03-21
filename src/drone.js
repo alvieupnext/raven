@@ -3,7 +3,7 @@
 import React, { useRef, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { batteryStream, sendToServer } from './server';
+import { batteryStream, sendToServer, statusStream } from './server';
 import Slider from '@mui/material/Slider';
 import { Subscription } from './raven';
 const { logToApp, logDroneHistory, droneLog, distanceMarks, degreeMarks, commandLog } = require("./Utilities");
@@ -13,6 +13,7 @@ function Drone(props) {
     const strength = useRef(20)
     const degree = useRef(90)
     const [battery, setBattery] = useState("0")
+    const [color, setColor] = useState("#282c34")
     const [trick, reTrick] = useState(false)
     const history = useRef([])
     //could also be changed to 5
@@ -50,6 +51,21 @@ function Drone(props) {
         complete: () => { console.log('Completed') }
     }
 
+    let messageSubscriber = {
+        next: (data) => { processStatus(data); },
+        error: (error) => { console.log(error) },
+        complete: () => { console.log('Completed') }
+    }
+
+    function processStatus(msg){
+        if (msg === "ok"){
+            setColor("green")
+            
+        }
+        else {setColor("red")}
+        setTimeout(() => setColor("#282c34"), 1000)
+    }
+
 
     let telloSubscriber = {
         next: (data) => { console.log(data); console.log("kaas"); logToApp(commandLog(data), "appLog"); sendToDrone(data.value) },
@@ -59,6 +75,8 @@ function Drone(props) {
     }
 
     batteryStream.subscribe(batterySubscriber)
+
+    statusStream.subscribe(messageSubscriber)
 
 
     function processCommand(command) {
@@ -120,6 +138,10 @@ function Drone(props) {
             <Container>
                 {sub}
                 <p className="fs-3" >Battery: {battery}</p>
+                <div class= {`box ${color}`}>
+                <p className="fs-6"> </p>
+                <p className="fs-6">command status</p>
+                </div>
                 <Button variant="danger" onClick={e => sendToDrone({ name: 'emergencyLand' })}>Land</Button>
                 <Button variant="light" onClick={e => sendToDrone({ name: 'yawCW' })}>Rotate</Button>
                 <Button variant="danger" onClick={e => sendToDrone({ name: 'stop' })}>Stop</Button>
