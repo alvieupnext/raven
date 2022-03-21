@@ -48,10 +48,15 @@ wss.on('connection', (ws) => {
         let parsed = JSON.parse(data)
         // console.log(parsed)
         if (battery !== parsed.bat){ //update battery variable and send new battery value to server
-            let msg = {type: 'bat', content: parsed.bat}
+            let msg = {type: 'battery', content: parsed.bat}
             ws.send(JSON.stringify(msg))
             battery = parsed.bat
         }
+    })
+
+    Tello.on(Tello.events.MESSAGE, data => {
+        let msg = {type: 'message', content: data}
+        ws.send(JSON.stringify(msg))
     })
 
     
