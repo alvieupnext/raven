@@ -48,11 +48,13 @@ wss.on('connection', (ws) => {
         let parsed = JSON.parse(data)
         // console.log(parsed)
         if (battery !== parsed.bat){ //update battery variable and send new battery value to server
-            ws.send(JSON.stringify({type: 'bat', content: parsed.bat}))
+            let msg = {type: 'bat', content: parsed.bat}
+            ws.send(JSON.stringify(msg))
             battery = parsed.bat
         }
-        
     })
+
+    
 
     //connection is up, let's add a simple simple event
     ws.on('message', (message) => {
