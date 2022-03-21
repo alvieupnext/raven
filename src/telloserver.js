@@ -37,11 +37,10 @@ wss.on('connection', (ws) => {
 
     Tello.streamOn()
 
-    //events
-    Tello.on(Tello.events.VIDEO, data => {
-        let msg = {type: 'video', content: data}
-        ws.send(JSON.stringify(msg))
-    })
+    // //events
+    // Tello.on(Tello.events.VIDEO, data => {
+    //     console.log(data)
+    // })
 
 
     //telemetry

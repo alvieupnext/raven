@@ -3,7 +3,7 @@
 import React, { useRef, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { batteryStream, sendToServer, statusStream, videoStream } from './server';
+import { batteryStream, sendToServer, statusStream } from './server';
 import Slider from '@mui/material/Slider';
 import { Subscription } from './raven';
 const { logToApp, logDroneHistory, droneLog, distanceMarks, degreeMarks, commandLog } = require("./Utilities");
@@ -57,12 +57,6 @@ function Drone(props) {
         complete: () => { console.log('Completed') }
     }
 
-    let videoSubscriber = {
-        next: (data) => { console.log(data) },
-        error: (error) => { console.log(error) },
-        complete: () => { console.log('Completed') }
-    }
-
     function processStatus(msg){
         if (msg === "ok"){
             setColor("green")
@@ -83,8 +77,6 @@ function Drone(props) {
     batteryStream.subscribe(batterySubscriber)
 
     statusStream.subscribe(messageSubscriber)
-
-    videoStream.subscribe(videoSubscriber)
 
 
     function processCommand(command) {
