@@ -11,10 +11,12 @@ ws.onopen = function () {
 
 //battery
 ws.onmessage = function (evt){
-    var received_msg = evt.data;
-    console.log("Message is received..." + received_msg);
-    console.log(typeof received_msg)
-    battery = received_msg
+    const msg = evt.data
+    const received_msg = JSON.parse(msg);
+    const bat = received_msg.content
+    console.log("Message is received..." + bat);
+    console.log(typeof bat)
+    battery = bat
 }
 
 ws.onclose = function () {
