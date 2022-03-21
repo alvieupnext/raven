@@ -5,6 +5,8 @@ const batteryStream = new Subject()
 
 const statusStream = new Subject()
 
+const videoStream = new Subject()
+
 ws.onopen = function () {
     // Web Socket is connected, send data using send()
     console.log("Server is Open");
@@ -27,6 +29,8 @@ ws.onmessage = function (evt){
                         break;
         case "message": statusStream.next(content)
         break;
+        case "video": videoStream.next(content)
+        break;
         default: console.log(content)
     } 
 }
@@ -44,4 +48,4 @@ function sendToServer(command){
     else ws.send(`${command.name}_${command.arg}`)
 }
 
-export {sendToServer, batteryStream, statusStream}
+export {sendToServer, batteryStream, statusStream, videoStream}
