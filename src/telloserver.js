@@ -55,8 +55,10 @@ wss.on('connection', (ws) => {
     })
 
     Tello.on(Tello.events.MESSAGE, data => {
-        let msg = {type: 'message', content: data}
-        ws.send(JSON.stringify(msg))
+        if (typeof data !== "object"){
+            let msg = {type: 'message', content: data}
+            ws.send(JSON.stringify(msg))
+        }
     })
 
     

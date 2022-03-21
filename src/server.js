@@ -17,6 +17,10 @@ ws.onmessage = function (evt){
     const msg = evt.data
     const received_msg = JSON.parse(msg);
     const content = received_msg.content
+    if (typeof content === "object"){
+        console.log(received_msg.type)
+        console.log(JSON.stringify(content))
+    }
     console.log("Received " + content)
     switch (received_msg.type){
         case "battery": batteryStream.next(content)
