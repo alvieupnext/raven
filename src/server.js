@@ -1,13 +1,14 @@
+import {Subject} from "rxjs"
 let ws = new WebSocket('ws://localhost:4000/ws')
-let battery = "0"
 
-function getBattery(){
-    return battery
-}
+const batteryStream = new Subject()
+
 ws.onopen = function () {
     // Web Socket is connected, send data using send()
     console.log("Server is Open");
 };
+
+
 
 //battery
 ws.onmessage = function (evt){
@@ -16,7 +17,7 @@ ws.onmessage = function (evt){
     const bat = received_msg.content
     console.log("Message is received..." + bat);
     console.log(typeof bat)
-    battery = bat
+    batteryStream.next(bat)
 }
 
 ws.onclose = function () {
@@ -32,4 +33,4 @@ function sendToServer(command){
     else ws.send(`${command.name}_${command.arg}`)
 }
 
-export {sendToServer, getBattery}
+export {sendToServer, batteryStream}

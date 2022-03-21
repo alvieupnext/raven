@@ -3,7 +3,7 @@
 import React, { useRef, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { getBattery, sendToServer} from './server';
+import { batteryStream, sendToServer} from './server';
 import Slider from '@mui/material/Slider';
 import { Subscription } from './raven';
 const { logToApp, logDroneHistory, droneLog, distanceMarks, degreeMarks } = require("./Utilities");
@@ -35,8 +35,6 @@ function Drone(props) {
         degree.current = number
     }
 
-    setInterval(() => {setBattery(getBattery())}, 10000)
-
     function addToHistory(command) {
         console.log(history)
         history.current.push(command)
@@ -45,6 +43,14 @@ function Drone(props) {
     const directions = ["up", "left", "right", "down", "forward", "back"]
 
     const rotations = ['yawCW', 'yawCCW']
+
+    let batterySubscriber = {
+        next: (data) => { setBattery(data);},
+        error: (error) => { console.log(error) },
+        complete: () => { console.log('Completed') }
+    }
+
+    batteryStream.subscribe(batterySubscriber)
 
 
     function processCommand(command) {
