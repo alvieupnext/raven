@@ -296,12 +296,33 @@ function frequencyStream(observable) {
       }
       return setValue(json, occurences)
     }
+  function motion(json){
+    let array = json.value
+    if (array.length !== 1){ //single element, no compound statement
+      let first_command = array[0]
+      let second_command = array[1]
+      if (first_command.name === "up"){
+        switch (second_command.name){ //flip by flicking the wrist
+          case "left": first_command.name = "flip_l"; break;
+          case "right": first_command.name = "flip_r"; break;
+          case "down": first_command.name = "flip_b"; break;
+          default: break;
+        }
+      }
+      else if (first_command.name === "down" && second_command.name === "up"){
+        first_command.name = "flip_f"
+      }
+    }
+    return json
+  }
   return observable
     .pipe(EmptyArrayFilter)
     .pipe(map(frequency))
     .pipe(SortByHighestFrequency)
-    .pipe(FrequencyThreshold(0.5))
+    // .pipe(FrequencyThreshold(0.15))
+    .pipe(map(motion))
     .pipe(EmptyArrayFilter)
+    .pipe(tap(data => console.log(data.value)))
     //get single element
     .pipe(map(json => transformValue(json, (array => array[0]))))
     .pipe(map(json => setOrigin(json, 'frequency')))
