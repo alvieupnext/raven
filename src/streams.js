@@ -183,7 +183,7 @@ const one_hand = {
   thumbs_right: 'right',
   thumbs_left: 'left',
   thumbs_down: 'down',
-  stop: 'land',
+  stop: 'stop',
   yeah: 'forward',
   phone: 'back',
   one: 1,
@@ -216,17 +216,12 @@ const two_hand_alt = {
   thumbs_right: 'flip_r',
   yeah: 'flip_f',
   phone: 'flip_b',
-  stop: 'emergencyLand',
+  stop: 'land',
   one: 1,
   victory: 2,
   three: 3,
   four: 4,
   high_five: 5,
-}
-
-const dict = {
-  Left: one_hand,
-  Right: one_hand
 }
 
 function toCommand(command, hand){
