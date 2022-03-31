@@ -2,6 +2,8 @@ const { app, BrowserWindow } = require('electron')
 
 require("./telloserver")
 
+require("./videoFeed")
+
 // const http = require('http');
 // const WebSocket = require('ws');
 
