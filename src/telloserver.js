@@ -19,7 +19,7 @@ const server = http.createServer(app);
 //initialize the WebSocket server instance
 const wss = new WebSocket.Server({ server });
 
-const { TelloDrone } = require('yatsw')
+const { TelloDrone } = require('./yatsw')
 
 const argdict = {
     left: [1],

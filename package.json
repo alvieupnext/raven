@@ -24,8 +24,7 @@
     "react-webcam": "^6.0.1",
     "rxjs": "^7.5.4",
     "wait-on": "^6.0.1",
-    "web-vitals": "^2.1.4",
-    "yatsw": "^1.0.0-beta.2"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

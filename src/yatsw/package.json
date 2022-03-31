@@ -1,0 +1,65 @@
+{
+  "_args": [
+    [
+      "yatsw@1.0.0-beta.2",
+      "C:\\Users\\gisel\\Bachelorproef\\raven"
+    ]
+  ],
+  "_from": "yatsw@1.0.0-beta.2",
+  "_id": "yatsw@1.0.0-beta.2",
+  "_inBundle": false,
+  "_integrity": "sha512-FPSR8HkoJlPAvgXoVHxsjQ2xM9I2AVFKejmZvuPwlzGnXtnNQzO+og8o35c8mj8Xla+jFki41eMgCwCG9OdEMg==",
+  "_location": "/yatsw",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "yatsw@1.0.0-beta.2",
+    "name": "yatsw",
+    "escapedName": "yatsw",
+    "rawSpec": "1.0.0-beta.2",
+    "saveSpec": null,
+    "fetchSpec": "1.0.0-beta.2"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/yatsw/-/yatsw-1.0.0-beta.2.tgz",
+  "_spec": "1.0.0-beta.2",
+  "_where": "C:\\Users\\gisel\\Bachelorproef\\raven",
+  "author": {
+    "name": "Elia Biraschi",
+    "email": "elia.birasachi@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/eliabiraschi/TelloDrone/issues"
+  },
+  "dependencies": {
+    "dgram": "^1.0.1",
+    "eventemitter3": "^3.1.0"
+  },
+  "description": "A Ryze Tello SDK wrapper for NodeJS",
+  "engines": {
+    "node": ">=7.10"
+  },
+  "homepage": "https://github.com/eliabiraschi/TelloDrone",
+  "keywords": [
+    "tello",
+    "drone",
+    "ryze",
+    "dji",
+    "sdk",
+    "async"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "yatsw",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eliabiraschi/TelloDrone.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0-beta.2"
+}
