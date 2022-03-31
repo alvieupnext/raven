@@ -100,9 +100,9 @@ setTimeout(function() {
   var args = [
     "-i", "udp://0.0.0.0:11111",
     "-r", "30",
-    "-s", "960x720",
+    "-s", "640x480",
     "-codec:v", "mpeg1video",
-    "-b", "800k",
+    "-b", "400k",
     "-f", "mpegts",
     "http://127.0.0.1:5001/stream"
   ];
@@ -114,4 +114,4 @@ setTimeout(function() {
   streamer.on("exit", function(code){
       console.log("Failure", code);
   });
-}, 6000);
+}, 4000);
