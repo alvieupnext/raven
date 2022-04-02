@@ -1,8 +1,16 @@
-const { app, BrowserWindow } = require('electron')
-
+const { app, BrowserWindow, Menu, ipcMain, ipcRenderer} = require('electron')
 require("./telloserver")
 
 require("./videoFeed")
+
+var menu = Menu.buildFromTemplate([
+  {
+    label: 'Tello Drone Feed',
+    click: ipcRenderer.send("feed")
+  }
+])
+
+Menu.setApplicationMenu(menu)
 
 function createWindow () {
   // Create the browser window.
@@ -10,7 +18,8 @@ function createWindow () {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false,
     }
   })
 
@@ -19,7 +28,16 @@ function createWindow () {
 
   // Open the DevTools.
   win.webContents.openDevTools()
+  const drone = new BrowserWindow({
+    width: 640,
+    height:480,
+    show: false,
+  })
+  drone.loadURL('http://localhost:5000/index.html')
+  ipcMain.on("feed", (evnt, arg) => {drone.show()})
 }
+
+
 
 
 // This method will be called when Electron has finished
