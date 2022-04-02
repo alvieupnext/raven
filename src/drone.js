@@ -13,6 +13,10 @@ function Drone(props) {
     const distance = useRef(20)
     const degree = useRef(90)
     const speed = useRef(10)
+    //toggle for safe mode
+    const [safe, setSafe] = useState(false)
+    //toggle for sending a command
+    const [send, setSend] = useState(true)
     const [battery, setBattery] = useState("0")
     const [color, setColor] = useState("#282c34")
     const [trick, reTrick] = useState(false)
@@ -23,6 +27,8 @@ function Drone(props) {
 
     function setTakeoff(bool) {
         takeoff.current = bool
+        //set send to false
+        setSend(false)
         //needed to force a re-render while maintaing this state
         reTrick(bool)
     }
@@ -56,7 +62,7 @@ function Drone(props) {
     }
 
     let messageSubscriber = {
-        next: (data) => { processStatus(data); },
+        next: (data) => { processStatus(data);},
         error: (error) => { console.log(error) },
         complete: () => { console.log('Completed') }
     }
@@ -67,6 +73,8 @@ function Drone(props) {
             
         }
         else {setColor("red")}
+        //if received message from drone (either ok or err), allow another command to be sent
+        setSend(true)
         setTimeout(() => setColor("#282c34"), 1000)
     }
 
@@ -82,20 +90,26 @@ function Drone(props) {
 
     statusStream.subscribe(messageSubscriber)
 
+    function sendToTello(command){
+        if (send){
+            sendToServer(command)
+            addToHistory(command)
+            setSend(false)
+        }
+    }
+
 
     function processCommand(command) {
         if (!takeoff.current) { //drone on the ground
             if (command.name === "takeOff") {
-                sendToServer(command)
-                addToHistory(command)
+                sendToTello(command)
                 setTakeoff(true)
             }
             if (typeof command.name === 'number' && counter.current === command.name) { //takeoff sequence?
                 logToApp(counter.current, "appLog")
                 counter.current -= 1
                 if (counter.current === 0) {
-                    sendToServer({ name: 'takeOff' })
-                    addToHistory({ name: 'takeOff' })
+                    sendToTello({ name: 'takeOff' })
                     setTakeoff(true)
                     counter.current = 3
                 }
@@ -119,8 +133,7 @@ function Drone(props) {
                     command.name = 'sequence'
                 }
             }
-            sendToServer(command)
-            addToHistory(command)
+            sendToTello(command)
         }
     }
     function sendToDrone(command) {
@@ -135,6 +148,8 @@ function Drone(props) {
 
     const sub = <Subscription sub={telloSubscriber} />
 
+    const safeButton = (safe ?  <div class= {"box " + (send ? "green" : "red")}> <p className="fs-6"> </p><p className="fs-6">{(send ? "ready" : "busy")}</p></div> : <div></div>)
+
 
     return (
         (takeoff.current ?
@@ -148,7 +163,9 @@ function Drone(props) {
                 <Button variant="danger" onClick={e => sendToDrone({ name: 'emergencyLand' })}>Land</Button>
                 <Button variant="light" onClick={e => sendToDrone({ name: 'yawCW' })}>Rotate</Button>
                 <Button variant="warning" onClick={e => sendToDrone({ name: 'stop' })}>Stop</Button>
+                <Button variant='info' onClick={e => setSafe(!safe)}>Toggle Safe Mode</Button>
                 {history_text}
+                {safeButton}
                 <p className="fs-5" >Distance performed by direction:</p>
                 <Slider defaultValue={distance.current} step={5} min={20} max={100} onChangeCommitted={(event, value) => setDistance(value)} marks={distanceMarks} valueLabelDisplay="auto" color="secondary" />
                 <p className="fs-5" >Rotation in degrees:</p>
@@ -160,6 +177,7 @@ function Drone(props) {
             :
             <Container>
                 {sub}
+                <Button variant='info' onClick={e => setSafe(!safe)}>Toggle Safe Mode</Button>
                 <p className="fs-3" >Battery: {battery}</p>
                 <Button variant="primary" onClick={e => sendToDrone({ name: 'takeOff' })}>TakeOff</Button>
                 {history_text}
