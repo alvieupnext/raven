@@ -85,7 +85,6 @@ function Drone(props) {
 
     function processCommand(command) {
         if (!takeoff.current) { //drone on the ground
-            console.log(counter)
             if (command.name === "takeOff") {
                 sendToServer(command)
                 addToHistory(command)
@@ -148,8 +147,7 @@ function Drone(props) {
                 </div>
                 <Button variant="danger" onClick={e => sendToDrone({ name: 'emergencyLand' })}>Land</Button>
                 <Button variant="light" onClick={e => sendToDrone({ name: 'yawCW' })}>Rotate</Button>
-                <Button variant="danger" onClick={e => sendToDrone({ name: 'stop' })}>Stop</Button>
-                <Button variant="light" onClick={e => sendToDrone({ name: 'forward' })}>Go Forward</Button>
+                <Button variant="warning" onClick={e => sendToDrone({ name: 'stop' })}>Stop</Button>
                 {history_text}
                 <p className="fs-5" >Distance performed by direction:</p>
                 <Slider defaultValue={distance.current} step={5} min={20} max={100} onChangeCommitted={(event, value) => setDistance(value)} marks={distanceMarks} valueLabelDisplay="auto" color="secondary" />
