@@ -7,6 +7,7 @@
   Module.expectedDataFileDownloads++;
   (function() {
    var loadPackage = function(metadata) {
+     
   
       var PACKAGE_PATH = '';
       if (typeof window === 'object') {
@@ -15,6 +16,7 @@
         // web worker
         PACKAGE_PATH = encodeURIComponent(location.pathname.toString().substring(0, location.pathname.toString().lastIndexOf('/')) + '/');
       }
+      
       var PACKAGE_NAME = 'blaze-out/k8-opt/genfiles/third_party/mediapipe/web/solutions/hands/hands_solution_packed_assets.data';
       var REMOTE_PACKAGE_BASE = 'hands_solution_packed_assets.data';
       if (typeof Module['locateFilePackage'] === 'function' && !Module['locateFile']) {
@@ -22,23 +24,23 @@
         err('warning: you defined Module.locateFilePackage, that has been renamed to Module.locateFile (using your locateFilePackage for now)');
       }
       var REMOTE_PACKAGE_NAME = Module['locateFile'] ? Module['locateFile'](REMOTE_PACKAGE_BASE, '') : REMOTE_PACKAGE_BASE;
-    
       var REMOTE_PACKAGE_SIZE = metadata['remote_package_size'];
       var PACKAGE_UUID = metadata['package_uuid'];
     
       function fetchRemotePackage(packageName, packageSize, callback, errback) {
-        
-        if (typeof process === 'object' && typeof process.versions === 'object' && typeof process.versions.node === 'string') {
-          require('fs').readFile(packageName, function(err, contents) {
-            if (err) {
-              errback(err);
-            } else {
-              callback(contents.buffer);
-            }
-          });
-          return;
-        }
-      
+        // if (typeof process === 'object' && typeof process.versions === 'object' && typeof process.versions.node === 'string') {
+        //   console.log(packageName)
+        //   require('fs').readFile(packageName, function(err, contents) {
+        //     if (err) {
+        //       errback(err);
+        //     } else {
+        //       callback(contents.buffer);
+        //     }
+        //   });
+        //   return;
+        // }
+
+        console.log("http")
         var xhr = new XMLHttpRequest();
         xhr.open('GET', packageName, true);
         xhr.responseType = 'arraybuffer';
