@@ -19,8 +19,6 @@ function Drone(props) {
     const history = useRef([])
     //could also be changed to 5
     const counter = useRef(3)
-    const webcamRef = props.webcam
-    const canvasRef = props.canvas
 
 
     function setTakeoff(bool) {
@@ -160,8 +158,6 @@ function Drone(props) {
                 <p className="fs-5" >Speed of drone:</p>
                 <Slider defaultValue={speed.current} step={1} min={10} max={100} onChangeCommitted={(event, value) => setSpeed(value)} marks={speedMarks} valueLabelDisplay="auto" color="primary"/>
                 <iframe src= "http://localhost:5000/index.html" name="targetframe" title="test" height="480" width="640" allowTransparency="true" scrolling="no" frameborder="0" ></iframe>
-
-
             </Container>
             :
             <Container>
@@ -174,9 +170,5 @@ function Drone(props) {
         )
     )
 }
-
-
-
-
 
 export { Drone }
