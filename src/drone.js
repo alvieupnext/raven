@@ -14,15 +14,25 @@ function Drone(props) {
     const degree = useRef(90)
     const speed = useRef(10)
     //toggle for safe mode
-    const [safe, setSafe] = useState(false)
+    const safe = useRef(false)
     //toggle for sending a command
-    const [send, setSend] = useState(true)
+    const send = useRef(true)
     const [battery, setBattery] = useState("0")
     const [color, setColor] = useState("#282c34")
-    const [trick, reTrick] = useState(false)
+    const [trick, reTrick] = useState(0)
     const history = useRef([])
     //could also be changed to 5
     const counter = useRef(3)
+
+    function setSafe(bool){
+        safe.current = bool
+        reTrick((trick + 1) % 4)
+    }
+
+    function setSend(bool){
+        send.current = bool
+        reTrick((trick + 1) % 4)
+    }
 
 
     function setTakeoff(bool) {
@@ -30,7 +40,7 @@ function Drone(props) {
         //set send to false
         setSend(false)
         //needed to force a re-render while maintaing this state
-        reTrick(bool)
+        reTrick((trick + 1) % 4)
     }
 
     function setDistance(number) {
@@ -91,10 +101,13 @@ function Drone(props) {
     statusStream.subscribe(messageSubscriber)
 
     function sendToTello(command){
-        if (send){
+        //if either safe mode disabled or safe mode enabled with send enabled, perform command
+        if (!safe.current || send.current){
             sendToServer(command)
             addToHistory(command)
-            setSend(false)
+            if (command.name !== "stop" || command.name !== "emergencyLand"){ //do not await confirmation for these commands
+                setSend(false)
+            } 
         }
     }
 
@@ -148,7 +161,7 @@ function Drone(props) {
 
     const sub = <Subscription sub={telloSubscriber} />
 
-    const safeButton = (safe ?  <div class= {"box " + (send ? "green" : "red")}> <p className="fs-6"> </p><p className="fs-6">{(send ? "ready" : "busy")}</p></div> : <div></div>)
+    const safeButton = (safe.current ?  <div class= {"box " + (send.current ? "green" : "red")}> <p className="fs-6"> </p><p className="fs-6">{(send.current ? "ready" : "busy")}</p></div> : <div></div>)
 
 
     return (
@@ -160,10 +173,10 @@ function Drone(props) {
                 <p className="fs-6"> </p>
                 <p className="fs-6">command status</p>
                 </div>
-                <Button variant="danger" onClick={e => sendToDrone({ name: 'emergencyLand' })}>Land</Button>
+                <Button variant="danger" onClick={e => {sendToDrone({name: "stop"}); sendToDrone({ name: 'emergencyLand' }); }}>Land</Button>
                 <Button variant="light" onClick={e => sendToDrone({ name: 'yawCW' })}>Rotate</Button>
                 <Button variant="warning" onClick={e => sendToDrone({ name: 'stop' })}>Stop</Button>
-                <Button variant='info' onClick={e => setSafe(!safe)}>Toggle Safe Mode</Button>
+                <Button variant='info' onClick={e => setSafe(!safe.current)}>Toggle Safe Mode</Button>
                 {history_text}
                 {safeButton}
                 <p className="fs-5" >Distance performed by direction:</p>
