@@ -81,6 +81,22 @@ const distanceMarks = [
     },
 ];
 
+const speedMarks = [
+    {
+        value: 10,
+        label: 'Min'
+
+    },
+    {
+        value: 50,
+        label: 'Warning'
+    },
+    {
+        value: 100,
+        label: 'Max'
+    }
+]
+
 //combines one or multiple commands into one single string
 function commandLog(data) {
     let result = ""
@@ -150,4 +166,4 @@ function transformValue(json, transform) {
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue, commandLog, drawHand, mirrorDirection, setValue, logDroneHistory, distanceMarks, droneLog, degreeMarks}
+export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue, commandLog, drawHand, mirrorDirection, setValue, logDroneHistory, distanceMarks, droneLog, degreeMarks, speedMarks}

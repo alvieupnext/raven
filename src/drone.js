@@ -6,12 +6,13 @@ import Container from 'react-bootstrap/Container';
 import { batteryStream, sendToServer, statusStream } from './server';
 import Slider from '@mui/material/Slider';
 import { Subscription } from './raven';
-const { logToApp, logDroneHistory, droneLog, distanceMarks, degreeMarks, commandLog } = require("./Utilities");
+const { logToApp, logDroneHistory, droneLog, distanceMarks, degreeMarks, commandLog, speedMarks } = require("./Utilities");
 
 function Drone(props) {
     const takeoff = useRef(false)
     const distance = useRef(20)
     const degree = useRef(90)
+    const speed = useRef(10)
     const [battery, setBattery] = useState("0")
     const [color, setColor] = useState("#282c34")
     const [trick, reTrick] = useState(false)
@@ -34,6 +35,11 @@ function Drone(props) {
 
     function setDegree(number) {
         degree.current = number
+    }
+
+    function setSpeed(number){
+        speed.current = number
+        sendToDrone({name: "setSpeed", arg: number})
     }
 
     function addToHistory(command) {
@@ -151,6 +157,8 @@ function Drone(props) {
                 <Slider defaultValue={distance.current} step={5} min={20} max={100} onChangeCommitted={(event, value) => setDistance(value)} marks={distanceMarks} valueLabelDisplay="auto" color="secondary" />
                 <p className="fs-5" >Rotation in degrees:</p>
                 <Slider defaultValue={degree.current} step={1} min={0} max={360} onChangeCommitted={(event, value) => setDegree(value)} marks={degreeMarks} valueLabelDisplay="auto" />
+                <p className="fs-5" >Speed of drone:</p>
+                <Slider defaultValue={speed.current} step={1} min={10} max={100} onChangeCommitted={(event, value) => setSpeed(value)} marks={speedMarks} valueLabelDisplay="auto" color="primary"/>
 
 
             </Container>
