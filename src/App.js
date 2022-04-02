@@ -15,7 +15,6 @@ function App() {
         <Container>
           <p className="text-justify" id="appLog">Welcome To Raven!</p>
           <Drone ></Drone>
-          <iframe src= "http://localhost:5000/index.html" name="targetframe" title="test" allowTransparency="true" scrolling="no" frameborder="0" ></iframe>
 
         </Container>
 
