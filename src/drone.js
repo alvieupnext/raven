@@ -148,8 +148,8 @@ function Drone(props) {
                 <Button variant="light" onClick={e => sendToDrone({ name: 'forward' })}>Go Forward</Button>
                 {history_text}
                 <p className="fs-5" >Distance performed by direction:</p>
-                <Slider defaultValue={20} step={5} min={20} max={100} onChangeCommitted={(event, value) => setDistance(value)} marks={distanceMarks} valueLabelDisplay="auto" color="secondary" />
-                <Slider defaultValue={90} step={1} min={0} max={360} onChangeCommitted={(event, value) => setDegree(value)} marks={degreeMarks} valueLabelDisplay="auto" />
+                <Slider defaultValue={distance.current} step={5} min={20} max={100} onChangeCommitted={(event, value) => setDistance(value)} marks={distanceMarks} valueLabelDisplay="auto" color="secondary" />
+                <Slider defaultValue={degree.current} step={1} min={0} max={360} onChangeCommitted={(event, value) => setDegree(value)} marks={degreeMarks} valueLabelDisplay="auto" />
 
 
             </Container>
