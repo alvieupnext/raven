@@ -10,7 +10,7 @@ const { logToApp, logDroneHistory, droneLog, distanceMarks, degreeMarks, command
 
 function Drone(props) {
     const takeoff = useRef(false)
-    const strength = useRef(20)
+    const distance = useRef(20)
     const degree = useRef(90)
     const [battery, setBattery] = useState("0")
     const [color, setColor] = useState("#282c34")
@@ -28,8 +28,8 @@ function Drone(props) {
         reTrick(bool)
     }
 
-    function setStrength(number) {
-        strength.current = number
+    function setDistance(number) {
+        distance.current = number
     }
 
     function setDegree(number) {
@@ -105,7 +105,7 @@ function Drone(props) {
             }
             else {
                 if (directions.includes(command.name)) { //check if direction
-                    command.arg = strength.current
+                    command.arg = distance.current
 
                 }
                 else if (rotations.includes(command.name)) {
@@ -148,8 +148,8 @@ function Drone(props) {
                 <Button variant="light" onClick={e => sendToDrone({ name: 'forward' })}>Go Forward</Button>
                 {history_text}
                 <p className="fs-5" >Distance performed by direction:</p>
-                <Slider defaultValue={20} step={5} min={20} max={100} onChangeCommitted={(event, value) => setStrength(value)} marks={distanceMarks} id="Strength" valueLabelDisplay="auto" color="secondary" />
-                <Slider defaultValue={90} step={1} min={0} max={360} onChangeCommitted={(event, value) => setDegree(value)} marks={degreeMarks} id="Strength" valueLabelDisplay="auto" />
+                <Slider defaultValue={20} step={5} min={20} max={100} onChangeCommitted={(event, value) => setDistance(value)} marks={distanceMarks} valueLabelDisplay="auto" color="secondary" />
+                <Slider defaultValue={90} step={1} min={0} max={360} onChangeCommitted={(event, value) => setDegree(value)} marks={degreeMarks} valueLabelDisplay="auto" />
 
 
             </Container>
