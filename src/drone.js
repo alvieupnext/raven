@@ -117,10 +117,10 @@ function Drone(props) {
                 else if (rotations.includes(command.name)) {
                     command.arg = degree.current
                 }
-                // else if (typeof command.name === 'number') { //number
-                //     command.arg = command.name * 10
-                //     command.name = 'setSpeed'
-                // }
+                else if (typeof command.name === 'number') { //number
+                    command.arg = command.name
+                    command.name = 'sequence'
+                }
             }
             sendToServer(command)
             addToHistory(command)

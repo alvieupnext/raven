@@ -83,24 +83,23 @@ wss.on('connection', (ws) => {
         }
         else {
             let name = message.substring(0, index)
-            let func = Tello[name]
-            let arg = message.substring(index + 1)
-            console.log(arg)
-            console.log(name)
-            if (name === "flip"){
-                func(arg)
-            } 
+            if (name === "sequence"){ //TODO sequence
+                console.log("sequence")
+            }
             else {
-                func(parseInt(arg))
+                let func = Tello[name]
+                let arg = message.substring(index + 1)
+                console.log(arg)
+                console.log(name)
+                if (name === "flip"){
+                    func(arg)
+                } 
+                else {
+                    func(parseInt(arg))
+                }
+
             }
         }
-        const func = Tello[message.toString()]
-        // const arg = argdict[message.toString()]
-        // console.log(func)
-        // if (arg !== undefined){
-        //     func.apply(null, arg)
-        // }
-        // else {func()}
     });
 });
 
