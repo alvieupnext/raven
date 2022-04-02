@@ -159,7 +159,7 @@ function Drone(props) {
                 <Slider defaultValue={degree.current} step={1} min={0} max={360} onChangeCommitted={(event, value) => setDegree(value)} marks={degreeMarks} valueLabelDisplay="auto" />
                 <p className="fs-5" >Speed of drone:</p>
                 <Slider defaultValue={speed.current} step={1} min={10} max={100} onChangeCommitted={(event, value) => setSpeed(value)} marks={speedMarks} valueLabelDisplay="auto" color="primary"/>
-                <iframe src= "http://localhost:5000/index.html" ref={iframe}name="targetframe" title="test" height="480" width="640" allowTransparency="true" scrolling="no" frameborder="0" ></iframe>
+                <iframe src= "http://localhost:5000/index.html" name="targetframe" title="test" height="480" width="640" allowTransparency="true" scrolling="no" frameborder="0" ></iframe>
 
 
             </Container>
@@ -169,6 +169,7 @@ function Drone(props) {
                 <p className="fs-3" >Battery: {battery}</p>
                 <Button variant="primary" onClick={e => sendToDrone({ name: 'takeOff' })}>TakeOff</Button>
                 {history_text}
+                <iframe src= "http://localhost:5000/index.html" name="targetframe" title="test" height="480" width="640" allowTransparency="true" scrolling="no" frameborder="0" ></iframe>
             </Container>
         )
     )
