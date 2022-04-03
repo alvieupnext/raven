@@ -17,6 +17,8 @@ function Drone(props) {
     const safe = useRef(false)
     //toggle for sending a command
     const send = useRef(true)
+    //sequencer
+    const sequence = useRef(false)
     const [battery, setBattery] = useState("0")
     const [color, setColor] = useState("#282c34")
     const [trick, reTrick] = useState(0)
@@ -26,12 +28,16 @@ function Drone(props) {
 
     function setSafe(bool){
         safe.current = bool
-        reTrick((trick + 1) % 4)
+        // reTrick((trick + 1) % 4)
     }
 
     function setSend(bool){
         send.current = bool
-        reTrick((trick + 1) % 4)
+        // reTrick((trick + 1) % 4)
+    }
+
+    function setSequence(bool){
+        sequence.current = bool
     }
 
 
@@ -40,7 +46,7 @@ function Drone(props) {
         //set send to false
         setSend(false)
         //needed to force a re-render while maintaing this state
-        reTrick((trick + 1) % 4)
+        // reTrick((trick + 1) % 4)
     }
 
     function setDistance(number) {
@@ -101,13 +107,13 @@ function Drone(props) {
     statusStream.subscribe(messageSubscriber)
 
     function sendToTello(command){
+        if (command.name === "stop" || command.name === "emergencyLand"){ //do not await confirmation for these commands
+            setSend(true)
+        } 
         //if either safe mode disabled or safe mode enabled with send enabled, perform command
         if (!safe.current || send.current){
             sendToServer(command)
             addToHistory(command)
-            if (command.name !== "stop" || command.name !== "emergencyLand"){ //do not await confirmation for these commands
-                setSend(false)
-            } 
         }
     }
 
@@ -142,6 +148,9 @@ function Drone(props) {
                     command.arg = degree.current
                 }
                 else if (typeof command.name === 'number') { //number
+                    if (!sequence.current){ //if sequences are disabled, return 
+                        return;
+                    }
                     command.arg = command.name
                     command.name = 'sequence'
                 }
@@ -150,8 +159,20 @@ function Drone(props) {
         }
     }
     function sendToDrone(command) {
-        processCommand(command)
-        logDroneHistory(history.current)
+        if (command.name === "sequenceToggle"){
+            if (sequence.current){ 
+                setSequence(false)
+                logToApp("Disabled sequences", "appLog")
+            }
+            else {
+                setSequence(true)
+                logToApp("Enabled sequences", "appLog")
+            }
+        }
+        else {
+            processCommand(command)
+            logDroneHistory(history.current)
+        }
     }
 
     const history_text = <div>

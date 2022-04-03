@@ -307,6 +307,9 @@ function frequencyStream(observable) {
       else if (first_command.name === "down" && second_command.name === "up"){
         first_command.name = "flip_f"
       }
+      else if (first_command.name === 2 && second_command.name === 5){
+        first_command.name = "sequenceToggle"
+      }
     }
     return json
   }
