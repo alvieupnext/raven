@@ -15,8 +15,10 @@ function Drone(props) {
     const speed = useRef(10)
     //toggle for safe mode
     const safe = useRef(false)
+    const [safeBox, setSafeBox] = useState(false)
     //toggle for sending a command
     const send = useRef(true)
+    const [sendColor, setSendColor] = useState(false)
     //sequencer
     const sequence = useRef(false)
     const [battery, setBattery] = useState("0")
@@ -28,12 +30,12 @@ function Drone(props) {
 
     function setSafe(bool){
         safe.current = bool
-        // reTrick((trick + 1) % 4)
+        setSafeBox(bool)
     }
 
     function setSend(bool){
         send.current = bool
-        // reTrick((trick + 1) % 4)
+        setSendColor((bool ? "green" : "red"))
     }
 
     function setSequence(bool){
@@ -46,7 +48,7 @@ function Drone(props) {
         //set send to false
         setSend(false)
         //needed to force a re-render while maintaing this state
-        // reTrick((trick + 1) % 4)
+        reTrick((trick + 1) % 4)
     }
 
     function setDistance(number) {
@@ -107,13 +109,16 @@ function Drone(props) {
     statusStream.subscribe(messageSubscriber)
 
     function sendToTello(command){
-        if (command.name === "stop" || command.name === "emergencyLand"){ //do not await confirmation for these commands
+        if (command.name === "stop" || command.name === "emergencyLand" || command.name === "land"){ //do not await confirmation for these commands
             setSend(true)
-        } 
-        //if either safe mode disabled or safe mode enabled with send enabled, perform command
-        if (!safe.current || send.current){
             sendToServer(command)
             addToHistory(command)
+        } 
+        //if either safe mode disabled or safe mode enabled with send enabled, perform command
+        else if (!safe.current || send.current){
+            sendToServer(command)
+            addToHistory(command)
+            setSend(false)
         }
     }
 
@@ -160,13 +165,19 @@ function Drone(props) {
     }
     function sendToDrone(command) {
         if (command.name === "sequenceToggle"){
-            if (sequence.current){ 
-                setSequence(false)
-                logToApp("Disabled sequences", "appLog")
-            }
-            else {
-                setSequence(true)
-                logToApp("Enabled sequences", "appLog")
+            if (!safe.current || send.current){
+                if (sequence.current){ 
+                    setSequence(false)
+                    setSend(false)
+                    logToApp("Disabled sequences", "appLog")
+                }
+                else {
+                    setSequence(true)
+                    setSafe(true)
+                    setSend(false)
+                    logToApp("Enabled sequences", "appLog")
+                }
+                setTimeout(() => setSend(true), 2000)
             }
         }
         else {
@@ -182,7 +193,7 @@ function Drone(props) {
 
     const sub = <Subscription sub={telloSubscriber} />
 
-    const safeButton = (safe.current ?  <div class= {"box " + (send.current ? "green" : "red")}> <p className="fs-6"> </p><p className="fs-6">{(send.current ? "ready" : "busy")}</p></div> : <div></div>)
+    const safeButton = (safeBox ?  <div class= {"box " + sendColor}> <p className="fs-6"> </p><p className="fs-6">{(send.current ? "ready" : "busy")}</p></div> : <div></div>)
 
 
     return (
