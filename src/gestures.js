@@ -377,6 +377,15 @@ phone.addDirection(Finger.Thumb, FingerDirection.HorizontalRight, 1.0)
 phone.addDirection(Finger.Thumb, FingerDirection.DiagonalUpLeft, 0.9)
 phone.addDirection(Finger.Thumb, FingerDirection.DiagonalUpRight, 0.9)
 
+const emperor = new GestureDescription('emperor')
+
+for (let finger of [Finger.Pinky, Finger.Middle, Finger.Ring, Finger.Index]){
+    emperor.addCurl(finger, FingerCurl.NoCurl, 1.0)
+    emperor.addDirection(finger, FingerDirection.HorizontalLeft, 1.0)
+    emperor.addDirection(finger, FingerDirection.HorizontalRight, 1.0)
+}
 
 
-export {okaySign, thumbsDown, highFive, stopSign, thumbsRight, thumbsUp, thumbsLeft, victory, secondary, pointUp, three, four, yeah, phone}
+
+
+export {okaySign, thumbsDown, highFive, stopSign, thumbsRight, thumbsUp, thumbsLeft, victory, secondary, pointUp, three, four, yeah, phone, emperor}

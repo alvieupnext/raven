@@ -3,7 +3,7 @@ import { getExporter } from './exports';
 import { dereference, drawHand, mirrorDirection, refreshRate, setJSON, setOrigin, setValue, transformValue } from './Utilities';
 import * as mp from '@mediapipe/hands';
 import * as fp from 'fingerpose'
-import { four, highFive, secondary, okaySign, phone, pointUp, stopSign, three, thumbsDown, thumbsLeft, thumbsRight, thumbsUp, victory, yeah } from './gestures';
+import { four, highFive, secondary, okaySign, phone, pointUp, stopSign, three, thumbsDown, thumbsLeft, thumbsRight, thumbsUp, victory, yeah, emperor } from './gestures';
 import { EmptyArrayFilter, FrequencyThreshold, NoGestureFilter, SortByBestGesture, SortByHighestFrequency } from './filters';
 
 //the stream that starts emitting as first, known as the prime data stream
@@ -113,6 +113,7 @@ function fingerposeStream(observable) {
     four,
     yeah,
     phone,
+    emperor,
   ])
 
   function fromTensorFlow(hand) {
@@ -186,6 +187,7 @@ const one_hand = {
   stop: 'stop',
   yeah: 'forward',
   phone: 'back',
+  emperor: 'sequenceToggle',
   one: 1,
   victory: 2,
   three: 3,
@@ -202,6 +204,7 @@ const two_hand = {
   stop: 'land',
   yeah: 'forward',
   phone: 'back',
+  emperor: 'sequenceToggle',
   one: 1,
   victory: 2,
   three: 3,
@@ -217,6 +220,7 @@ const two_hand_alt = {
   yeah: 'flip_f',
   phone: 'flip_b',
   stop: 'land',
+  emperor: 'sequenceToggle',
   one: 1,
   victory: 2,
   three: 3,
@@ -306,9 +310,6 @@ function frequencyStream(observable) {
       }
       else if (first_command.name === "down" && second_command.name === "up"){
         first_command.name = "flip_f"
-      }
-      else if (first_command.name === 2 && second_command.name === 5){
-        first_command.name = "sequenceToggle"
       }
     }
     return json
