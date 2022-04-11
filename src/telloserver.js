@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
+const sequences  = require('./sequences');
 
 const app = express();
 
@@ -20,11 +21,6 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 const { TelloDrone } = require('./yatsw')
-
-const argdict = {
-    left: [1],
-    right: [1],
-}
 
 //store battery in this variable
 let battery = 0;
@@ -61,14 +57,7 @@ wss.on('connection', (ws) => {
         }
     })
 
-    
-
-    //connection is up, let's add a simple simple event
-    ws.on('message', (message) => {
-
-        //log the received message and send it back to the client
-        console.log('received: %s', message);
-        // console.log(message.toString())
+    function process(message){
         const index = message.indexOf('_')
         if (index === -1){ //no parameter
             if (message === "stop"){
@@ -78,28 +67,45 @@ wss.on('connection', (ws) => {
             }
             else {
             let func = Tello[message]
-            func()
+            return func()
             }
         }
         else {
             let name = message.substring(0, index)
-            if (name === "sequence"){ //TODO sequence
-                console.log("sequence")
+            let arg = message.substring(index + 1)
+            if (name === "sequence"){ 
+               let sequence = sequences[arg]
+               for (let command of sequence){
+                   process(command)
+               }
+               let msg = {type: 'message', content: "ok"}
+               ws.send(JSON.stringify(msg))
             }
             else {
                 let func = Tello[name]
-                let arg = message.substring(index + 1)
                 console.log(arg)
                 console.log(name)
                 if (name === "flip"){
-                    func(arg)
+                    return func(arg)
                 } 
                 else {
-                    func(parseInt(arg))
+                    return func(parseInt(arg))
                 }
+                
 
             }
         }
+
+    }
+    
+
+    //connection is up, let's add a simple simple event
+    ws.on('message', (message) => {
+
+        //log the received message and send it back to the client
+        console.log('received: %s', message);
+        // console.log(message.toString())
+        process(message)
     });
 });
 
