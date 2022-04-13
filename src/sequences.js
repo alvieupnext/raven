@@ -7,7 +7,7 @@ const seq3 = ["sequence_1", "sequence_7"];
 
 const seq4 = ["setSpeed_60", "left_40", "yawCCW_30", "forward_40", "sequence_2"]
 
-const seq5 = []
+const seq5 = ["up_100", "down_50", "forward_50", "yawCCW_360", "flip_b"]
 
 const seq6 =[]
 
