@@ -1,8 +1,8 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import Container from 'react-bootstrap/Container';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Drone } from './drone';
+import { Drone } from './client/drone';
 
 
 function App() {
@@ -15,7 +15,6 @@ function App() {
         <Container>
           <p className="text-justify" id="appLog">Welcome To Raven!</p>
           <Drone ></Drone>
-
         </Container>
 
 

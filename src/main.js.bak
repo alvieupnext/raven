@@ -1,7 +1,7 @@
 const { app, BrowserWindow} = require('electron')
-require("./server/telloserver")
+require("./telloserver")
 
-require("./server/www/videoFeed")
+require("./www/videoFeed")
 
 
 function createWindow () {

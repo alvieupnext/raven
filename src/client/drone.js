@@ -1,4 +1,3 @@
-
 //drone module which takes care of communications with drone
 import React, { useRef, useState } from 'react'
 import Button from 'react-bootstrap/Button';
