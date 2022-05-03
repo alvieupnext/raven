@@ -193,14 +193,14 @@ function Drone(props) {
 
     const sub = <Subscription sub={telloSubscriber} />
 
-    const safeButton = (safeBox ?  <div class= {"box " + sendColor}> <p className="fs-6"> </p><p className="fs-6">{(send.current ? "ready" : "busy")}</p></div> : <div></div>)
+    const safeButton = (safeBox ?  <div className= {"box " + sendColor}> <p className="fs-6"> </p><p className="fs-6">{(send.current ? "ready" : "busy")}</p></div> : <div></div>)
 
     return (
         (takeoff.current ?
             <Container>
                 {sub}
                 <p className="fs-3" >Battery: {battery}</p>
-                <div class= {`box ${color}`}>
+                <div className= {`box ${color}`}>
                 <p className="fs-6"> </p>
                 <p className="fs-6">command status</p>
                 </div>
