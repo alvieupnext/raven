@@ -1,10 +1,10 @@
-import { interval, map, from, combineLatestWith, mergeAll, filter, zip, tap, pluck, take, observable, Subject, buffer } from 'rxjs';
+import { interval, map,filter, zip, tap, pluck, Subject, buffer } from 'rxjs';
 import { getExporter } from './exports';
 import { dereference, drawHand, mirrorDirection, refreshRate, setJSON, setOrigin, setValue, transformValue } from './Utilities';
 import * as mp from '@mediapipe/hands';
 import * as fp from 'fingerpose'
-import { four, highFive, secondary, okaySign, phone, pointUp, stopSign, three, thumbsDown, thumbsLeft, thumbsRight, thumbsUp, victory, yeah, emperor } from './gestures';
-import { EmptyArrayFilter, FrequencyThreshold, NoGestureFilter, SortByBestGesture, SortByHighestFrequency } from './filters';
+import { four, highFive, phone, pointUp, stopSign, three, thumbsDown, thumbsLeft, thumbsRight, thumbsUp, victory, yeah, emperor } from './gestures';
+import { EmptyArrayFilter, NoGestureFilter, SortByBestGesture, SortByHighestFrequency } from './filters';
 
 //the stream that starts emitting as first, known as the prime data stream
 let primeStream = interval(refreshRate)
