@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import { batteryStream, sendToServer, statusStream } from './server';
 import Slider from '@mui/material/Slider';
 import { Subscription } from './raven';
+import Iframe from 'react-iframe';
 const { logToApp, logDroneHistory, droneLog, distanceMarks, degreeMarks, commandLog, speedMarks } = require("./Utilities");
 
 function Drone(props) {
@@ -194,16 +195,6 @@ function Drone(props) {
 
     const safeButton = (safeBox ?  <div class= {"box " + sendColor}> <p className="fs-6"> </p><p className="fs-6">{(send.current ? "ready" : "busy")}</p></div> : <div></div>)
 
-    const allSequences = []
-
-    for (let i = 1; i < 11; i++){
-        allSequences.push(createSequenceButton(i))
-    }
-
-    function createSequenceButton(number){
-        return <Button variant="info" onClick={e => sendToDrone({ name: `sequence_${number}`})}>{number}</Button>
-    }
-
     return (
         (takeoff.current ?
             <Container>
@@ -219,8 +210,6 @@ function Drone(props) {
                 <Button variant='info' onClick={e => setSafe(!safe.current)}>Toggle Safe Mode</Button>
                 {history_text}
                 {safeButton}
-                <p className="fs-4" >Sequences</p>
-                <div>{allSequences}</div>
                 <p className="fs-5" >Distance performed by direction:</p>
                 <Slider defaultValue={distance.current} step={5} min={20} max={100} onChangeCommitted={(event, value) => setDistance(value)} marks={distanceMarks} valueLabelDisplay="auto" color="secondary" />
                 <p className="fs-5" >Rotation in degrees:</p>
@@ -232,11 +221,10 @@ function Drone(props) {
             :
             <Container>
                 {sub}
-                <Button variant='info' onClick={e => setSafe(!safe)}>Toggle Safe Mode</Button>
                 <p className="fs-3" >Battery: {battery}</p>
                 <Button variant="primary" onClick={e => sendToDrone({ name: 'takeOff' })}>TakeOff</Button>
                 {history_text}
-                <iframe src= "http://localhost:5000/index.html" name="targetframe" title="test" height="480" width="640" allowTransparency="true" scrolling="no" frameborder="0" ></iframe>
+                <Iframe src= "http://localhost:5000/index.html" name="targetframe" title="test" height="480" width="640" allowTransparency="true" scrolling="no" frameBorder="0" ></Iframe>
             </Container>
         )
     )
