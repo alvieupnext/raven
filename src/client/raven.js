@@ -1,9 +1,7 @@
 import React, { useRef, useState } from 'react'
-import { setExporter, completeExport, vanillaExport, minimalExport } from './exports'
 import { loadModel } from './streams';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import Dropdown from 'react-bootstrap/Dropdown';
 import { logToApp } from './Utilities.js';
 import { createRaven } from './source';
 import Col from 'react-bootstrap/Col';
@@ -31,15 +29,17 @@ function Subscription(props) {
         setSub(false)
     }
 
-    const exporters = [completeExport, vanillaExport, minimalExport]
-    const names = ["Complete", "Vanilla", "Minimal"]
+    //exporter code
 
-      function updateExporter(eventKey) {
-    //access the right export function and set it as exporter
-    setExporter(exporters[eventKey])
-    //confirm to the user and if the stream is running, remind them to resubscribe to the stream
-    logToApp(`Changed output to ${names[eventKey]}. ` + (running.current ? "Please stop and resume the stream" : ""), "appLog")
-  }
+    // const exporters = [completeExport, vanillaExport, minimalExport]
+    // const names = ["Complete", "Vanilla", "Minimal"]
+
+  //     function updateExporter(eventKey) {
+  //   //access the right export function and set it as exporter
+  //   setExporter(exporters[eventKey])
+  //   //confirm to the user and if the stream is running, remind them to resubscribe to the stream
+  //   logToApp(`Changed output to ${names[eventKey]}. ` + (running.current ? "Please stop and resume the stream" : ""), "appLog")
+  // }
 
     // useEffect(()=> {
     //     if (sub){
@@ -103,7 +103,8 @@ function Subscription(props) {
             </Col>
             <LoadMediaPipeButton></LoadMediaPipeButton>
             <Button variant={(running.current ? "danger" : "success")} id="toggle" onClick={e => toggleSub()}>{buttonText}</Button>
-            <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
+            {/*toggles Change Output Settings*/}
+            {/* <Dropdown onSelect={(eventKey, event) => updateExporter(eventKey)}>
                 <Dropdown.Toggle variant="light" id="dropdown-button-drop-right">
                     Change Output Settings
                 </Dropdown.Toggle>
@@ -112,7 +113,7 @@ function Subscription(props) {
                     <Dropdown.Item eventKey={1}>Vanilla</Dropdown.Item>
                     <Dropdown.Item eventKey={2}>Minimal</Dropdown.Item>
                 </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> */}
         </Container>
     )
 }
