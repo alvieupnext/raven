@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
-const sequences  = require('./sequences');
+const presets  = require('./presets');
 
 const app = express();
 
@@ -74,7 +74,7 @@ wss.on('connection', (ws) => {
             let name = message.substring(0, index)
             let arg = message.substring(index + 1)
             if (name === "sequence"){ 
-               let sequence = sequences[arg]
+               let sequence = presets[arg]
                for (let command of sequence){
                    process(command)
                }
