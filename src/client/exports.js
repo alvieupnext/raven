@@ -1,7 +1,7 @@
 import { map } from 'rxjs';
 import { setJSON, dereference } from './Utilities'
 
-var exporter = completeExport
+var exporter = vanillaExport
 
 function setExporter(newExport){
    exporter = newExport
