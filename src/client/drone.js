@@ -132,6 +132,7 @@ function Drone(props) {
                 logToApp(counter.current, "appLog")
                 counter.current -= 1
                 if (counter.current === 0) {
+                    logToApp("Taking off!", "appLog")
                     sendToTello({ name: 'takeOff' })
                     setTakeoff(true)
                     counter.current = 3
