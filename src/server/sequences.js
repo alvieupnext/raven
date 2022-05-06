@@ -21,6 +21,6 @@ const seq9 = []
 
 const seq10 = []
 
-const presets = {1: seq1, 2: seq2, 3: seq3, 4: seq4, 5: seq5, 6: seq6, 7: seq7, 8: seq8, 9: seq9, 10: seq10};
+const sequences = {1: seq1, 2: seq2, 3: seq3, 4: seq4, 5: seq5, 6: seq6, 7: seq7, 8: seq8, 9: seq9, 10: seq10};
 
-module.exports = presets
+module.exports = sequences
