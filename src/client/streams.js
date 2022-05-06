@@ -1,10 +1,11 @@
 import { interval, map,filter, zip, tap, pluck, Subject, buffer } from 'rxjs';
 import { getExporter } from './exports';
-import { dereference, drawHand, mirrorDirection, refreshRate, setJSON, setOrigin, setValue, transformValue } from './Utilities';
+import { dereference, drawHand, mirrorDirection, setJSON, setOrigin, setValue, transformValue } from './Utilities';
 import * as mp from '@mediapipe/hands';
 import * as fp from 'fingerpose'
 import { four, highFive, phone, pointUp, stopSign, three, thumbsDown, thumbsLeft, thumbsRight, thumbsUp, victory, yeah, emperor } from './gestures';
 import { EmptyArrayFilter, NoGestureFilter, SortByBestGesture, SortByHighestFrequency } from './filters';
+import { one_hand, two_hand, two_hand_alt, refreshRate, MAX_HANDS, GESTURE_CONFIDENCE } from './settings';
 
 //the stream that starts emitting as first, known as the prime data stream
 let primeStream = interval(refreshRate)
@@ -65,7 +66,7 @@ let handModel = new mp.Hands({
   }
 });
 handModel.setOptions({
-  maxNumHands: 2,
+  maxNumHands: MAX_HANDS,
   modelComplexity: 1,
   minDetectionConfidence: 0.75,
   minTrackingConfidence: 0.5
@@ -100,8 +101,6 @@ function mediapipeStream(canvasRef) {
 function fingerposeStream(observable) {
   const GE = new fp.GestureEstimator([
     victory,
-    // secondary,
-    // okaySign,
     thumbsDown,
     highFive,
     stopSign,
@@ -115,18 +114,13 @@ function fingerposeStream(observable) {
     phone,
     emperor,
   ])
-
-  function fromTensorFlow(hand) {
-    return [{ gesture: GE.estimate(hand[0].landmarks, 8), hand: 'one' }]
-  }
-
-  //remember we have to mirror the hands to keep consistent with the whole program
+  //remember we have to mirror the hands to keep consistency with the whole program
   function fromMediaPipe(hands) {
     let result = []
     let length = hands.multiHandWorldLandmarks.length
     for (let place of hands.multiHandedness) {
       let index = place.index
-      result.push({ gesture: GE.estimate(convertLandmarks(hands.multiHandWorldLandmarks[index % length]), 8), hand: mirrorDirection(place.label) })
+      result.push({ gesture: GE.estimate(convertLandmarks(hands.multiHandWorldLandmarks[index % length]), GESTURE_CONFIDENCE), hand: mirrorDirection(place.label) })
     }
     return result
   }
@@ -144,13 +138,7 @@ function fingerposeStream(observable) {
   }
 
   function predict(json) {
-    if (json.origin === 'tensorflow') {
-      transformValue(json, (hand => fromTensorFlow(hand)))
-
-    }
-    else {
-      transformValue(json, (hands => fromMediaPipe(hands)))
-    }
+    transformValue(json, (hands => fromMediaPipe(hands)))
     return setOrigin(json, 'fingerpose')
   }
 
@@ -178,56 +166,6 @@ function gesturer(observable) {
     .pipe(getExporter())
 }
 
-//one-handed commands
-const one_hand = {
-  thumbs_up: 'up',
-  thumbs_right: 'right',
-  thumbs_left: 'left',
-  thumbs_down: 'down',
-  stop: 'stop',
-  yeah: 'forward',
-  phone: 'back',
-  emperor: 'sequenceToggle',
-  one: 1,
-  victory: 2,
-  three: 3,
-  four: 4,
-  high_five: 5,
-}
-
-//commands for two hands
-const two_hand = {
-  thumbs_up: 'secondary',
-  thumbs_right: 'right',
-  thumbs_left: 'left',
-  thumbs_down: 'down',
-  stop: 'land',
-  yeah: 'forward',
-  phone: 'back',
-  emperor: 'sequenceToggle',
-  one: 1,
-  victory: 2,
-  three: 3,
-  four: 4,
-  high_five: 5,
-}
-
-const two_hand_alt = {
-  thumbs_up: 'yawCCW',
-  thumbs_down: 'yawCW',
-  thumbs_left: 'flip_l',
-  thumbs_right: 'flip_r',
-  yeah: 'flip_f',
-  phone: 'flip_b',
-  stop: 'land',
-  emperor: 'sequenceToggle',
-  one: 1,
-  victory: 2,
-  three: 3,
-  four: 4,
-  high_five: 5,
-}
-
 function toCommand(command, hand){
   return {command: command, hand: hand}
 }
@@ -237,7 +175,6 @@ function translateGesture(value) {
     return toCommand(one_hand[value[0].gesture], value[0].hand)
   }
   else {//compound
-    //TODO emergency land with two hands
     let command1 = two_hand[value[0].gesture]
     let command2 = two_hand[value[1].gesture]
     if (command1 === 'secondary'){ //using secondary menu

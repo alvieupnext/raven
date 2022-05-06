@@ -1,8 +1,6 @@
 import * as mp from '@mediapipe/hands'
 import * as du from '@mediapipe/drawing_utils'
 
-const refreshRate = 60
-
 function drawHand(results, canvasElement) {
     const canvasCtx = canvasElement.current.getContext("2d")
     canvasCtx.save();
@@ -166,4 +164,4 @@ function transformValue(json, transform) {
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export { logToApp, setJSON, dereference, refreshRate, setOrigin, transformValue, commandLog, drawHand, mirrorDirection, setValue, logDroneHistory, distanceMarks, droneLog, degreeMarks, speedMarks}
+export { logToApp, setJSON, dereference, setOrigin, transformValue, commandLog, drawHand, mirrorDirection, setValue, logDroneHistory, distanceMarks, droneLog, degreeMarks, speedMarks}
