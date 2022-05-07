@@ -74,7 +74,6 @@ handModel.setOptions({
 
 const result = new Subject()
 
-
 handModel.initialize();
 
 function mediapipeStream(canvasRef) {
@@ -210,7 +209,6 @@ function bufferStream(ms) {
   }
 }
 
-//TODO solve frequency glitch with frequencies being over 1
 function frequencyStream(observable) {
   function frequency(json) {
     let occurences = []

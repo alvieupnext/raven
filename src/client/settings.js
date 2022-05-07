@@ -1,6 +1,9 @@
 //These are the customizable settings of Raven. You can change a lot of constants here to match your preferences
-//Refresh Rate
+//Refresh Rate (ms) for the webcam
 const refreshRate = 60
+
+//Gesture Detection Interval (ms)
+const DETECTION_INTERVAL = 1500
 
 //Max number of recognizable hands (min 2 hands)
 const MAX_HANDS = 2
@@ -59,4 +62,4 @@ const one_hand = {
     high_five: 5,
   }
 
-export {one_hand, two_hand, two_hand_alt, refreshRate, MAX_HANDS, GESTURE_CONFIDENCE}
+export {one_hand, two_hand, two_hand_alt, refreshRate, MAX_HANDS, GESTURE_CONFIDENCE, DETECTION_INTERVAL}

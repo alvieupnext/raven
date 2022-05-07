@@ -1,5 +1,6 @@
 import { webcamStream, primeStream, mediapipeStream,  fingerposeStream, gesturer, commandStream, bufferStream, frequencyStream } from './streams.js';
 import { EmptyHandFilter } from './filters';
+import { DETECTION_INTERVAL } from './settings.js';
 
 function createRaven(webcamRef, canvasRef){
     return primeStream
@@ -9,7 +10,7 @@ function createRaven(webcamRef, canvasRef){
     fingerposeStream,
     gesturer,
     commandStream,
-    bufferStream(1500),
+    bufferStream(DETECTION_INTERVAL),
     frequencyStream,
 )
 }
