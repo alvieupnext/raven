@@ -11,6 +11,20 @@ const MAX_HANDS = 2
 //Gesture confidence (by default 8)
 const GESTURE_CONFIDENCE = 8
 
+//Drone Menu constants
+const START_DISTANCE = 20
+
+//locked to 100 (Tello maximum is 500)
+const MAX_DISTANCE = 100
+
+const START_DEGREE = 90
+
+const START_SPEED = 10
+
+const SAFE_MODE = false
+
+const SEQUENCE = false;
+
 //Gesture mapping to commands
 //one-handed commands
 const one_hand = {
@@ -62,4 +76,4 @@ const one_hand = {
     high_five: 5,
   }
 
-export {one_hand, two_hand, two_hand_alt, refreshRate, MAX_HANDS, GESTURE_CONFIDENCE, DETECTION_INTERVAL}
+export {one_hand, two_hand, two_hand_alt, refreshRate, MAX_HANDS, GESTURE_CONFIDENCE, DETECTION_INTERVAL, START_SPEED, START_DEGREE, START_DISTANCE, SAFE_MODE, SEQUENCE, MAX_DISTANCE}

@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { loadModel } from './streams';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { logToApp } from './Utilities.js';
+import { logToApp } from './utilities.js';
 import { createRaven } from './source';
 import Col from 'react-bootstrap/Col';
 import Webcam from 'react-webcam'
@@ -28,28 +28,7 @@ function Subscription(props) {
         sub.unsubscribe()
         setSub(false)
     }
-
-    //exporter code
-
-    // const exporters = [completeExport, vanillaExport, minimalExport]
-    // const names = ["Complete", "Vanilla", "Minimal"]
-
-  //     function updateExporter(eventKey) {
-  //   //access the right export function and set it as exporter
-  //   setExporter(exporters[eventKey])
-  //   //confirm to the user and if the stream is running, remind them to resubscribe to the stream
-  //   logToApp(`Changed output to ${names[eventKey]}. ` + (running.current ? "Please stop and resume the stream" : ""), "appLog")
-  // }
-
-    // useEffect(()=> {
-    //     if (sub){
-    //         console.log("subscribed")
-    //         const subscription = raven.current.subscribe(telloSubscriber(send));
-    //         return () => subscription.unsubscribe();
-    //     }
-    //     else {console.log("Not Subscribed")}
-    // })
-
+    
     function toggleSub() {
         if (!running.current) {
             startRaven()

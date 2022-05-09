@@ -1,5 +1,5 @@
 import { map } from 'rxjs';
-import { setJSON, dereference } from './Utilities'
+import { setJSON, dereference } from './utilities'
 
 var exporter = vanillaExport
 

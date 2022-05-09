@@ -1,4 +1,4 @@
-import { dereference, setJSON, transformValue } from "./Utilities";
+import { dereference, setJSON, transformValue } from "./utilities";
 import { map, filter } from "rxjs"
 
 function createFilterer(filterf) {

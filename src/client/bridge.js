@@ -12,7 +12,7 @@ ws.onopen = function () {
 
 
 
-//battery
+//battery and event confirmations
 ws.onmessage = function (evt){
     const msg = evt.data
     const received_msg = JSON.parse(msg);

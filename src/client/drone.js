@@ -2,24 +2,26 @@
 import React, { useRef, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-import { batteryStream, sendToServer, statusStream } from './server';
+import { batteryStream, sendToServer, statusStream } from './bridge';
 import Slider from '@mui/material/Slider';
-import { Subscription } from './raven';
-const { logToApp, logDroneHistory, droneLog, distanceMarks, degreeMarks, commandLog, speedMarks } = require("./Utilities");
+import { Subscription } from './subscription';
+import { MAX_DISTANCE, SAFE_MODE, SEQUENCE, START_DEGREE, START_DISTANCE, START_SPEED } from './settings';
+const { logToApp, logDroneHistory, droneLog, distanceMarks, degreeMarks, commandLog, speedMarks } = require("./utilities");
 
 function Drone(props) {
+    //default values that can be changed in the UI
     const takeoff = useRef(false)
-    const distance = useRef(20)
-    const degree = useRef(90)
-    const speed = useRef(10)
+    const distance = useRef(START_DISTANCE)
+    const degree = useRef(START_DEGREE)
+    const speed = useRef(START_SPEED)
     //toggle for safe mode
     const safe = useRef(false)
-    const [safeBox, setSafeBox] = useState(false)
+    const [safeBox, setSafeBox] = useState(SAFE_MODE)
     //toggle for sending a command
     const send = useRef(true)
     const [sendColor, setSendColor] = useState(false)
     //sequencer
-    const sequence = useRef(false)
+    const sequence = useRef(SEQUENCE)
     const [battery, setBattery] = useState("0")
     const [color, setColor] = useState("#282c34")
     const [trick, reTrick] = useState(0)
@@ -27,6 +29,7 @@ function Drone(props) {
     //could also be changed to 5
     const counter = useRef(3)
 
+    //setters for our constants
     function setSafe(bool){
         safe.current = bool
         setSafeBox(bool)
@@ -68,10 +71,19 @@ function Drone(props) {
         history.current.push(command)
     }
 
-    const directions = ["up", "left", "right", "down", "forward", "back"]
+    //function for processing the command confirmations 
+    function processStatus(msg){
+        if (msg === "ok"){
+            setColor("green")
+            
+        }
+        else {setColor("red")}
+        //if received message from drone (either ok or err), allow another command to be sent
+        setSend(true)
+        setTimeout(() => setColor("#282c34"), 1000)
+    }
 
-    const rotations = ['yawCW', 'yawCCW']
-
+    //subscribers for events
     let batterySubscriber = {
         next: (data) => { setBattery(data); },
         error: (error) => { console.log(error) },
@@ -84,28 +96,20 @@ function Drone(props) {
         complete: () => { console.log('Completed') }
     }
 
-    function processStatus(msg){
-        if (msg === "ok"){
-            setColor("green")
-            
-        }
-        else {setColor("red")}
-        //if received message from drone (either ok or err), allow another command to be sent
-        setSend(true)
-        setTimeout(() => setColor("#282c34"), 1000)
-    }
-
-
     let telloSubscriber = {
-        next: (data) => { console.log(data); console.log("kaas"); logToApp(commandLog(data), "appLog"); sendToDrone(data.value) },
+        next: (data) => { console.log(data); logToApp(commandLog(data), "appLog"); sendToDrone(data.value) },
         error: (error) => { console.log(error) },
-        //TODO tello stop
         complete: () => { console.log('Completed') }
     }
 
+    //subscribe to the battery and status stream instantly
     batteryStream.subscribe(batterySubscriber)
 
     statusStream.subscribe(messageSubscriber)
+
+    const directions = ["up", "left", "right", "down", "forward", "back"]
+
+    const rotations = ['yawCW', 'yawCCW']
 
     function sendToTello(command){
         if (command.name === "stop" || command.name === "emergencyLand" || command.name === "land"){ //do not await confirmation for these commands
@@ -177,6 +181,7 @@ function Drone(props) {
                     setSend(false)
                     logToApp("Enabled sequences", "appLog")
                 }
+                //Allow 2 seconds of delay between sequence toggles
                 setTimeout(() => setSend(true), 2000)
             }
         }
@@ -211,7 +216,7 @@ function Drone(props) {
                 {history_text}
                 {safeButton}
                 <p className="fs-5" >Distance performed by direction:</p>
-                <Slider defaultValue={distance.current} step={5} min={20} max={100} onChangeCommitted={(event, value) => setDistance(value)} marks={distanceMarks} valueLabelDisplay="auto" color="secondary" />
+                <Slider defaultValue={distance.current} step={5} min={20} max={MAX_DISTANCE} onChangeCommitted={(event, value) => setDistance(value)} marks={distanceMarks} valueLabelDisplay="auto" color="secondary" />
                 <p className="fs-5" >Rotation in degrees:</p>
                 <Slider defaultValue={degree.current} step={1} min={0} max={360} onChangeCommitted={(event, value) => setDegree(value)} marks={degreeMarks} valueLabelDisplay="auto" />
                 <p className="fs-5" >Speed of drone:</p>

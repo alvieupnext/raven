@@ -1,6 +1,6 @@
 import { interval, map,filter, zip, tap, pluck, Subject, buffer } from 'rxjs';
 import { getExporter } from './exports';
-import { dereference, drawHand, mirrorDirection, setJSON, setOrigin, setValue, transformValue } from './Utilities';
+import { dereference, drawHand, mirrorDirection, setJSON, setOrigin, setValue, transformValue } from './utilities';
 import * as mp from '@mediapipe/hands';
 import * as fp from 'fingerpose'
 import { four, highFive, phone, pointUp, stopSign, three, thumbsDown, thumbsLeft, thumbsRight, thumbsUp, victory, yeah, emperor } from './gestures';
