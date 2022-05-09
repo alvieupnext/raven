@@ -97,6 +97,7 @@ function mediapipeStream(canvasRef) {
   }
 }
 
+//supported gestures
 function fingerposeStream(observable) {
   const GE = new fp.GestureEstimator([
     victory,
@@ -114,7 +115,7 @@ function fingerposeStream(observable) {
     emperor,
   ])
   //remember we have to mirror the hands to keep consistency with the whole program
-  function fromMediaPipe(hands) {
+  function toGesture(hands) {
     let result = []
     let length = hands.multiHandWorldLandmarks.length
     for (let place of hands.multiHandedness) {
@@ -137,7 +138,7 @@ function fingerposeStream(observable) {
   }
 
   function predict(json) {
-    transformValue(json, (hands => fromMediaPipe(hands)))
+    transformValue(json, toGesture) //change
     return setOrigin(json, 'fingerpose')
   }
 
