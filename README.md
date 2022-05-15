@@ -1,4 +1,4 @@
-# Raven
+# Raven (Tello Drone Wrapper for JavaScript)
 
 Raven is a JavaScript library written in the Reactive Programming paradigm that converts user gestures from a webcam to commands for the drone. 
 
