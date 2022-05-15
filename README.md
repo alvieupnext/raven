@@ -9,7 +9,7 @@ Once we have our prerequisites, we can run the program. Clone the Raven  reposit
 
 ### `npm install`
 
-##Launching Raven
+## Launching Raven
 For booting up Raven, run the following command:
 
 ### `npm run dev`
