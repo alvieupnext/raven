@@ -31,7 +31,7 @@ Once we enable Gesture Recognition, our interface changes.
   <img src="https://user-images.githubusercontent.com/94294217/168469436-108298e6-b872-45ad-be68-b3c70ade4e5a.png" />
   <p align="center"> Figure 2: Webcam Feed when GR enabled </p>
 </p>
-The welcoming message above the webcam describes what command you are doing, along with the hand and the certainty score. There are red dots indicating the location of the landmark positions connected via green lines to form an accurate representation of a hand. You can press stop to disable Gesture Recognition.
+Above the webcam, you can receive information about the command you are sending to the drone, along with the hand and the certainty score. There are red dots indicating the location of the landmark positions connected via green lines to form an accurate representation of a hand. When finished, you can press stop to disable Gesture Recognition.
 ###	Drone Menu 
 Below the webcam are the controls for the drone. The contents of this menu will change depending on the state of the drone. There are 3 states:
 -	Pc is not connected to the drone
@@ -49,7 +49,7 @@ If the program starts not connected to a drone, it will show a battery level at 
   <p align="center"> Figure 4: Drone menu when connected to a stationary drone </p>
 </p>
 
-If the program starts connected to a drone, you can see the battery level of the drone, along with a button to make the drone takeoff. You also see a history of previous commands send to the Tello drone and a live video feed of the webcam from the drone.
+If the program starts connected to a drone, you can see the battery level of the drone, along with a button to make the drone takeoff. You also see a history of previous commands sent to the Tello drone and a live video feed of the webcam from the drone.
 Once our drone has taken off, we are greeted to a new menu with new features:
 
  <p align="center">
@@ -57,7 +57,7 @@ Once our drone has taken off, we are greeted to a new menu with new features:
   <p align="center"> Figure 5: New drone menu features when connected to an airborne drone </p>
 </p>
  
-The program provides buttons for controlling the drone in cases of emergency (where the Gesture Recognition might fail) and the command status on the top left that blinks green if the command has been successfully executed or red if it hasn’t. You can also use the sliders to decide what distance a drone should do per command (between 20cm and 1m), how many degrees to rotate and how fast to make the propellers spin.
+The program provides buttons for controlling the drone in cases of emergency (where the Gesture Recognition might fail) and the command status on the top left that blinks green if the command has been successfully executed or red if it hasn’t. You can also use the sliders to decide what distance a drone should do per command (between 20cm and 1m), how many degrees the drone should rotate (either clockwise or counterclockwise) and how fast to make the propellers spin.
 ###	Features
 The main feature of the Raven library is the ability to control the Tello drone using gestures from a webcam. This section will talk about all the different kinds of commands, alongside some miscellaneous features.
 Commands can only be recognized when Gesture Recognition is enabled. 
