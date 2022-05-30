@@ -50,7 +50,7 @@ function Subscription(props) {
     function LoadMediaPipeButton(props) {
         if (!loaded) {
           return (
-            <Button variant="info" onClick={e => { logToApp("Loading Hand Detection Model", "appLog"); loadModel(); setLoaded(true); logToApp("Loaded Hand Detection Model", "appLog") }}>Load Mediapipe Model</Button>
+            <Button variant="info" onClick={e => { logToApp("Loading Hand Detection Model", "appLog"); loadModel(); setLoaded(true); logToApp("Loaded Hand Detection Model", "appLog") }}>Load Model</Button>
           );
         }
         else return (<div></div>)
