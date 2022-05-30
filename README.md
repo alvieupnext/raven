@@ -12,7 +12,7 @@ Once we have our prerequisites, we can run the program. Clone the Raven  reposit
 ## Launching Raven
 For booting up Raven, run the following command:
 
-### `npm run dev`
+### `npm start`
 
 Make sure you are connected to the Tello Drone’s wi-fi before you run this command. Keep in mind that your pc is disconnected from the internet while controlling the Tello drone. Upon running this command, a new window will open.
 
