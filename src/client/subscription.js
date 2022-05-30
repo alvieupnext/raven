@@ -39,6 +39,7 @@ function Subscription(props) {
         }
         else {
             stopRaven()
+            //clear canvas
             let ctx = canvasRef.current.getContext("2d")
             ctx.clearRect(0, 0, 640, 480)
             setButtonText("Resume")
@@ -66,10 +67,7 @@ function Subscription(props) {
                 position: 'absolute',
                 // position: 'relative',
               }}
-
-
             />
-
             <canvas
               ref={canvasRef}
               style={{
