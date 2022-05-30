@@ -213,6 +213,7 @@ function Drone(props) {
                 <Button variant="light" onClick={e => sendToDrone({ name: 'yawCW' })}>Rotate</Button>
                 <Button variant="warning" onClick={e => sendToDrone({ name: 'stop' })}>Stop</Button>
                 <Button variant='info' onClick={e => setSafe(!safe.current)}>Toggle Safe Mode</Button>
+                <Button variant="danger" onClick={e => sendToDrone({name: "emergency"})}>EMERGENCY LANDING</Button>
                 {history_text}
                 {safeButton}
                 <p className="fs-5" >Distance performed by direction:</p>
